@@ -12,7 +12,6 @@ namespace KronosData.Model
         {
             Number = string.Empty;
             Title = string.Empty;
-            AssignedTasks = new List<WorkTask>();
         }
 
         #region Properties
@@ -20,8 +19,6 @@ namespace KronosData.Model
         public string Number { get; set; }
 
         public string Title { get; set; }
-
-        public List<WorkTask> AssignedTasks { get; }
 
         #endregion
     }

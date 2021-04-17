@@ -25,6 +25,8 @@ namespace KronosData.Model
 
         public DateTime End { get; }
 
+        public WorkTask AssignedWorkTask { get; set; }
+
         #endregion
     }
 }

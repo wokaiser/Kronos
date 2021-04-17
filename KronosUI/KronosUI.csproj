@@ -10,4 +10,8 @@
     <Folder Include="Logic\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KronosData\KronosData.csproj" />
+  </ItemGroup>
+
 </Project>

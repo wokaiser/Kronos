@@ -11,14 +11,14 @@ namespace KronosData.Model
         public WorkTask()
         {
             Title = string.Empty;
-            WorkItems = new List<WorkItem>();
+            AssignedAccount = new Account();
         }
 
         #region Properties
 
         public string Title { get; set; }
 
-        public List<WorkItem> WorkItems { get; }
+        public Account AssignedAccount { get; set; }
 
         #endregion
     }

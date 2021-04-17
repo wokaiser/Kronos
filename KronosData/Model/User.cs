@@ -13,7 +13,22 @@ namespace KronosData.Model
             UserName = string.Empty;
             FirstName = string.Empty;
             LastName = string.Empty;
-            AssignedAccounts = new List<Account>();
+            AssignedWorkItems = new List<WorkItem>();
+        }
+
+        public List<WorkItem> GetItemsOfDay(DateTime desiredDay)
+        {
+            return AssignedWorkItems.Where(d => d.Begin.Date.Equals(desiredDay.Date)).ToList();
+        }
+
+        public List<WorkItem> GetItemsOfMonth(DateTime desiredMonth)
+        {
+            return AssignedWorkItems.Where(d => d.Begin.Year == desiredMonth.Year && d.Begin.Month == desiredMonth.Month).ToList();
+        }
+
+        public List<WorkItem> GetItemsOfYear(DateTime desiredYear)
+        {
+            return AssignedWorkItems.Where(d => d.Begin.Year == desiredYear.Year).ToList();
         }
 
         #region Properties
@@ -24,7 +39,7 @@ namespace KronosData.Model
 
         public string LastName { get; set; }
 
-        public List<Account> AssignedAccounts { get; }
+        public List<WorkItem> AssignedWorkItems { get; }
 
         #endregion
 
