@@ -1,23 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KronosData.Model
+﻿namespace KronosData.Model
 {
     public class Account : DB_Access
     {
-        public Account()
+        /// <summary>
+        /// Creates a new Account object
+        /// </summary>
+        /// <param name="number">The account number</param>
+        public Account(string number)
         {
-            Number = string.Empty;
+            Number = number;
             Title = string.Empty;
         }
 
+        #region Overrides
+
+        public override string ToString()
+        {
+            return string.Format("{0}: \"{1}\"", Number, Title);
+        }
+
+        #endregion
+
         #region Properties
 
-        public string Number { get; set; }
+        /// <summary>
+        /// The account number
+        /// </summary>
+        public string Number { get; }
 
+        /// <summary>
+        /// The title of the account
+        /// </summary>
         public string Title { get; set; }
 
         #endregion
