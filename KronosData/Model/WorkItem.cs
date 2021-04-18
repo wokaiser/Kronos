@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace KronosData.Model
 {
@@ -41,6 +42,7 @@ namespace KronosData.Model
         /// <summary>
         /// The duration of the work item
         /// </summary>
+        [JsonIgnore]
         public TimeSpan Duration
         {
             get { return End - Begin; }

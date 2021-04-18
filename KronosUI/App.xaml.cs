@@ -39,6 +39,8 @@ namespace KronosUI
             var results1 = user.GetItemsOfDay(new DateTime(2021, 4, 13));
             var results2 = user.GetItemsOfDay(new DateTime(2021, 4, 14));
 
+            //user.SerializeToFile(@"C:\temp\test.json");
+            var user2 = User.DeserializeFromFile(@"C:\temp\test.json");
         }
     }
 }

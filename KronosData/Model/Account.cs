@@ -1,4 +1,6 @@
-﻿namespace KronosData.Model
+﻿using System;
+
+namespace KronosData.Model
 {
     public class Account : DB_Access
     {
@@ -17,6 +19,16 @@
         public override string ToString()
         {
             return string.Format("{0}: \"{1}\"", Number, Title);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Account account && Number.Equals(account.Number);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Number);
         }
 
         #endregion

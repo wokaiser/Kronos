@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace KronosData.Model
@@ -48,11 +50,47 @@ namespace KronosData.Model
             return AssignedWorkItems.Where(d => d.Begin.Year == desiredYear.Year).ToList();
         }
 
+        public void SerializeToFile(string path)
+        {
+            var serializer = new JsonSerializer();
+            serializer.Formatting = Formatting.Indented;
+
+            using (var sw = new StreamWriter(@"C:\temp\test.json"))
+            {
+                using (var writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, this);
+                }
+            }
+        }
+
+        public static User DeserializeFromFile(string path)
+        {
+            var json = File.ReadAllText(path);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<User>(json);
+        }
+
         #region Overrides
 
         public override string ToString()
         {
             return string.Format("{0}: {1}, {2}", UserName, LastName, FirstName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is User user && UserName.Equals(user.UserName);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(UserName);
         }
 
         #endregion
