@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KronosUI
+namespace KronosUI.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für DataView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DataView : UserControl
     {
-        public MainWindow()
+        public DataView()
         {
             InitializeComponent();
         }

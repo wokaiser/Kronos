@@ -1,5 +1,8 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Views;
+using Prism.Ioc;
+using Prism.Unity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,9 +16,9 @@ namespace KronosUI
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        public App()
+        /*public App()
         {
             Test();
         }
@@ -41,6 +44,18 @@ namespace KronosUI
 
             //user.SerializeToFile(@"C:\temp\test.json");
             var user2 = User.DeserializeFromFile(@"C:\temp\test.json");
+        }*/
+
+        protected override Window CreateShell()
+        {
+            var w = Container.Resolve<Shell>();
+
+            return w;
+        }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            //throw new NotImplementedException();
         }
     }
 }
