@@ -50,6 +50,10 @@ namespace KronosData.Model
             return AssignedWorkItems.Where(d => d.Begin.Year == desiredYear.Year).ToList();
         }
 
+        /// <summary>
+        /// Serialize object to json file
+        /// </summary>
+        /// <param name="path">The path where to store the desired json file</param>
         public void SerializeToFile(string path)
         {
             var serializer = new JsonSerializer();
@@ -64,6 +68,11 @@ namespace KronosData.Model
             }
         }
 
+        /// <summary>
+        /// Deserialize an json file to an user object
+        /// </summary>
+        /// <param name="path">The path to the json file to deserialize</param>
+        /// <returns>A User object or null in case of an error</returns>
         public static User DeserializeFromFile(string path)
         {
             var json = File.ReadAllText(path);
