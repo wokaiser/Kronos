@@ -16,6 +16,7 @@ namespace KronosUI.ViewModels
     {
         public enum ViewState { Configuration = 0, WeekListing, MonthListing, YearListing };
 
+        private bool canAppTerminate = true;
         private ViewState currentState = ViewState.Configuration;
         private IRegionManager regionManager;
 
@@ -34,6 +35,7 @@ namespace KronosUI.ViewModels
             SwitchToWeekListingViewCommand = new DelegateCommand(SwitchToWeekListingView, CanSwitchToWeekListingView);
             SwitchToMonthListingViewCommand = new DelegateCommand(SwitchToMonthListingView, CanSwitchToMonthListingView);
             SwitchToYearListingViewCommand = new DelegateCommand(SwitchToYearListingView, CanSwitchToYearListingView);
+            ExitCommand = new DelegateCommand(Exit, CanExit);
         }
 
         void SwitchToConfigurationView()
@@ -80,6 +82,16 @@ namespace KronosUI.ViewModels
             return CurrentState != ViewState.YearListing;
         }
 
+        void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
+        bool CanExit()
+        {
+            return CanAppTerminate;
+        }
+
         #endregion
 
         #region Properties
@@ -97,6 +109,16 @@ namespace KronosUI.ViewModels
             }
         }
 
+        public bool CanAppTerminate
+        {
+            get { return canAppTerminate; }
+            set
+            {
+                SetProperty(ref canAppTerminate, value);
+                ExitCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public DelegateCommand SwitchToConfigurationViewCommand { get; private set; }
 
         public DelegateCommand SwitchToWeekListingViewCommand { get; private set; }
@@ -104,6 +126,8 @@ namespace KronosUI.ViewModels
         public DelegateCommand SwitchToMonthListingViewCommand { get; private set; }
 
         public DelegateCommand SwitchToYearListingViewCommand { get; private set; }
+
+        public DelegateCommand ExitCommand { get; private set; }
 
         #endregion
     }
