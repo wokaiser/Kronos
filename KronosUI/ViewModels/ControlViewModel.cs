@@ -1,5 +1,8 @@
-﻿using Prism.Commands;
+﻿using KronosUI.Model;
+using KronosUI.Views;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +17,18 @@ namespace KronosUI.ViewModels
         public enum ViewState { Configuration = 0, WeekListing, MonthListing, YearListing };
 
         private ViewState currentState = ViewState.Configuration;
+        private IRegionManager regionManager;
 
-        public ControlViewModel()
+        public ControlViewModel(IRegionManager regionManager)
+        {
+            this.regionManager = regionManager;
+
+            PopulateCommands();
+        }
+
+        #region Command functions
+
+        void PopulateCommands()
         {
             SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView, CanSwitchToConfigurationView);
             SwitchToWeekListingViewCommand = new DelegateCommand(SwitchToWeekListingView, CanSwitchToWeekListingView);
@@ -23,10 +36,9 @@ namespace KronosUI.ViewModels
             SwitchToYearListingViewCommand = new DelegateCommand(SwitchToYearListingView, CanSwitchToYearListingView);
         }
 
-        #region Command functions
-
         void SwitchToConfigurationView()
         {
+            regionManager.RequestNavigate(RegionNames.DataRegion, ConfigurationView.ViewName);
             CurrentState = ViewState.Configuration;
         }
 
@@ -37,6 +49,7 @@ namespace KronosUI.ViewModels
 
         void SwitchToWeekListingView()
         {
+            regionManager.RequestNavigate(RegionNames.DataRegion, WeekListingView.ViewName);
             CurrentState = ViewState.WeekListing;
         }
 
@@ -47,6 +60,7 @@ namespace KronosUI.ViewModels
 
         void SwitchToMonthListingView()
         {
+            regionManager.RequestNavigate(RegionNames.DataRegion, MonthListingView.ViewName);
             CurrentState = ViewState.MonthListing;
         }
 
@@ -57,6 +71,7 @@ namespace KronosUI.ViewModels
 
         void SwitchToYearListingView()
         {
+            regionManager.RequestNavigate(RegionNames.DataRegion, YearListingView.ViewName);
             CurrentState = ViewState.YearListing;
         }
 

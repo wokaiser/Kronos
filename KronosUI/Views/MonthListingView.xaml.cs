@@ -16,13 +16,13 @@ using System.Windows.Shapes;
 namespace KronosUI.Views
 {
     /// <summary>
-    /// Interaktionslogik für ConfigurationView.xaml
+    /// Interaktionslogik für MonthListingView.xaml
     /// </summary>
-    public partial class ConfigurationView : UserControl
+    public partial class MonthListingView : UserControl
     {
-        public static readonly string ViewName = "ConfigurationView";
+        public static readonly string ViewName = "MonthListingView";
 
-        public ConfigurationView()
+        public MonthListingView()
         {
             InitializeComponent();
         }
