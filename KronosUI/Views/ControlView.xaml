@@ -11,6 +11,8 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="FontSize" Value="16" />
         </Style>
     </UserControl.Resources>    
     <Border Background="DodgerBlue" CornerRadius="8" Margin="5">
@@ -21,12 +23,12 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Week" />
-                    <Button Grid.Column="1" Content="Month" />
-                    <Button Grid.Column="2" Content="Year" />
-                    <Button Grid.Column="3" Content=" Configuration " Command="{Binding SwitchToConfigurationViewCommand}" />
+                    <Button Grid.Column="0" Content="Week" Command="{Binding SwitchToWeekListingViewCommand}" />
+                    <Button Grid.Column="1" Content="Month" Command="{Binding SwitchToMonthListingViewCommand}" />
+                    <Button Grid.Column="2" Content="Year" Command="{Binding SwitchToYearListingViewCommand}" />
+                    <Button Grid.Column="3" Content="Configuration" Width="120" Command="{Binding SwitchToConfigurationViewCommand}" />
                 </Grid>
             </GroupBox>
         </StackPanel>
