@@ -4,11 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+    </UserControl.Resources>    
     <Border Background="DodgerBlue" CornerRadius="8" Margin="5">
-        <Grid Margin="5">
-            <TextBlock Text="Control View" />
-        </Grid>
+        <StackPanel Margin="5">
+            <GroupBox Header="Navigation">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Week" />
+                    <Button Grid.Column="1" Content="Month" />
+                    <Button Grid.Column="2" Content="Year" />
+                    <Button Grid.Column="3" Content=" Configuration " Command="{Binding SwitchToConfigurationViewCommand}" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
     </Border>
 </UserControl>

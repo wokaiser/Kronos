@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace KronosUI.Views
 {
     /// <summary>
-    /// Interaktionslogik für DataView.xaml
+    /// Interaktionslogik für ConfigurationView.xaml
     /// </summary>
-    public partial class DataView : UserControl
+    public partial class ConfigurationView : UserControl
     {
-        public DataView()
+        public ConfigurationView()
         {
             InitializeComponent();
         }
