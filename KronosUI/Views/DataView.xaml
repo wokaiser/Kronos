@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="DataView" />
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="600">
+    <Border Background="LightSteelBlue" CornerRadius="8" Margin="5">
+        <Grid Margin="5">
+            <TextBlock Text="Data View" />
+        </Grid>
+    </Border>
 </UserControl>
