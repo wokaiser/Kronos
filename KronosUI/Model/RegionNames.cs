@@ -7,6 +7,11 @@
             get { return "StatusBarRegion"; }
         }
 
+        public static string NavigationRegion
+        {
+            get { return "NavigationRegion"; }
+        }
+
         public static string ControlRegion
         {
             get { return "ControlRegion"; }

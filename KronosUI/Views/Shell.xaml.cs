@@ -18,6 +18,7 @@ namespace KronosUI.Views
 
         private void RegisterRegions(IRegionManager regionManager)
         {
+            regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(NavigationView));
             regionManager.RegisterViewWithRegion(RegionNames.StatusBarRegion, typeof(StatusBarView));
             regionManager.RegisterViewWithRegion(RegionNames.ControlRegion, typeof(ControlView));
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(ConfigurationView));

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="KronosUI.Views.NavigationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KronosUI.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+    </UserControl.Resources>
+    <Border Background="DodgerBlue" CornerRadius="8" Margin="5">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Week" Command="{Binding SwitchToWeekListingViewCommand}" />
+                <Button Grid.Column="1" Content="Month" Command="{Binding SwitchToMonthListingViewCommand}" />
+                <Button Grid.Column="2" Content="Year" Command="{Binding SwitchToYearListingViewCommand}" />
+                <Button Grid.Column="3" Content="Configuration" Width="120" Command="{Binding SwitchToConfigurationViewCommand}" />
+            </Grid>
+            <Button Grid.Row="1" Content="Exit" Width="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding ExitCommand}" />
+        </Grid>
+    </Border>
+</UserControl>

@@ -8,34 +8,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
-    <UserControl.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="Height" Value="25" />
-            <Setter Property="FontSize" Value="16" />
-        </Style>
-    </UserControl.Resources>    
-    <Border Background="DodgerBlue" CornerRadius="8" Margin="5">
-        <Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0" Header="Navigation">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Week" Command="{Binding SwitchToWeekListingViewCommand}" />
-                    <Button Grid.Column="1" Content="Month" Command="{Binding SwitchToMonthListingViewCommand}" />
-                    <Button Grid.Column="2" Content="Year" Command="{Binding SwitchToYearListingViewCommand}" />
-                    <Button Grid.Column="3" Content="Configuration" Width="120" Command="{Binding SwitchToConfigurationViewCommand}" />
-                </Grid>
-            </GroupBox>
-            <Button Grid.Row="1" Content="Exit" Width="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding ExitCommand}" />
-        </Grid>
+    <Border Background="LightYellow" CornerRadius="8" Margin="5">
+        <TextBlock Text="ControlView" />
     </Border>
 </UserControl>

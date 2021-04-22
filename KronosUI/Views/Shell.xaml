@@ -10,6 +10,7 @@
         Title="Kronos Viewer" Height="1024" Width="1280" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico" >
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
@@ -17,8 +18,9 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ContentControl Grid.Row="1" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
-        <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
-        <ContentControl Grid.Row="0" Grid.Column="0" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
+        <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
+        <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
+        <ContentControl Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
+        <ContentControl Grid.Row="2" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
     </Grid>
 </Window>
