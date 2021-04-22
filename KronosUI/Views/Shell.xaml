@@ -11,13 +11,13 @@
         MinWidth="1280" MinHeight="1024">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="460" />
+            <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
         <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />

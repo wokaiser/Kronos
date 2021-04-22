@@ -13,7 +13,7 @@ namespace KronosUI.ViewModels
     public class NavigationViewModel : BindableBase
     {
         public enum ViewState { Configuration = 0, WeekListing, MonthListing, YearListing };
-        public enum MonthName { Januar = 1, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember }
+        public enum MonthName { Jan = 1, Feb, März, April, Mai, Juni, Juli, Aug, Sept, Okt, Nov, Dez }
 
         private bool canAppTerminate = true;
         private string calendarWeek;

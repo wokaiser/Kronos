@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2" />
-            <Setter Property="Height" Value="80" />
+            <Setter Property="Height" Value="60" />
             <Setter Property="Background" Value="White" />
         </Style>
     </UserControl.Resources>
@@ -27,19 +27,19 @@
             <Button Grid.Column="0" Command="{Binding SwitchToWeekListingViewCommand}">
                 <Grid Margin="5">
                     <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
-                    <TextBlock Text="{Binding CalendarWeek}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding CalendarWeek}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
             <Button Grid.Column="1" Command="{Binding SwitchToMonthListingViewCommand}">
                 <Grid Margin="5">
                     <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
-                    <TextBlock Text="{Binding CalendarMonth}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding CalendarMonth}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
             <Button Grid.Column="2" Command="{Binding SwitchToYearListingViewCommand}">
                 <Grid Margin="5">
                     <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
-                    <TextBlock Text="{Binding CalendarYear}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding CalendarYear}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
             <Button Grid.Column="3" Command="{Binding SwitchToConfigurationViewCommand}">
