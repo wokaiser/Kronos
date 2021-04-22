@@ -8,24 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\calendar_blank.png" />
+    <None Remove="Images\calendar_blank.svg" />
     <None Remove="Images\clock.ico" />
-    <None Remove="Images\door.png" />
     <None Remove="Images\door.svg" />
-    <None Remove="Images\settings.png" />
+    <None Remove="Images\settings.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\calendar_blank.png" />
+    <Resource Include="Images\calendar_blank.svg" />
     <Resource Include="Images\clock.ico" />
-    <Resource Include="Images\door.png" />
     <Resource Include="Images\door.svg" />
-    <Resource Include="Images\settings.png" />
+    <Resource Include="Images\settings.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
+    <PackageReference Include="SharpVectors" Version="1.7.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -25,27 +26,27 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Command="{Binding SwitchToWeekListingViewCommand}">
                 <Grid Margin="5">
-                    <Image Source="/Images/calendar_blank.png" />
-                    <TextBlock Text="{Binding CalendarWeek}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,15,0,0"/>
+                    <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
+                    <TextBlock Text="{Binding CalendarWeek}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
             <Button Grid.Column="1" Command="{Binding SwitchToMonthListingViewCommand}">
                 <Grid Margin="5">
-                    <Image Source="/Images/calendar_blank.png" />
-                    <TextBlock Text="{Binding CalendarMonth}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,15,0,0"/>
+                    <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
+                    <TextBlock Text="{Binding CalendarMonth}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
             <Button Grid.Column="2" Command="{Binding SwitchToYearListingViewCommand}">
                 <Grid Margin="5">
-                    <Image Source="/Images/calendar_blank.png" />
-                    <TextBlock Text="{Binding CalendarYear}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,15,0,0"/>
+                    <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
+                    <TextBlock Text="{Binding CalendarYear}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
             <Button Grid.Column="3" Command="{Binding SwitchToConfigurationViewCommand}">
-                <Image Source="/Images/settings.png" Margin="5" />
+                <svgc:SvgViewbox Source="/Images/settings.svg" Margin="5" />
             </Button>
             <Button Grid.Column="4" Command="{Binding ExitCommand}">
-                <Image Source="/Images/door.png" Margin="5" />
+                <svgc:SvgViewbox Source="/Images/door.svg" Margin="5" />
             </Button>
         </Grid>
     </Border>
