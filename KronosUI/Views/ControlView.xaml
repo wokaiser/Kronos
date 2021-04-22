@@ -8,7 +8,9 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
-    <Border Background="LightYellow" CornerRadius="8" Margin="5">
-        <TextBlock Text="ControlView" />
+    <Border Background="Gray" CornerRadius="8" Margin="0,0,5,5">
+        <Grid Margin="5">
+            <TextBlock Text="ControlView" />
+        </Grid>
     </Border>
 </UserControl>
