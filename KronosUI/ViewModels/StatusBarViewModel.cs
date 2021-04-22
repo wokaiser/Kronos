@@ -16,7 +16,7 @@ namespace KronosUI.ViewModels
 
         void StatusBarTextUpdated(string text)
         {
-
+            //TODO: Reset timer to avoid cancelling of previous running thread
             var delayedStatusThread = new Thread(() => ShowDelayedStatusText(text, 5000));
             delayedStatusThread.Start();
         }
