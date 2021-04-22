@@ -55,6 +55,7 @@ namespace KronosUI.ViewModels
         void SwitchToConfigurationView()
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, ConfigurationView.ViewName);
+            regionManager.RequestNavigate(RegionNames.ControlRegion, ConfigurationControlView.ViewName);
             CurrentState = ViewState.Configuration;
             eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Configuration page loaded");
         }
@@ -67,6 +68,7 @@ namespace KronosUI.ViewModels
         void SwitchToWeekListingView()
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, WeekListingView.ViewName);
+            regionManager.RequestNavigate(RegionNames.ControlRegion, WeekListingControlView.ViewName);
             CurrentState = ViewState.WeekListing;
             eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Week listing loaded");
         }
@@ -79,6 +81,7 @@ namespace KronosUI.ViewModels
         void SwitchToMonthListingView()
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, MonthListingView.ViewName);
+            regionManager.RequestNavigate(RegionNames.ControlRegion, MonthListingControlView.ViewName);
             CurrentState = ViewState.MonthListing;
             eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Month listing loaded");
         }
@@ -91,6 +94,7 @@ namespace KronosUI.ViewModels
         void SwitchToYearListingView()
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, YearListingView.ViewName);
+            regionManager.RequestNavigate(RegionNames.ControlRegion, YearListingControlView.ViewName);
             CurrentState = ViewState.YearListing;
             eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Year listing loaded");
         }

@@ -5,9 +5,11 @@ namespace KronosUI.Views
     /// <summary>
     /// Interaktionslogik für ControlView.xaml
     /// </summary>
-    public partial class ControlView : UserControl
+    public partial class ConfigurationControlView : UserControl
     {
-        public ControlView()
+        public static readonly string ViewName = "ConfigurationControlView";
+
+        public ConfigurationControlView()
         {
             InitializeComponent();
         }

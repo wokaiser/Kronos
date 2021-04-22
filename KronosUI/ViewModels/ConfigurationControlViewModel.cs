@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace KronosUI.ViewModels
 {
-    public class ControlViewModel : BindableBase
+    public class ConfigurationControlViewModel : BindableBase
     {
         
     }
