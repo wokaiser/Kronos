@@ -1,6 +1,8 @@
-﻿using KronosUI.Model;
+﻿using KronosUI.Events;
+using KronosUI.Model;
 using KronosUI.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Windows;
@@ -14,10 +16,12 @@ namespace KronosUI.ViewModels
         private bool canAppTerminate = true;
         private ViewState currentState = ViewState.Configuration;
         private IRegionManager regionManager;
+        private IEventAggregator eventAggregator;
 
-        public NavigationViewModel(IRegionManager regionManager)
+        public NavigationViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             this.regionManager = regionManager;
+            this.eventAggregator = eventAggregator;
 
             PopulateCommands();
         }
@@ -37,6 +41,7 @@ namespace KronosUI.ViewModels
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, ConfigurationView.ViewName);
             CurrentState = ViewState.Configuration;
+            eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Configuration page loaded");
         }
 
         bool CanSwitchToConfigurationView()
@@ -48,6 +53,7 @@ namespace KronosUI.ViewModels
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, WeekListingView.ViewName);
             CurrentState = ViewState.WeekListing;
+            eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Week listing loaded");
         }
 
         bool CanSwitchToWeekListingView()
@@ -59,6 +65,7 @@ namespace KronosUI.ViewModels
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, MonthListingView.ViewName);
             CurrentState = ViewState.MonthListing;
+            eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Month listing loaded");
         }
 
         bool CanSwitchToMonthListingView()
@@ -70,6 +77,7 @@ namespace KronosUI.ViewModels
         {
             regionManager.RequestNavigate(RegionNames.DataRegion, YearListingView.ViewName);
             CurrentState = ViewState.YearListing;
+            eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Publish("Year listing loaded");
         }
 
         bool CanSwitchToYearListingView()

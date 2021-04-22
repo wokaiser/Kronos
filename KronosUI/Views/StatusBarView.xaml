@@ -10,7 +10,7 @@
              d:DesignHeight="20" d:DesignWidth="800">
     <Grid>
         <StatusBar>
-            <TextBlock Text="Test" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding StatusText}" VerticalAlignment="Center"/>
         </StatusBar>
     </Grid>
 </UserControl>
