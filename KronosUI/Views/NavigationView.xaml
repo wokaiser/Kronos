@@ -6,34 +6,47 @@
              xmlns:local="clr-namespace:KronosUI.Views"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2" />
-            <Setter Property="Height" Value="25" />
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="80" />
+            <Setter Property="Background" Value="White" />
         </Style>
     </UserControl.Resources>
     <Border Background="DodgerBlue" CornerRadius="8" Margin="0,5,5,5">
         <Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Week" Command="{Binding SwitchToWeekListingViewCommand}" />
-                <Button Grid.Column="1" Content="Month" Command="{Binding SwitchToMonthListingViewCommand}" />
-                <Button Grid.Column="2" Content="Year" Command="{Binding SwitchToYearListingViewCommand}" />
-                <Button Grid.Column="3" Content="Configuration" Width="120" Command="{Binding SwitchToConfigurationViewCommand}" />
-            </Grid>
-            <Button Grid.Row="1" Content="Exit" Width="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding ExitCommand}" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding SwitchToWeekListingViewCommand}">
+                <Grid Margin="5">
+                    <Image Source="/Images/calendar_blank.png" />
+                    <TextBlock Text="{Binding CalendarWeek}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,15,0,0"/>
+                </Grid>
+            </Button>
+            <Button Grid.Column="1" Command="{Binding SwitchToMonthListingViewCommand}">
+                <Grid Margin="5">
+                    <Image Source="/Images/calendar_blank.png" />
+                    <TextBlock Text="{Binding CalendarMonth}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,15,0,0"/>
+                </Grid>
+            </Button>
+            <Button Grid.Column="2" Command="{Binding SwitchToYearListingViewCommand}">
+                <Grid Margin="5">
+                    <Image Source="/Images/calendar_blank.png" />
+                    <TextBlock Text="{Binding CalendarYear}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,15,0,0"/>
+                </Grid>
+            </Button>
+            <Button Grid.Column="3" Command="{Binding SwitchToConfigurationViewCommand}">
+                <Image Source="/Images/settings.png" Margin="5" />
+            </Button>
+            <Button Grid.Column="4" Command="{Binding ExitCommand}">
+                <Image Source="/Images/door.png" Margin="5" />
+            </Button>
         </Grid>
     </Border>
 </UserControl>

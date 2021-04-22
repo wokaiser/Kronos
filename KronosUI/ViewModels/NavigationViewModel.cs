@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Windows;
 
 namespace KronosUI.ViewModels
@@ -12,8 +13,13 @@ namespace KronosUI.ViewModels
     public class NavigationViewModel : BindableBase
     {
         public enum ViewState { Configuration = 0, WeekListing, MonthListing, YearListing };
+        public enum MonthName { Januar = 1, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember }
 
         private bool canAppTerminate = true;
+        private string calendarWeek;
+        private string calendarMonth;
+        private string calendarYear;
+
         private ViewState currentState = ViewState.Configuration;
         private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
@@ -24,6 +30,14 @@ namespace KronosUI.ViewModels
             this.eventAggregator = eventAggregator;
 
             PopulateCommands();
+            SetButtonTexts();
+        }
+
+        private void SetButtonTexts()
+        {
+            CalendarWeek = "KW" + (DateTime.Now.DayOfYear / 7).ToString();
+            CalendarMonth = ((MonthName)DateTime.Now.Month).ToString();
+            CalendarYear = DateTime.Now.Year.ToString();
         }
 
         #region Command functions
@@ -98,6 +112,24 @@ namespace KronosUI.ViewModels
         #endregion
 
         #region Properties
+
+        public string CalendarWeek
+        {
+            get { return calendarWeek; }
+            set { SetProperty(ref calendarWeek, value); }
+        }
+
+        public string CalendarMonth
+        {
+            get { return calendarMonth; }
+            set { SetProperty(ref calendarMonth, value); }
+        }
+
+        public string CalendarYear
+        {
+            get { return calendarYear; }
+            set { SetProperty(ref calendarYear, value); }
+        }
 
         public ViewState CurrentState
         {
