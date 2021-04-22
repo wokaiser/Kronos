@@ -102,7 +102,12 @@ namespace KronosUI.ViewModels
 
         void Exit()
         {
-            Application.Current.Shutdown();
+            var res = MessageBox.Show("Möchten Sie wirklich das Programm beenden?", "Beenden", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (res == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         bool CanExit()

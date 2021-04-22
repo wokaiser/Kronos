@@ -15,7 +15,7 @@ namespace KronosUI
     {
         public App()
         {
-            Test();
+            //Test();
         }
 
         private void Test()
