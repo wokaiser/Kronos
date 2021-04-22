@@ -21,10 +21,10 @@ namespace KronosUI.Views
             regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(NavigationView));
             regionManager.RegisterViewWithRegion(RegionNames.StatusBarRegion, typeof(StatusBarView));
             regionManager.RegisterViewWithRegion(RegionNames.ControlRegion, typeof(ControlView));
-            regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(ConfigurationView));
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(WeekListingView));
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(MonthListingView));
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(YearListingView));
+            regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(ConfigurationView));
         }
     }
 }

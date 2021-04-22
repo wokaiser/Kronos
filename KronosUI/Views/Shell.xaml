@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="360" />
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
         <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />

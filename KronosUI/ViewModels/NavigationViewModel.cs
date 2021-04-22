@@ -20,7 +20,7 @@ namespace KronosUI.ViewModels
         private string calendarMonth;
         private string calendarYear;
 
-        private ViewState currentState = ViewState.Configuration;
+        private ViewState currentState;
         private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
 
@@ -29,6 +29,7 @@ namespace KronosUI.ViewModels
             this.regionManager = regionManager;
             this.eventAggregator = eventAggregator;
 
+            currentState = ViewState.WeekListing;
             PopulateCommands();
             SetButtonTexts();
         }

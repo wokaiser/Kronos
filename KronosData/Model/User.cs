@@ -17,9 +17,9 @@ namespace KronosData.Model
             UserName = username;
             FirstName = string.Empty;
             LastName = string.Empty;
-            AssignedWorkItems = new List<WorkItem>();
+            AssignedWorkDays = new List<WorkDay>();
         }
-
+        /*
         /// <summary>
         /// Gets all items of the desired day
         /// </summary>
@@ -49,7 +49,7 @@ namespace KronosData.Model
         {
             return AssignedWorkItems.Where(d => d.Begin.Year == desiredYear.Year).ToList();
         }
-
+        */
         /// <summary>
         /// Serialize object to json file
         /// </summary>
@@ -124,7 +124,7 @@ namespace KronosData.Model
         /// <summary>
         /// The work items assigned to the user
         /// </summary>
-        public List<WorkItem> AssignedWorkItems { get; }
+        public List<WorkDay> AssignedWorkDays { get; }
 
         #endregion
 
