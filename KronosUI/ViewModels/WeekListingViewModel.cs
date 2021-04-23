@@ -2,11 +2,12 @@
 
 namespace KronosUI.ViewModels
 {
-    public class WeekListingViewModel : ControlViewModelBase
+    public class WeekListingViewModel : ListingViewModelBase
     {
         protected override void Initialize()
         {
             CalendarValue = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
+            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
         }
 
         public override bool CanSwitchToPrevious()
@@ -22,12 +23,20 @@ namespace KronosUI.ViewModels
         public override void SwitchToPrevious()
         {
             currentTimeFrame = currentTimeFrame.AddDays(-7);
+            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToPrevious();
+        }
+
+        public override void SwitchToCurrent()
+        {
+            base.SwitchToCurrent();
+            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
         }
 
         public override void SwitchToNext()
         {
             currentTimeFrame = currentTimeFrame.AddDays(7);
+            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToNext();
         }
     }

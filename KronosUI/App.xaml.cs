@@ -1,5 +1,6 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.ViewModels;
 using KronosUI.Views;
 using Prism.Ioc;
 using Prism.Unity;
@@ -63,6 +64,7 @@ namespace KronosUI
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance(new DataManager());
+            containerRegistry.RegisterInstance(new WeekListingViewModel());
         }
     }
 }

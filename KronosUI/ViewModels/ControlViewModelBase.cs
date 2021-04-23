@@ -10,7 +10,7 @@ namespace KronosUI.ViewModels
     public abstract class ControlViewModelBase : BindableBase
     {
         private string calendarValue;
-        private IEventAggregator eventAggregator;
+        private readonly IEventAggregator eventAggregator;
 
         protected DateTime currentTimeFrame;
 
@@ -41,7 +41,7 @@ namespace KronosUI.ViewModels
             eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
         }
 
-        public void SwitchToCurrent()
+        public virtual void SwitchToCurrent()
         {
             currentTimeFrame = DateTime.Now;
             eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);

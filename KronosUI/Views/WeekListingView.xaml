@@ -4,13 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="LightSeaGreen" CornerRadius="8" Margin="5">
         <Grid Margin="5">
-            <TextBlock Text="WeekListingView" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
+            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tag" />
+                    <DataGridTextColumn Header="Von" />
+                    <DataGridTextColumn Header="Bis" />
+                    <DataGridTextColumn Header="Total" />
+                    <DataGridTextColumn Header="Differenz" />
+                    <DataGridTextColumn Header="Task1" />
+                    <DataGridTextColumn Header="Task2" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Border>
 </UserControl>
