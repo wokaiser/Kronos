@@ -1,20 +1,23 @@
-﻿using Prism.Commands;
+﻿using KronosUI.Events;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace KronosUI.ViewModels
 {
     public class WeekListingViewModel : BindableBase
     {
         private string calendarWeek;
+        private DateTime currentTimeFrame;
+        private IEventAggregator eventAggregator;
 
         public WeekListingViewModel()
         {
+            eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
+            currentTimeFrame = DateTime.Now;
+
             CalendarWeek = "KW" + (DateTime.Now.DayOfYear / 7).ToString();
 
             PopulateCommands();
@@ -31,17 +34,20 @@ namespace KronosUI.ViewModels
 
         public void SwitchToPreviousWeek()
         {
-            MessageBox.Show("Previous");
+            currentTimeFrame = currentTimeFrame.AddDays(-7);
+            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
         }
 
         public void SwitchToCurrentWeek()
         {
-            MessageBox.Show("Current");
+            currentTimeFrame = DateTime.Now;
+            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
         }
 
         public void SwitchToNextWeek()
         {
-            MessageBox.Show("Next");
+            currentTimeFrame = currentTimeFrame.AddDays(7);
+            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
         }
 
         public bool CanSwitchToPreviousWeek()

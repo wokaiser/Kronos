@@ -31,17 +31,27 @@ namespace KronosUI.ViewModels
             eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
 
             currentState = ViewState.WeekListing;
+            eventAggregator.GetEvent<TimeframeChangedEvent>().Subscribe(TimeframeChangedEventHandler);
 
             PopulateCommands();
-            SetButtonTexts();
+            SetButtonTexts(DateTime.Now);
         }
 
-        private void SetButtonTexts()
+        private void SetButtonTexts(DateTime date)
         {
-            CalendarWeek = "KW" + (DateTime.Now.DayOfYear / 7).ToString();
-            CalendarMonth = ((MonthName)DateTime.Now.Month).ToString();
-            CalendarYear = DateTime.Now.Year.ToString();
+            CalendarWeek = "KW" + (date.DayOfYear / 7).ToString();
+            CalendarMonth = ((MonthName)date.Month).ToString();
+            CalendarYear = date.Year.ToString();
         }
+
+        #region Event handling
+
+        private void TimeframeChangedEventHandler(DateTime timeFrame)
+        {
+            SetButtonTexts(timeFrame);
+        }
+
+        #endregion
 
         #region Command functions
 
