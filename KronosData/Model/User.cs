@@ -25,16 +25,14 @@ namespace KronosData.Model
         /// <param name="path">The path where to store the desired json file</param>
         public void SerializeToFile(string path)
         {
-            var serializer = new JsonSerializer();
-            serializer.Formatting = Formatting.Indented;
-
-            using (var sw = new StreamWriter(@"C:\temp\test.json"))
+            var serializer = new JsonSerializer
             {
-                using (var writer = new JsonTextWriter(sw))
-                {
-                    serializer.Serialize(writer, this);
-                }
-            }
+                Formatting = Formatting.Indented
+            };
+
+            using var sw = new StreamWriter(path);
+            using var writer = new JsonTextWriter(sw);
+            serializer.Serialize(writer, this);
         }
 
         /// <summary>
