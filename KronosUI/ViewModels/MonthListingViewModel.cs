@@ -4,7 +4,7 @@ namespace KronosUI.ViewModels
 {
     public class MonthListingViewModel : ControlViewModelBase
     {
-        public override void Initialize()
+        protected override void Initialize()
         {
             CalendarValue = ((MonthName)currentTimeFrame.Month).ToString();
         }

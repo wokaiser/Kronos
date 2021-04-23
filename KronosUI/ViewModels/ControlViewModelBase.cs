@@ -25,7 +25,7 @@ namespace KronosUI.ViewModels
             PopulateCommands();
         }
 
-        public abstract void Initialize();
+        protected abstract void Initialize();
 
         #region Command functions
 
@@ -47,7 +47,7 @@ namespace KronosUI.ViewModels
             eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
         }
 
-        public virtual void  SwitchToNext()
+        public virtual void SwitchToNext()
         {
             eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
         }

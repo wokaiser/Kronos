@@ -2,7 +2,7 @@
 {
     public class WeekListingViewModel : ControlViewModelBase
     {
-        public override void Initialize()
+        protected override void Initialize()
         {
             CalendarValue = "KW" + (currentTimeFrame.DayOfYear / 7).ToString();
         }

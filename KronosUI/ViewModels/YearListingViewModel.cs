@@ -2,7 +2,7 @@
 {
     public class YearListingViewModel : ControlViewModelBase
     {
-        public override void Initialize()
+        protected override void Initialize()
         {
             CalendarValue = currentTimeFrame.Year.ToString();
         }
