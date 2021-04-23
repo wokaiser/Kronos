@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using KronosUI.ViewModels;
+using Prism.Ioc;
+using System.Windows.Controls;
 
 namespace KronosUI.Views
 {
@@ -12,6 +14,7 @@ namespace KronosUI.Views
         public WeekListingControlView()
         {
             InitializeComponent();
+            DataContext = ContainerLocator.Container.Resolve<WeekListingViewModel>();
         }
     }
 }
