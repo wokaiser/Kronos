@@ -1,86 +1,32 @@
-﻿using KronosUI.Events;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Ioc;
-using Prism.Mvvm;
-using System;
-
-namespace KronosUI.ViewModels
+﻿namespace KronosUI.ViewModels
 {
-    public class WeekListingViewModel : BindableBase
+    public class WeekListingViewModel : ControlViewModelBase
     {
-        private string calendarWeek;
-        private DateTime currentTimeFrame;
-        private IEventAggregator eventAggregator;
-
-        public WeekListingViewModel()
+        public override void Initialize()
         {
-            eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
-            currentTimeFrame = DateTime.Now;
-
-            CalendarWeek = "KW" + (DateTime.Now.DayOfYear / 7).ToString();
-
-            PopulateCommands();
+            CalendarValue = "KW" + (currentTimeFrame.DayOfYear / 7).ToString();
         }
 
-        #region Command functions
-
-        private void PopulateCommands()
+        public override bool CanSwitchToPrevious()
         {
-            SwitchToPreviousWeekCommand = new DelegateCommand(SwitchToPreviousWeek, CanSwitchToPreviousWeek);
-            SwitchToCurrentWeekCommand = new DelegateCommand(SwitchToCurrentWeek, CanSwitchToCurrentWeek);
-            SwitchToNextWeekCommand = new DelegateCommand(SwitchToNextWeek, CanSwitchToNextWeek);
+            return true;
         }
 
-        public void SwitchToPreviousWeek()
+        public override bool CanSwitchToNext()
+        {
+            return true;
+        }
+
+        public override void SwitchToPrevious()
         {
             currentTimeFrame = currentTimeFrame.AddDays(-7);
-            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
+            base.SwitchToPrevious();
         }
 
-        public void SwitchToCurrentWeek()
-        {
-            currentTimeFrame = DateTime.Now;
-            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
-        }
-
-        public void SwitchToNextWeek()
+        public override void SwitchToNext()
         {
             currentTimeFrame = currentTimeFrame.AddDays(7);
-            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
+            base.SwitchToNext();
         }
-
-        public bool CanSwitchToPreviousWeek()
-        {
-            return true;
-        }
-
-        public bool CanSwitchToCurrentWeek()
-        {
-            return true;
-        }
-
-        public bool CanSwitchToNextWeek()
-        {
-            return true;
-        }
-
-        #endregion
-
-        #region Properties
-
-        public string CalendarWeek
-        {
-            get { return calendarWeek; }
-            set { SetProperty(ref calendarWeek, value); }
-        }
-
-        public DelegateCommand SwitchToPreviousWeekCommand { get; private set; }
-
-        public DelegateCommand SwitchToCurrentWeekCommand { get; private set; }
-
-        public DelegateCommand SwitchToNextWeekCommand { get; private set; }
-
-        #endregion
     }
 }

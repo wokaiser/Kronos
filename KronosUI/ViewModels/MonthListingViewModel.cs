@@ -1,87 +1,34 @@
-﻿using KronosUI.Events;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Ioc;
-using Prism.Mvvm;
-using System;
-using static KronosUI.ViewModels.NavigationViewModel;
+﻿using static KronosUI.ViewModels.NavigationViewModel;
 
 namespace KronosUI.ViewModels
 {
-    public class MonthListingViewModel : BindableBase
+    public class MonthListingViewModel : ControlViewModelBase
     {
-        private string calendarMonth;
-        private DateTime currentTimeFrame;
-        private IEventAggregator eventAggregator;
-
-        public MonthListingViewModel()
+        public override void Initialize()
         {
-            eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
-            currentTimeFrame = DateTime.Now;
-
-            CalendarMonth = ((MonthName)currentTimeFrame.Month).ToString();
-
-            PopulateCommands();
+            CalendarValue = ((MonthName)currentTimeFrame.Month).ToString();
         }
 
-        #region Command functions
-
-        private void PopulateCommands()
+        public override bool CanSwitchToPrevious()
         {
-            SwitchToPreviousMonthCommand = new DelegateCommand(SwitchToPreviousMonth, CanSwitchToPreviousMonth);
-            SwitchToCurrentMonthCommand = new DelegateCommand(SwitchToCurrentMonth, CanSwitchToCurrentMonth);
-            SwitchToNextMonthCommand = new DelegateCommand(SwitchToNextMonth, CanSwitchToNextMonth);
+            return true;
         }
 
-        public void SwitchToPreviousMonth()
+        public override bool CanSwitchToNext()
+        {
+            return true;
+        }
+
+        public override void SwitchToPrevious()
         {
             currentTimeFrame = currentTimeFrame.AddMonths(-1);
-            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
+            base.SwitchToPrevious();
         }
 
-        public void SwitchToCurrentMonth()
-        {
-            currentTimeFrame = DateTime.Now;
-            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
-        }
-
-        public void SwitchToNextMonth()
+        public override void SwitchToNext()
         {
             currentTimeFrame = currentTimeFrame.AddMonths(1);
-            eventAggregator.GetEvent<TimeframeChangedEvent>().Publish(currentTimeFrame);
+            base.SwitchToNext();
         }
-
-        public bool CanSwitchToPreviousMonth()
-        {
-            return true;
-        }
-
-        public bool CanSwitchToCurrentMonth()
-        {
-            return true;
-        }
-
-        public bool CanSwitchToNextMonth()
-        {
-            return true;
-        }
-
-        #endregion
-
-        #region Properties
-
-        public string CalendarMonth
-        {
-            get { return calendarMonth; }
-            set { SetProperty(ref calendarMonth, value); }
-        }
-
-        public DelegateCommand SwitchToPreviousMonthCommand { get; private set; }
-
-        public DelegateCommand SwitchToCurrentMonthCommand { get; private set; }
-
-        public DelegateCommand SwitchToNextMonthCommand { get; private set; }
-
-        #endregion
     }
 }
