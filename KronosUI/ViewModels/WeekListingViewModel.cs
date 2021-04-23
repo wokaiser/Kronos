@@ -4,6 +4,10 @@ namespace KronosUI.ViewModels
 {
     public class WeekListingViewModel : ListingViewModelBase
     {
+
+
+        #region Inherited method implementation and overrides
+
         protected override void Initialize()
         {
             CalendarValue = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
@@ -39,5 +43,7 @@ namespace KronosUI.ViewModels
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToNext();
         }
+
+        #endregion
     }
 }
