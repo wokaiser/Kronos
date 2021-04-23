@@ -1,5 +1,6 @@
 ﻿using KronosUI.Events;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using System.Threading;
 
@@ -9,9 +10,9 @@ namespace KronosUI.ViewModels
     {
         private string statusText;
 
-        public StatusBarViewModel(IEventAggregator eventAggregator)
+        public StatusBarViewModel()
         {
-            eventAggregator.GetEvent<UpdateStatusBarTextEvent>().Subscribe(StatusBarTextUpdated);
+            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<UpdateStatusBarTextEvent>().Subscribe(StatusBarTextUpdated);
         }
 
         void StatusBarTextUpdated(string text)

@@ -3,6 +3,7 @@ using KronosUI.Model;
 using KronosUI.Views;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -24,12 +25,13 @@ namespace KronosUI.ViewModels
         private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
 
-        public NavigationViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
+        public NavigationViewModel()
         {
-            this.regionManager = regionManager;
-            this.eventAggregator = eventAggregator;
+            regionManager = ContainerLocator.Container.Resolve<IRegionManager>();
+            eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
 
             currentState = ViewState.WeekListing;
+
             PopulateCommands();
             SetButtonTexts();
         }

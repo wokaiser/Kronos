@@ -7,11 +7,32 @@ namespace KronosData.Logic
 {
     public class DataManager
     {
-        private User currentUser;
+        private static readonly string savePath = @"C:\temp\test.json";
 
-        public DataManager(User user)
+        /// <summary>
+        /// Creates a DataManager instance and loads the default user file
+        /// </summary>
+        public DataManager()
         {
-            currentUser = user;
+            CurrentUser = User.DeserializeFromFile(savePath);
+        }
+
+        /// <summary>
+        /// Loads a user into the data manager
+        /// </summary>
+        /// <param name="user">The user instance to load</param>
+        public void LoadUser(User user)
+        {
+            CurrentUser = user;
+        }
+
+        /// <summary>
+        /// Loads a user into the data manager
+        /// </summary>
+        /// <param name="path">The path to the user file to load</param>
+        public void LoadUser(string path)
+        {
+            CurrentUser = User.DeserializeFromFile(path);
         }
 
         /// <summary>
@@ -21,12 +42,12 @@ namespace KronosData.Logic
         /// <returns>All work items created at the given day</returns>
         public List<WorkItem> GetItemsOfDay(DateTime desiredDay)
         {
-            if (currentUser == null)
+            if (CurrentUser == null)
             {
                 return null;
             }
 
-            var day = currentUser.AssignedWorkDays.Find(d => d.Date.Date.Equals(desiredDay.Date));
+            var day = CurrentUser.AssignedWorkDays.Find(d => d.Date.Date.Equals(desiredDay.Date));
 
             if (day == null)
             {
@@ -45,7 +66,7 @@ namespace KronosData.Logic
         {
             var retVal = new List<WorkItem>();
 
-            foreach (var item in currentUser.AssignedWorkDays.Where(d => d.Date.Year == desiredMonth.Year && d.Date.Month == desiredMonth.Month))
+            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.Date.Year == desiredMonth.Year && d.Date.Month == desiredMonth.Month))
             {
                 retVal.AddRange(item.AssignedWorkItems);
             }
@@ -62,7 +83,7 @@ namespace KronosData.Logic
         {
             var retVal = new List<WorkItem>();
 
-            foreach (var item in currentUser.AssignedWorkDays.Where(d => d.Date.Year == desiredYear.Year))
+            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.Date.Year == desiredYear.Year))
             {
                 retVal.AddRange(item.AssignedWorkItems);
             }
@@ -70,9 +91,14 @@ namespace KronosData.Logic
             return retVal;
         }
 
+        /// <summary>
+        /// Calculates the overtime of the given day
+        /// </summary>
+        /// <param name="desiredDay">The day to check the overtime of</param>
+        /// <returns>The total overtime. Note that the overtime can be negative</returns>
         public TimeSpan GetOvertimeOfDay(DateTime desiredDay)
         {
-            var day = currentUser.AssignedWorkDays.Find(d => d.Date.Date.Equals(desiredDay.Date));
+            var day = CurrentUser.AssignedWorkDays.Find(d => d.Date.Date.Equals(desiredDay.Date));
 
             if (day == null)
             {
@@ -82,11 +108,15 @@ namespace KronosData.Logic
             return day.GetTotalWorkTime().Subtract(day.DailyWorkTime);
         }
 
+        /// <summary>
+        /// Returns all the accounts used by the loaded user
+        /// </summary>
+        /// <returns>A list containing all accounts</returns>
         public List<Account> GetAllAccounts()
         {
             var retVal = new List<Account>();
 
-            foreach (var workDay in currentUser.AssignedWorkDays)
+            foreach (var workDay in CurrentUser.AssignedWorkDays)
             {
                 foreach (var workItem in workDay.AssignedWorkItems)
                 {
@@ -102,11 +132,15 @@ namespace KronosData.Logic
             return retVal;
         }
 
+        /// <summary>
+        /// Returns all the task used by the loaded user
+        /// </summary>
+        /// <returns>A list containing all tasks</returns>
         public List<WorkTask> GetAllTasks()
         {
             var retVal = new List<WorkTask>();
 
-            foreach (var workDay in currentUser.AssignedWorkDays)
+            foreach (var workDay in CurrentUser.AssignedWorkDays)
             {
                 foreach (var workItem in workDay.AssignedWorkItems)
                 {
@@ -121,5 +155,15 @@ namespace KronosData.Logic
 
             return retVal;
         }
+
+        #region Properties
+
+        /// <summary>
+        /// The current user loaded into the data manager
+        /// </summary>
+        public User CurrentUser { get; private set; }
+
+        #endregion
+
     }
 }

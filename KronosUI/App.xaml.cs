@@ -15,12 +15,13 @@ namespace KronosUI
     {
         public App()
         {
-            //Test();
+            //Save();
+            //Load();
         }
 
-        private void Test()
+        private void Save()
         {
-            /*var user = new User("simpsonho") { FirstName = "Homer", LastName = "Simpson" };
+            var user = new User("simpsonho") { FirstName = "Homer", LastName = "Simpson" };
 
             var account = new Account("AC-123-456-01") { Title = "Research more C#" };
 
@@ -40,28 +41,28 @@ namespace KronosUI
             user.AssignedWorkDays.Add(day1);
             user.AssignedWorkDays.Add(day2);
 
-            user.SerializeToFile(@"C:\temp\test.json");*/
-            var user = User.DeserializeFromFile(@"C:\temp\test.json");
+            user.SerializeToFile(@"C:\temp\test.json");
+        }
 
-            var datMan1 = new DataManager(user);
+        private void Load()
+        {
+            var datMan1 = new DataManager();
             var ret1 = datMan1.GetAllAccounts();
             var ret2 = datMan1.GetAllTasks();
-            var t1 = user.AssignedWorkDays[0].GetTotalWorkTime();
-            var t2 = user.AssignedWorkDays[1].GetTotalWorkTime();
+            var t1 = datMan1.CurrentUser.AssignedWorkDays[0].GetTotalWorkTime();
+            var t2 = datMan1.CurrentUser.AssignedWorkDays[1].GetTotalWorkTime();
             var t3 = datMan1.GetOvertimeOfDay(new DateTime(2021, 4, 13));
             var t4 = datMan1.GetOvertimeOfDay(new DateTime(2021, 4, 14));
         }
 
         protected override Window CreateShell()
         {
-            var w = Container.Resolve<Shell>();
-
-            return w;
+            return Container.Resolve<Shell>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //throw new NotImplementedException();
+            containerRegistry.RegisterInstance(new DataManager());
         }
     }
 }
