@@ -1,4 +1,5 @@
-﻿using KronosUI.Events;
+﻿using KronosData.Logic;
+using KronosUI.Events;
 using KronosUI.Model;
 using KronosUI.Views;
 using Prism.Commands;
@@ -14,7 +15,6 @@ namespace KronosUI.ViewModels
     public class NavigationViewModel : BindableBase
     {
         public enum ViewState { Configuration = 0, WeekListing, MonthListing, YearListing };
-        public enum MonthName { Jan = 1, Feb, März, April, Mai, Juni, Juli, Aug, Sept, Okt, Nov, Dez }
 
         private bool canAppTerminate = true;
         private string calendarWeek;
@@ -39,8 +39,8 @@ namespace KronosUI.ViewModels
 
         private void SetButtonTexts(DateTime date)
         {
-            CalendarWeek = "KW" + (date.DayOfYear / 7).ToString();
-            CalendarMonth = ((MonthName)date.Month).ToString();
+            CalendarWeek = DateHelper.GetCalenderWeekFromDate(date);
+            CalendarMonth = DateHelper.GetMonthNameFormDate(date);
             CalendarYear = date.Year.ToString();
         }
 

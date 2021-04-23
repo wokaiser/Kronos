@@ -1,4 +1,4 @@
-﻿using static KronosUI.ViewModels.NavigationViewModel;
+﻿using KronosData.Logic;
 
 namespace KronosUI.ViewModels
 {
@@ -6,7 +6,7 @@ namespace KronosUI.ViewModels
     {
         protected override void Initialize()
         {
-            CalendarValue = ((MonthName)currentTimeFrame.Month).ToString();
+            CalendarValue = DateHelper.GetMonthNameFormDate(currentTimeFrame);
         }
 
         public override bool CanSwitchToPrevious()

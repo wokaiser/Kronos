@@ -1,10 +1,12 @@
-﻿namespace KronosUI.ViewModels
+﻿using KronosData.Logic;
+
+namespace KronosUI.ViewModels
 {
     public class WeekListingViewModel : ControlViewModelBase
     {
         protected override void Initialize()
         {
-            CalendarValue = "KW" + (currentTimeFrame.DayOfYear / 7).ToString();
+            CalendarValue = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
         }
 
         public override bool CanSwitchToPrevious()
