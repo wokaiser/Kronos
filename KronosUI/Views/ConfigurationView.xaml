@@ -4,13 +4,54 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="600">
     <Border Background="LightSteelBlue" CornerRadius="8" Margin="5">
         <Grid Margin="5">
-            <TextBlock Text="ConfigurationView" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" CornerRadius="8" BorderThickness="5" BorderBrush="SteelBlue" Margin="0,0,0,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Kontierungen" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding CurrentAccounts}" AutoGenerateColumns="False" Margin="3">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Kontierungsnummer" Binding="{Binding Number}" Width="120" />
+                            <DataGridTextColumn Header="Beschreibung" Binding="{Binding Title}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" CornerRadius="8" BorderThickness="5" BorderBrush="SteelBlue" Margin="0,0,0,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Arbeitspakete" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding CurrentTasks}" AutoGenerateColumns="False" Margin="3">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Verkn. Kontierung" Binding="{Binding AssignedAccount.Number}" Width="120" />
+                            <DataGridTextColumn Header="Beschreibung" Binding="{Binding Title}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" CornerRadius="8" BorderThickness="5" BorderBrush="SteelBlue">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Sonstiges" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </UserControl>
