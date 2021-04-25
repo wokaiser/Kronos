@@ -4,7 +4,6 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace KronosUI.ViewModels
@@ -45,7 +44,7 @@ namespace KronosUI.ViewModels
 
         private void AddItem()
         {
-
+            PendingChanges = true;
         }
 
         private bool CanAddItem()
@@ -55,7 +54,7 @@ namespace KronosUI.ViewModels
 
         private void EditItem()
         {
-
+            PendingChanges = true;
         }
 
         private bool CanEditItem()
@@ -65,7 +64,7 @@ namespace KronosUI.ViewModels
 
         private void RemoveItem()
         {
-
+            PendingChanges = true;
         }
 
         private bool CanRemoveItem()
@@ -75,7 +74,7 @@ namespace KronosUI.ViewModels
 
         private void SaveChanges()
         {
-
+            PendingChanges = false;
         }
 
         private bool CanSaveChanges()

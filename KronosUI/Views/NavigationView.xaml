@@ -8,19 +8,6 @@
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="Height" Value="60" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
-                </Style>
-            </Style.Resources>
-        </Style>
-    </UserControl.Resources>
     <Border Background="DodgerBlue" CornerRadius="8" Margin="0,5,5,5">
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
