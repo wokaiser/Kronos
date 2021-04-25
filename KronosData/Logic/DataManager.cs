@@ -10,8 +10,8 @@ namespace KronosData.Logic
 {
     public class DataManager
     {
-        private static readonly string savePath = @"C:\temp\test.json";
-        private static readonly string accountPath = @"C:\temp\accounts.json";
+        private static readonly string savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\KronosData\userData.json";
+        private static readonly string accountPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\KronosData\accountData.json";
 
         /// <summary>
         /// Creates a DataManager instance and loads the default user file
