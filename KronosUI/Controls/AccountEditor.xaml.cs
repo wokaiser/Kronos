@@ -19,9 +19,17 @@ namespace KronosUI.Controls
     /// </summary>
     public partial class AccountEditor : Window
     {
-        public AccountEditor()
+        public enum EditorStyle { Add = 0, Edit = 1};
+
+        public AccountEditor(EditorStyle editorStyle, object selectedItem)
         {
             InitializeComponent();
+            DataContext = new AccountEditorViewModel();
+        }
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

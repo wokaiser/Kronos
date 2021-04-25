@@ -7,10 +7,10 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:KronosUI.Views"
         mc:Ignorable="d"
-        Title="Kronos Viewer" Width="1000" Height="700" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico"
-        MinWidth="800" MinHeight="600">
+        Title="Kronos Viewer" Width="1000" Height="700" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
             <RowDefinition Height="AUTO" />
             <RowDefinition Height="*" />
             <RowDefinition Height="AUTO" />
@@ -19,9 +19,12 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="360" />
         </Grid.ColumnDefinitions>
-        <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
-        <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
-        <ContentControl Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
-        <ContentControl Grid.Row="2" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
+            <TextBlock Text="Kronos Viewer" FontSize="16" FontWeight="Bold" Margin="10,0,0,0" />
+        </StackPanel>        
+        <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
+        <ContentControl Grid.Row="2" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
+        <ContentControl Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
+        <ContentControl Grid.Row="3" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
     </Grid>
 </Window>

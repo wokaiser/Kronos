@@ -8,9 +8,10 @@ namespace KronosData.Model
         /// Creates a new WorkTask object
         /// </summary>
         /// <param name="assignedAccount">The account to where this object is assigned to</param>
-        public WorkTask(string title)
+        public WorkTask(string title, string assignedAccountNumber)
         {
             Title = title;
+            AssignedAccountNumber = assignedAccountNumber;
         }
 
         #region Overrides
@@ -38,6 +39,8 @@ namespace KronosData.Model
         /// The title of the work task
         /// </summary>
         public string Title { get; set; }
+
+        public string AssignedAccountNumber { get; private set; }
 
         #endregion
     }

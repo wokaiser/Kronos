@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KronosUI.Controls"
         mc:Ignorable="d"
-        Title="AccountEditor" Height="450" Width="800">
+        Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" MouseDown="StackPanel_MouseDown">
+            <TextBlock Text="FooBar" FontSize="16" FontWeight="Bold" Margin="5,0,0,0" />
+        </StackPanel>
     </Grid>
 </Window>

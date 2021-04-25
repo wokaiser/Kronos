@@ -1,9 +1,13 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Controls;
+using KronosUI.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace KronosUI.ViewModels
@@ -26,6 +30,31 @@ namespace KronosUI.ViewModels
             InitializeCommands();
         }
 
+        private void PublishStatusMessage(string message)
+        {
+            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<UpdateStatusBarTextEvent>().Publish(message);
+        }
+
+        private bool RemoveAccount(Account account)
+        {
+            if (dataManger.IsAccountInUse(account))
+            {
+                MessageBox.Show("Die Kontierung: '" + account.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Kontierung in Verwendung", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return false;
+            }
+
+            if (MessageBox.Show("Die Kontierung: '" + account.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                var tmp = account.ToString();
+                dataManger.Accounts.Remove(account);
+
+                PublishStatusMessage(tmp + " gelöscht");
+            }
+
+            return true;
+        }
+
         #region Command functions
 
         private void InitializeCommands()
@@ -44,7 +73,12 @@ namespace KronosUI.ViewModels
 
         private void AddItem()
         {
-            PendingChanges = true;
+            var editor = new AccountEditor(AccountEditor.EditorStyle.Add, SelectedItem);
+
+            if ((bool)editor.ShowDialog())
+            {
+                PendingChanges = true;
+            }
         }
 
         private bool CanAddItem()
@@ -54,7 +88,12 @@ namespace KronosUI.ViewModels
 
         private void EditItem()
         {
-            PendingChanges = true;
+            var editor = new AccountEditor(AccountEditor.EditorStyle.Edit, SelectedItem);
+
+            if ((bool)editor.ShowDialog())
+            {
+                PendingChanges = true;
+            }
         }
 
         private bool CanEditItem()
@@ -64,7 +103,13 @@ namespace KronosUI.ViewModels
 
         private void RemoveItem()
         {
-            PendingChanges = true;
+            if (SelectedItem is Account)
+            {
+                if (RemoveAccount(SelectedItem as Account))
+                {
+                    PendingChanges = true;
+                }
+            }
         }
 
         private bool CanRemoveItem()
@@ -75,6 +120,8 @@ namespace KronosUI.ViewModels
         private void SaveChanges()
         {
             PendingChanges = false;
+            dataManger.SaveChanges();
+            PublishStatusMessage("Changes successfully saved.");
         }
 
         private bool CanSaveChanges()

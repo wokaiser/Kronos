@@ -148,6 +148,24 @@ namespace KronosData.Logic
             return day.GetTotalWorkTime().Subtract(day.DailyWorkTime);
         }
 
+        /// <summary>
+        /// Checks whether an account is still in use
+        /// </summary>
+        /// <param name="account">The account to check</param>
+        /// <returns>True, if the account is still in use</returns>
+        public bool IsAccountInUse(Account account)
+        {
+            foreach (var item in CurrentUser.AssignedWorkDays)
+            {
+                if (item.AssignedWorkItems.Where(d => d.AssignedWorkTask.AssignedAccountNumber.Equals(account.Number)).Any())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #region Properties
 
         /// <summary>
@@ -158,6 +176,5 @@ namespace KronosData.Logic
         public ObservableCollection<Account> Accounts { get; private set; }
 
         #endregion
-
     }
 }

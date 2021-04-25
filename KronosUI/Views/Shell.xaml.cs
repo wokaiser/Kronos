@@ -1,6 +1,7 @@
 ﻿using KronosUI.Model;
 using Prism.Regions;
 using System.Windows;
+using System.Windows.Input;
 
 namespace KronosUI.Views
 {
@@ -31,6 +32,11 @@ namespace KronosUI.Views
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(MonthListingView));
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(YearListingView));
             regionManager.RegisterViewWithRegion(RegionNames.DataRegion, typeof(ConfigurationView));
+        }
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }
