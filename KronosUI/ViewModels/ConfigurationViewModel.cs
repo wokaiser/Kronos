@@ -13,16 +13,18 @@ namespace KronosUI.ViewModels
     {
         private ObservableCollection<Account> currentAccounts;
         private object selectedItem;
+        private bool pendingChanges;
 
         private DataManager dataManger;
 
         public ConfigurationViewModel()
         {
-            InitializeCommands();
-
             dataManger = ContainerLocator.Container.Resolve<DataManager>();
             CurrentAccounts = dataManger.Accounts;
-            SelectedItem = null;
+            selectedItem = null;
+            pendingChanges = false;
+
+            InitializeCommands();
         }
 
         #region Command functions
@@ -33,6 +35,7 @@ namespace KronosUI.ViewModels
             AddItemCommand = new DelegateCommand(AddItem, CanAddItem);
             EditItemCommand = new DelegateCommand(EditItem, CanEditItem);
             RemoveItemCommand = new DelegateCommand(RemoveItem, CanRemoveItem);
+            SaveChangesCommand = new DelegateCommand(SaveChanges, CanSaveChanges);
         }
 
         private void ItemSelectionChanged(object param)
@@ -70,6 +73,16 @@ namespace KronosUI.ViewModels
             return SelectedItem != null;
         }
 
+        private void SaveChanges()
+        {
+
+        }
+
+        private bool CanSaveChanges()
+        {
+            return PendingChanges;
+        }
+
         #endregion
 
         #region Properties
@@ -95,6 +108,16 @@ namespace KronosUI.ViewModels
             }
         }
 
+        public bool PendingChanges
+        {
+            get { return pendingChanges; }
+            set
+            {
+                SetProperty(ref pendingChanges, value);
+                SaveChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public ICommand ItemSelectionChangedCommand { get; private set; }
 
         public DelegateCommand AddItemCommand { get; private set; }
@@ -102,6 +125,8 @@ namespace KronosUI.ViewModels
         public DelegateCommand EditItemCommand { get; private set; }
 
         public DelegateCommand RemoveItemCommand { get; private set; }
+
+        public DelegateCommand SaveChangesCommand { get; private set; }
 
         #endregion
     }

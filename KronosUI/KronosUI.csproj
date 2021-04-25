@@ -19,6 +19,7 @@
     <None Remove="Images\edit.svg" />
     <None Remove="Images\left_arrow.svg" />
     <None Remove="Images\right_arrow.svg" />
+    <None Remove="Images\save.svg" />
     <None Remove="Images\settings.svg" />
     <None Remove="Images\trash.svg" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <Resource Include="Images\edit.svg" />
     <Resource Include="Images\left_arrow.svg" />
     <Resource Include="Images\right_arrow.svg" />
+    <Resource Include="Images\save.svg" />
     <Resource Include="Images\settings.svg" />
     <Resource Include="Images\trash.svg" />
   </ItemGroup>

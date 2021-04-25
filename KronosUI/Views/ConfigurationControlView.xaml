@@ -27,7 +27,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Border BorderThickness="5" BorderBrush="SteelBlue" CornerRadius="8" Margin="5">
                 <Grid Margin="0,0,0,5">
@@ -52,6 +51,9 @@
                     </Button>
                 </Grid>
             </Border>
+            <Button Grid.Row="1" ToolTip="Änderung speichern" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Command="{Binding SaveChangesCommand}">
+                <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
+            </Button>
         </Grid>
     </Border>
 </UserControl>
