@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace KronosData.Model
 {
@@ -12,6 +13,7 @@ namespace KronosData.Model
         {
             Number = number;
             Title = string.Empty;
+            AssignedTasks = new ObservableCollection<WorkTask>();
         }
 
         #region Overrides
@@ -44,6 +46,11 @@ namespace KronosData.Model
         /// The title of the account
         /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// A collection of the tasks assigned to this account
+        /// </summary>
+        public ObservableCollection<WorkTask> AssignedTasks { get; }
 
         #endregion
     }

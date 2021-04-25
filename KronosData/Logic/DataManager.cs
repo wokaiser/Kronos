@@ -1,6 +1,9 @@
 ﻿using KronosData.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 
 namespace KronosData.Logic
@@ -8,31 +11,68 @@ namespace KronosData.Logic
     public class DataManager
     {
         private static readonly string savePath = @"C:\temp\test.json";
+        private static readonly string accountPath = @"C:\temp\accounts.json";
 
         /// <summary>
         /// Creates a DataManager instance and loads the default user file
         /// </summary>
-        public DataManager()
+        public DataManager(bool useDefault = false)
         {
-            CurrentUser = User.DeserializeFromFile(savePath);
+            if (useDefault)
+            {
+                CurrentUser = new User("default");
+                Accounts = new ObservableCollection<Account>();
+            }
+            else
+            {
+                CurrentUser = DeserializeFromFile<User>(savePath);
+                Accounts = DeserializeFromFile<ObservableCollection<Account>>(accountPath);
+            }
+        }
+
+        public void SaveChanges()
+        {
+            SerializeToFile(savePath, CurrentUser);
+            SerializeToFile(accountPath, Accounts);
+        }
+
+        public void SwitchUser(User newUser)
+        {
+            CurrentUser = newUser;
         }
 
         /// <summary>
-        /// Loads a user into the data manager
+        /// Serialize object to json file
         /// </summary>
-        /// <param name="user">The user instance to load</param>
-        public void LoadUser(User user)
+        /// <param name="path">The path where to store the desired json file</param>
+        public static void SerializeToFile(string path, object instance)
         {
-            CurrentUser = user;
+            var serializer = new JsonSerializer
+            {
+                Formatting = Formatting.Indented
+            };
+
+            using var sw = new StreamWriter(path);
+            using var writer = new JsonTextWriter(sw);
+
+            serializer.Serialize(writer, instance);
         }
 
         /// <summary>
-        /// Loads a user into the data manager
+        /// Deserialize an json file to an user object
         /// </summary>
-        /// <param name="path">The path to the user file to load</param>
-        public void LoadUser(string path)
+        /// <param name="path">The path to the json file to deserialize</param>
+        /// <returns>A User object or null in case of an error</returns>
+        public static T DeserializeFromFile<T>(string path)
         {
-            CurrentUser = User.DeserializeFromFile(path);
+            var json = File.ReadAllText(path);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                return default;
+            }
+
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         /// <summary>
@@ -108,60 +148,14 @@ namespace KronosData.Logic
             return day.GetTotalWorkTime().Subtract(day.DailyWorkTime);
         }
 
-        /// <summary>
-        /// Returns all the accounts used by the loaded user
-        /// </summary>
-        /// <returns>A list containing all accounts</returns>
-        public List<Account> GetAllAccounts()
-        {
-            var retVal = new List<Account>();
-
-            foreach (var workDay in CurrentUser.AssignedWorkDays)
-            {
-                foreach (var workItem in workDay.AssignedWorkItems)
-                {
-                    if (retVal.Contains(workItem.AssignedWorkTask.AssignedAccount))
-                    {
-                        continue;
-                    }
-
-                    retVal.Add(workItem.AssignedWorkTask.AssignedAccount);
-                }
-            }
-
-            return retVal;
-        }
-
-        /// <summary>
-        /// Returns all the task used by the loaded user
-        /// </summary>
-        /// <returns>A list containing all tasks</returns>
-        public List<WorkTask> GetAllTasks()
-        {
-            var retVal = new List<WorkTask>();
-
-            foreach (var workDay in CurrentUser.AssignedWorkDays)
-            {
-                foreach (var workItem in workDay.AssignedWorkItems)
-                {
-                    if (retVal.Contains(workItem.AssignedWorkTask))
-                    {
-                        continue;
-                    }
-
-                    retVal.Add(workItem.AssignedWorkTask);
-                }
-            }
-
-            return retVal;
-        }
-
         #region Properties
 
         /// <summary>
         /// The current user loaded into the data manager
         /// </summary>
         public User CurrentUser { get; private set; }
+
+        public ObservableCollection<Account> Accounts { get; private set; }
 
         #endregion
 

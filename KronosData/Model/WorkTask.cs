@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace KronosData.Model
 {
@@ -9,10 +8,9 @@ namespace KronosData.Model
         /// Creates a new WorkTask object
         /// </summary>
         /// <param name="assignedAccount">The account to where this object is assigned to</param>
-        public WorkTask(Account assignedAccount)
+        public WorkTask(string title)
         {
-            Title = string.Empty;
-            AssignedAccount = assignedAccount;
+            Title = title;
         }
 
         #region Overrides
@@ -24,12 +22,12 @@ namespace KronosData.Model
 
         public override bool Equals(object obj)
         {
-            return obj is WorkTask task && Title == task.Title && EqualityComparer<Account>.Default.Equals(AssignedAccount, task.AssignedAccount);
+            return obj is WorkTask task && Title.Equals(task.Title);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Title, AssignedAccount);
+            return HashCode.Combine(Title);
         }
 
         #endregion
@@ -40,11 +38,6 @@ namespace KronosData.Model
         /// The title of the work task
         /// </summary>
         public string Title { get; set; }
-
-        /// <summary>
-        /// The account to where this task is assigned to
-        /// </summary>
-        public Account AssignedAccount { get; }
 
         #endregion
     }

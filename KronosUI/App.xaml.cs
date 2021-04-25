@@ -22,38 +22,40 @@ namespace KronosUI
 
         private void Save()
         {
-            var user = new User("simpsonho") { FirstName = "Homer", LastName = "Simpson" };
+            var dataManager = new DataManager(true);
 
-            var account = new Account("AC-123-456-01") { Title = "Research more C#" };
+            dataManager.SwitchUser(new User("simpsonho") { FirstName = "Homer", LastName = "Simpson" });
 
-            var task1 = new WorkTask(account) { Title = "Research LINQ" };
-            var task2 = new WorkTask(account) { Title = "Research multi-threading" };
+            dataManager.Accounts.Add(new Account("AC-123-456-01") { Title = "Research more C#" });
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ"));
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research multi-threading"));
+            dataManager.Accounts.Add(new Account("AC-789-012-34") { Title = "Do chores" });
+            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Do the dishes"));
+            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Take out the trash"));
 
-            var day1 = new WorkDay(new DateTime(2021, 4, 13), WorkDay.ShiftTypeEnum.None, WorkDay.DayTypeEnum.Default);
-            day1.DailyWorkTime = new TimeSpan(8, 0, 0);
+            var task1 = dataManager.Accounts[0].AssignedTasks[0];
+            var task2 = dataManager.Accounts[0].AssignedTasks[1];
+
+            var day1 = new WorkDay(new DateTime(2021, 4, 13), WorkDay.ShiftTypeEnum.None, WorkDay.DayTypeEnum.Default)
+            {
+                DailyWorkTime = new TimeSpan(8, 0, 0)
+            };
             var day2 = new WorkDay(new DateTime(2021, 4, 14), WorkDay.ShiftTypeEnum.X_Shift, WorkDay.DayTypeEnum.HomeOffice);
-            day2.DailyWorkTime = new TimeSpan(8, 0, 0);
 
             day1.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 13, 7, 30, 0), new DateTime(2021, 4, 13, 12, 0, 0), task1));
             day1.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 13, 12, 45, 0), new DateTime(2021, 4, 13, 17, 0, 0), task2));
             day2.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 14, 8, 30, 0), new DateTime(2021, 4, 14, 12, 0, 0), task2));
             day2.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 14, 12, 45, 0), new DateTime(2021, 4, 14, 17, 0, 0), task1));
 
-            user.AssignedWorkDays.Add(day1);
-            user.AssignedWorkDays.Add(day2);
+            dataManager.CurrentUser.AssignedWorkDays.Add(day1);
+            dataManager.CurrentUser.AssignedWorkDays.Add(day2);
 
-            user.SerializeToFile(@"C:\temp\test.json");
+            dataManager.SaveChanges();
         }
 
         private void Load()
         {
-            var datMan1 = new DataManager();
-            var ret1 = datMan1.GetAllAccounts();
-            var ret2 = datMan1.GetAllTasks();
-            var t1 = datMan1.CurrentUser.AssignedWorkDays[0].GetTotalWorkTime();
-            var t2 = datMan1.CurrentUser.AssignedWorkDays[1].GetTotalWorkTime();
-            var t3 = datMan1.GetOvertimeOfDay(new DateTime(2021, 4, 13));
-            var t4 = datMan1.GetOvertimeOfDay(new DateTime(2021, 4, 14));
+            var dataManager = new DataManager();
         }
 
         protected override Window CreateShell()
