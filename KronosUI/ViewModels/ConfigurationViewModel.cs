@@ -74,7 +74,7 @@ namespace KronosUI.ViewModels
 
         private void AddItem()
         {
-            var editor = new AccountEditor(AccountEditor.EditorStyle.Add, SelectedItem);
+            var editor = new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem);
 
             if ((bool)editor.ShowDialog())
             {
@@ -89,7 +89,7 @@ namespace KronosUI.ViewModels
 
         private void EditItem()
         {
-            var editor = new AccountEditor(AccountEditor.EditorStyle.Edit, SelectedItem);
+            var editor = new AccountEditor(AccountEditorViewModel.EditorStyle.Edit, SelectedItem);
 
             if ((bool)editor.ShowDialog())
             {

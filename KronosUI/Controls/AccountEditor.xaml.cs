@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static KronosUI.Controls.AccountEditorViewModel;
 
 namespace KronosUI.Controls
 {
@@ -19,12 +20,11 @@ namespace KronosUI.Controls
     /// </summary>
     public partial class AccountEditor : Window
     {
-        public enum EditorStyle { Add = 0, Edit = 1};
 
         public AccountEditor(EditorStyle editorStyle, object selectedItem)
         {
             InitializeComponent();
-            DataContext = new AccountEditorViewModel();
+            DataContext = new AccountEditorViewModel(editorStyle, selectedItem);
         }
 
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
