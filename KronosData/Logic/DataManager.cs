@@ -25,8 +25,7 @@ namespace KronosData.Logic
             }
             else
             {
-                CurrentUser = DeserializeFromFile<User>(savePath);
-                Accounts = DeserializeFromFile<ObservableCollection<Account>>(accountPath);
+                LoadFromFile();
             }
         }
 
@@ -34,6 +33,12 @@ namespace KronosData.Logic
         {
             SerializeToFile(savePath, CurrentUser);
             SerializeToFile(accountPath, Accounts);
+        }
+
+        public void LoadFromFile()
+        {
+            CurrentUser = DeserializeFromFile<User>(savePath);
+            Accounts = DeserializeFromFile<ObservableCollection<Account>>(accountPath);
         }
 
         public void SwitchUser(User newUser)

@@ -45,6 +45,9 @@
             <Button Grid.Row="1" ToolTip="Änderung speichern" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Command="{Binding SaveChangesCommand}" Style="{StaticResource SaveButtonStyle}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
+            <Button Grid.Row="1" ToolTip="Änderung verwerfen" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5" Command="{Binding RevokeChangesCommand}">
+                <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
+            </Button>
         </Grid>
     </Border>
 </UserControl>

@@ -64,6 +64,7 @@ namespace KronosUI.ViewModels
             EditItemCommand = new DelegateCommand(EditItem, CanEditItem);
             RemoveItemCommand = new DelegateCommand(RemoveItem, CanRemoveItem);
             SaveChangesCommand = new DelegateCommand(SaveChanges, CanSaveChanges);
+            RevokeChangesCommand = new DelegateCommand(RevokeChanges, CanRevokeChanges);
         }
 
         private void ItemSelectionChanged(object param)
@@ -121,12 +122,26 @@ namespace KronosUI.ViewModels
         {
             PendingChanges = false;
             dataManger.SaveChanges();
-            PublishStatusMessage("Changes successfully saved.");
+            PublishStatusMessage("Änderungen erfolgreich gespeichert");
         }
 
         private bool CanSaveChanges()
         {
             return PendingChanges;
+        }
+
+        private void RevokeChanges()
+        {
+            dataManger.LoadFromFile();
+            CurrentAccounts = dataManger.Accounts;
+            SelectedItem = null;
+            PendingChanges = false;
+            PublishStatusMessage("Änderungen verworfen");
+        }
+
+        private bool CanRevokeChanges()
+        {
+            return pendingChanges;
         }
 
         #endregion
@@ -161,6 +176,7 @@ namespace KronosUI.ViewModels
             {
                 SetProperty(ref pendingChanges, value);
                 SaveChangesCommand.RaiseCanExecuteChanged();
+                RevokeChangesCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -173,6 +189,8 @@ namespace KronosUI.ViewModels
         public DelegateCommand RemoveItemCommand { get; private set; }
 
         public DelegateCommand SaveChangesCommand { get; private set; }
+
+        public DelegateCommand RevokeChangesCommand { get; private set; }
 
         #endregion
     }

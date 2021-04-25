@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\abort.svg" />
     <None Remove="Images\add.svg" />
     <None Remove="Images\calendar_blank.svg" />
     <None Remove="Images\clock.ico" />
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\abort.svg" />
     <Resource Include="Images\add.svg" />
     <Resource Include="Images\calendar_blank.svg" />
     <Resource Include="Images\clock.ico" />
