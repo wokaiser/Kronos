@@ -7,7 +7,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:KronosUI.Views"
         mc:Ignorable="d"
-        Title="Kronos Viewer" Width="1280" Height="1024" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico"
+        Title="Kronos Viewer" Width="1000" Height="700" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico"
         MinWidth="800" MinHeight="600">
     <Grid>
         <Grid.RowDefinitions>
