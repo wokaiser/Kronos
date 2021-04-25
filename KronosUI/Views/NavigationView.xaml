@@ -12,7 +12,8 @@
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2" />
             <Setter Property="Height" Value="60" />
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
     </UserControl.Resources>
     <Border Background="DodgerBlue" CornerRadius="8" Margin="0,5,5,5">
@@ -24,28 +25,28 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding SwitchToWeekListingViewCommand}">
+            <Button Grid.Column="0" Command="{Binding SwitchToWeekListingViewCommand}" ToolTip="Wochenansicht">
                 <Grid Margin="5">
                     <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
                     <TextBlock Text="{Binding CalendarWeek}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
-            <Button Grid.Column="1" Command="{Binding SwitchToMonthListingViewCommand}">
+            <Button Grid.Column="1" Command="{Binding SwitchToMonthListingViewCommand}" ToolTip="Monatsansicht">
                 <Grid Margin="5">
                     <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
                     <TextBlock Text="{Binding CalendarMonth}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
-            <Button Grid.Column="2" Command="{Binding SwitchToYearListingViewCommand}">
+            <Button Grid.Column="2" Command="{Binding SwitchToYearListingViewCommand}" ToolTip="Jahresansicht">
                 <Grid Margin="5">
                     <svgc:SvgViewbox Source="/Images/calendar_blank.svg" />
                     <TextBlock Text="{Binding CalendarYear}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,15,0,0"/>
                 </Grid>
             </Button>
-            <Button Grid.Column="3" Command="{Binding SwitchToConfigurationViewCommand}">
+            <Button Grid.Column="3" Command="{Binding SwitchToConfigurationViewCommand}" ToolTip="Einstellungen">
                 <svgc:SvgViewbox Source="/Images/settings.svg" Margin="5" />
             </Button>
-            <Button Grid.Column="4" Command="{Binding ExitCommand}">
+            <Button Grid.Column="4" Command="{Binding ExitCommand}" ToolTip="Beenden">
                 <svgc:SvgViewbox Source="/Images/door.svg" Margin="5" />
             </Button>
         </Grid>

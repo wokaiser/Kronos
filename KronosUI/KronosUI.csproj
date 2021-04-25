@@ -12,21 +12,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\add.svg" />
     <None Remove="Images\calendar_blank.svg" />
     <None Remove="Images\clock.ico" />
     <None Remove="Images\door.svg" />
+    <None Remove="Images\edit.svg" />
     <None Remove="Images\left_arrow.svg" />
     <None Remove="Images\right_arrow.svg" />
     <None Remove="Images\settings.svg" />
+    <None Remove="Images\trash.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\add.svg" />
     <Resource Include="Images\calendar_blank.svg" />
     <Resource Include="Images\clock.ico" />
     <Resource Include="Images\door.svg" />
+    <Resource Include="Images\edit.svg" />
     <Resource Include="Images\left_arrow.svg" />
     <Resource Include="Images\right_arrow.svg" />
     <Resource Include="Images\settings.svg" />
+    <Resource Include="Images\trash.svg" />
   </ItemGroup>
 
   <ItemGroup>
