@@ -18,10 +18,11 @@ namespace KronosUI.ViewModels
 
         public ConfigurationViewModel()
         {
+            InitializeCommands();
+
             dataManger = ContainerLocator.Container.Resolve<DataManager>();
             CurrentAccounts = dataManger.Accounts;
-
-            InitializeCommands();
+            SelectedItem = null;
         }
 
         #region Command functions
@@ -29,18 +30,44 @@ namespace KronosUI.ViewModels
         private void InitializeCommands()
         {
             ItemSelectionChangedCommand = new DelegateCommand<object>(ItemSelectionChanged);
+            AddItemCommand = new DelegateCommand(AddItem, CanAddItem);
+            EditItemCommand = new DelegateCommand(EditItem, CanEditItem);
+            RemoveItemCommand = new DelegateCommand(RemoveItem, CanRemoveItem);
         }
 
         private void ItemSelectionChanged(object param)
         {
-            if (param is Account)
-            {
-                MessageBox.Show("Account Nr: " + (param as Account).Number + " selected");
-            }
-            else if (param is WorkTask)
-            {
-                MessageBox.Show("Task: " + (param as WorkTask).Title + " selected");
-            }
+            SelectedItem = param;
+        }
+
+        private void AddItem()
+        {
+
+        }
+
+        private bool CanAddItem()
+        {
+            return true;
+        }
+
+        private void EditItem()
+        {
+
+        }
+
+        private bool CanEditItem()
+        {
+            return SelectedItem != null;
+        }
+
+        private void RemoveItem()
+        {
+
+        }
+
+        private bool CanRemoveItem()
+        {
+            return SelectedItem != null;
         }
 
         #endregion
@@ -62,10 +89,19 @@ namespace KronosUI.ViewModels
             set
             {
                 SetProperty(ref selectedItem, value);
+                AddItemCommand.RaiseCanExecuteChanged();
+                EditItemCommand.RaiseCanExecuteChanged();
+                RemoveItemCommand.RaiseCanExecuteChanged();
             }
         }
 
         public ICommand ItemSelectionChangedCommand { get; private set; }
+
+        public DelegateCommand AddItemCommand { get; private set; }
+
+        public DelegateCommand EditItemCommand { get; private set; }
+
+        public DelegateCommand RemoveItemCommand { get; private set; }
 
         #endregion
     }
