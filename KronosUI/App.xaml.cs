@@ -83,6 +83,7 @@ namespace KronosUI
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterInstance(new Shell());
             containerRegistry.RegisterInstance(new DataManager());
             containerRegistry.RegisterInstance(new WeekListingViewModel());
             containerRegistry.RegisterInstance(new ConfigurationViewModel());

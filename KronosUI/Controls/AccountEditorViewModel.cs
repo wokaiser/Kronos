@@ -1,5 +1,7 @@
-﻿using KronosData.Model;
+﻿using KronosData.Logic;
+using KronosData.Model;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -48,10 +50,34 @@ namespace KronosUI.Controls
             AbortCommand = new DelegateCommand<Window>(Abort);
         }
 
+        private void AddItem()
+        {
+            if (selectedItem == null)
+            {
+                ContainerLocator.Container.Resolve<DataManager>().Accounts.Add(new Account(AccountNumber) { Title = Description });
+            }
+        }
+
+        private void EditItem()
+        {
+
+        }
+
         #region Command functions
 
         private void SaveChanges(Window window)
         {
+            if (editorStyle == EditorStyle.Add)
+            {
+                AddItem();
+            }
+
+            if (editorStyle == EditorStyle.Edit)
+            {
+                EditItem();
+            }
+
+            window.DialogResult = true;
             window.Close();
         }
 
@@ -62,6 +88,7 @@ namespace KronosUI.Controls
 
         private void Abort(Window window)
         {
+            window.DialogResult = false;
             window.Close();
         }
 

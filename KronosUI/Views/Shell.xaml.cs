@@ -1,4 +1,5 @@
 ﻿using KronosUI.Model;
+using Prism.Ioc;
 using Prism.Regions;
 using System.Windows;
 using System.Windows.Input;
@@ -10,15 +11,17 @@ namespace KronosUI.Views
     /// </summary>
     public partial class Shell : Window
     {
-        public Shell(IRegionManager regionManager)
+        public Shell()
         {
             InitializeComponent();
 
-            RegisterRegions(regionManager);
+            RegisterRegions();
         }
 
-        private void RegisterRegions(IRegionManager regionManager)
+        private void RegisterRegions()
         {
+            var regionManager = ContainerLocator.Container.Resolve<IRegionManager>();
+
             regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(NavigationView));
 
             regionManager.RegisterViewWithRegion(RegionNames.StatusBarRegion, typeof(StatusBarView));

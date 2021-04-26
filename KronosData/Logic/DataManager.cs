@@ -185,6 +185,24 @@ namespace KronosData.Logic
             return false;
         }
 
+        /// <summary>
+        /// Checks whether a task is still in use
+        /// </summary>
+        /// <param name="task">The task to check</param>
+        /// <returns>True, if the task is still in use</returns>
+        public bool IsTaskInUse(WorkTask task)
+        {
+            foreach (var item in CurrentUser.AssignedWorkDays)
+            {
+                if (item.AssignedWorkItems.Where(d => d.AssignedWorkTask.Equals(task)).Any())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #region Properties
 
         /// <summary>

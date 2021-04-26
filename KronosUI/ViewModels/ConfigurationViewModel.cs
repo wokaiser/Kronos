@@ -7,6 +7,7 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -55,6 +56,25 @@ namespace KronosUI.ViewModels
             return true;
         }
 
+        private bool RemoveTask(WorkTask task)
+        {
+            if (dataManger.IsTaskInUse(task))
+            {
+                MessageBox.Show("Das Arbeitspaket: '" + task.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Arbeitspaket in Verwendung", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return false;
+            }
+
+            if (MessageBox.Show("Das Arbeitspaket: '" + task.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                dataManger.Accounts.Where(d => d.AssignedTasks.Contains(task)).First().AssignedTasks.Remove(task);
+
+                PublishStatusMessage(task.ToString() + " gelöscht");
+            }
+
+            return true;
+        }
+
         #region Command functions
 
         private void InitializeCommands()
@@ -74,10 +94,9 @@ namespace KronosUI.ViewModels
 
         private void AddItem()
         {
-            var editor = new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem);
-
-            if ((bool)editor.ShowDialog())
+            if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem).ShowDialog())
             {
+                CurrentAccounts = dataManger.Accounts;
                 PendingChanges = true;
             }
         }
@@ -89,10 +108,9 @@ namespace KronosUI.ViewModels
 
         private void EditItem()
         {
-            var editor = new AccountEditor(AccountEditorViewModel.EditorStyle.Edit, SelectedItem);
-
-            if ((bool)editor.ShowDialog())
+            if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Edit, SelectedItem).ShowDialog())
             {
+                CurrentAccounts = dataManger.Accounts;
                 PendingChanges = true;
             }
         }
@@ -107,6 +125,14 @@ namespace KronosUI.ViewModels
             if (SelectedItem is Account)
             {
                 if (RemoveAccount(SelectedItem as Account))
+                {
+                    PendingChanges = true;
+                }
+            }
+
+            if (SelectedItem is WorkTask)
+            {
+                if (RemoveTask(SelectedItem as WorkTask))
                 {
                     PendingChanges = true;
                 }
