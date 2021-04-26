@@ -10,8 +10,10 @@ namespace KronosData.Logic
 {
     public class DataManager
     {
-        private static readonly string savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\KronosData\userData.json";
-        private static readonly string accountPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\KronosData\accountData.json";
+        public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\KronosData";
+
+        private static readonly string savePath = AppDataPath + @"\userData.json";
+        private static readonly string accountPath = AppDataPath + @"\accountData.json";
 
         /// <summary>
         /// Creates a DataManager instance and loads the default user file
@@ -29,18 +31,28 @@ namespace KronosData.Logic
             }
         }
 
+        /// <summary>
+        /// Saves pending changes to the corresponding files
+        /// </summary>
         public void SaveChanges()
         {
             SerializeToFile(savePath, CurrentUser);
             SerializeToFile(accountPath, Accounts);
         }
 
+        /// <summary>
+        /// Load the data from files
+        /// </summary>
         public void LoadFromFile()
         {
             CurrentUser = DeserializeFromFile<User>(savePath);
             Accounts = DeserializeFromFile<ObservableCollection<Account>>(accountPath);
         }
 
+        /// <summary>
+        /// Switch to another user
+        /// </summary>
+        /// <param name="newUser">The new user to user</param>
         public void SwitchUser(User newUser)
         {
             CurrentUser = newUser;
@@ -50,6 +62,7 @@ namespace KronosData.Logic
         /// Serialize object to json file
         /// </summary>
         /// <param name="path">The path where to store the desired json file</param>
+        /// <param name="instance">The object to serialize</param>
         public static void SerializeToFile(string path, object instance)
         {
             var serializer = new JsonSerializer
@@ -66,6 +79,7 @@ namespace KronosData.Logic
         /// <summary>
         /// Deserialize an json file to an user object
         /// </summary>
+        /// <typeparam name="T">The type of object to deserialize into</typeparam>
         /// <param name="path">The path to the json file to deserialize</param>
         /// <returns>A User object or null in case of an error</returns>
         public static T DeserializeFromFile<T>(string path)
@@ -178,6 +192,9 @@ namespace KronosData.Logic
         /// </summary>
         public User CurrentUser { get; private set; }
 
+        /// <summary>
+        /// The accounts currently stored in the accounts file
+        /// </summary>
         public ObservableCollection<Account> Accounts { get; private set; }
 
         #endregion

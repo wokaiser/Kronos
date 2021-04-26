@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Model\WorkDay.cs~RF8d1faf8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Interfaces\" />
   </ItemGroup>
 

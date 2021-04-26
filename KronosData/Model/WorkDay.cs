@@ -36,14 +36,29 @@ namespace KronosData.Model
 
         #region Properties
 
+        /// <summary>
+        /// The date of the work day
+        /// </summary>
         public DateTime Date { get; }
 
+        /// <summary>
+        /// The type of workday
+        /// </summary>
         public DayTypeEnum DayType  { get; set; }
 
+        /// <summary>
+        /// The type of shift of the workday
+        /// </summary>
         public ShiftTypeEnum Shift { get; set; }
 
+        /// <summary>
+        /// The total time of work to be done at a day
+        /// </summary>
         public TimeSpan DailyWorkTime { get; set; }
 
+        /// <summary>
+        /// The assigned work items of this day
+        /// </summary>
         public List<WorkItem> AssignedWorkItems { get; }
 
         #endregion

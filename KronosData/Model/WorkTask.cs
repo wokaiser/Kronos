@@ -7,11 +7,12 @@ namespace KronosData.Model
         /// <summary>
         /// Creates a new WorkTask object
         /// </summary>
-        /// <param name="assignedAccount">The account to where this object is assigned to</param>
-        public WorkTask(string title, string assignedAccountNumber)
+        /// <param name="title">The title of the work task</param>
+        /// <param name="assignedAccoun">The account this task is assigned to</param>
+        public WorkTask(string title, Account assignedAccount)
         {
             Title = title;
-            AssignedAccountNumber = assignedAccountNumber;
+            AssignedAccountNumber = assignedAccount.Number;
         }
 
         #region Overrides
@@ -23,12 +24,12 @@ namespace KronosData.Model
 
         public override bool Equals(object obj)
         {
-            return obj is WorkTask task && Title.Equals(task.Title);
+            return obj is WorkTask task && Title.Equals(task.Title) && AssignedAccountNumber.Equals(task.AssignedAccountNumber);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Title);
+            return HashCode.Combine(Title, AssignedAccountNumber);
         }
 
         #endregion
@@ -40,6 +41,9 @@ namespace KronosData.Model
         /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        /// The assigned account number
+        /// </summary>
         public string AssignedAccountNumber { get; private set; }
 
         #endregion

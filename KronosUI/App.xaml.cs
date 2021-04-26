@@ -5,6 +5,7 @@ using KronosUI.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
+using System.IO;
 using System.Windows;
 
 namespace KronosUI
@@ -16,8 +17,7 @@ namespace KronosUI
     {
         public App()
         {
-            //Save();
-            //Load();
+            Setup();
         }
 
         private void Save()
@@ -56,6 +56,24 @@ namespace KronosUI
         private void Load()
         {
             var dataManager = new DataManager();
+        }
+
+        private void Setup()
+        {
+            if (!Directory.Exists(DataManager.AppDataPath))
+            {
+                Directory.CreateDirectory(DataManager.AppDataPath);
+            }
+
+            //TODO: Remove
+            try
+            {
+                var datMan = new DataManager();
+            }
+            catch (FileNotFoundException)
+            {
+                Save();
+            }
         }
 
         protected override Window CreateShell()
