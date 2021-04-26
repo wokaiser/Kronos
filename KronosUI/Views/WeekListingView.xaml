@@ -13,7 +13,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
-            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Tag" />
                     <DataGridTextColumn Header="Von" />
