@@ -67,7 +67,7 @@ namespace KronosUI.ViewModels
 
             if (MessageBox.Show("Das Arbeitspaket: '" + task.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                dataManger.Accounts.Where(d => d.AssignedTasks.Contains(task)).First().AssignedTasks.Remove(task);
+                dataManger.FindCorrespondingAccount(task).AssignedTasks.Remove(task);
 
                 PublishStatusMessage(task.ToString() + " gelöscht");
             }

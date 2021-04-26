@@ -16,6 +16,7 @@ namespace KronosUI.Controls
     {
         public enum EditorStyle { Add = 0, Edit = 1 };
 
+        private Visibility isNumberVisible;
         private string title;
         private string description;
         private string accountNumber;
@@ -35,7 +36,11 @@ namespace KronosUI.Controls
 
         private void Initialize()
         {
+            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
+            AbortCommand = new DelegateCommand<Window>(Abort);
+
             Title = selectedItem == null ? "Kontierung" : "Arbeitspaket";
+            IsNumberVisible = selectedItem == null || selectedItem is Account ? Visibility.Visible : Visibility.Collapsed;
 
             if (editorStyle == EditorStyle.Add)
             {
@@ -44,10 +49,18 @@ namespace KronosUI.Controls
             else if (editorStyle == EditorStyle.Edit)
             {
                 Title += " bearbeiten";
-            }
 
-            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
-            AbortCommand = new DelegateCommand<Window>(Abort);
+                if (selectedItem is Account)
+                {
+                    AccountNumber = (selectedItem as Account).Number;
+                    Description = (selectedItem as Account).Title;
+                }
+
+                if (selectedItem is WorkTask)
+                {
+                    Description = (selectedItem as WorkTask).Title;
+                }
+            }
         }
 
         private void AddItem()
@@ -56,11 +69,36 @@ namespace KronosUI.Controls
             {
                 ContainerLocator.Container.Resolve<DataManager>().Accounts.Add(new Account(AccountNumber) { Title = Description });
             }
+
+            if (selectedItem is Account)
+            {
+                (selectedItem as Account).AssignedTasks.Add(new WorkTask(Description, selectedItem as Account));
+            }
+
+            if (selectedItem is WorkTask)
+            {
+                var corrAcc = ContainerLocator.Container.Resolve<DataManager>().FindCorrespondingAccount(selectedItem as WorkTask);
+
+                corrAcc.AssignedTasks.Add(new WorkTask(Description, corrAcc));
+            }
         }
 
         private void EditItem()
         {
+            if (selectedItem == null)
+            {
+                return;
+            }
 
+            if (selectedItem is Account)
+            {
+                ContainerLocator.Container.Resolve<DataManager>().Accounts.First(d => d.Number.Equals((selectedItem as Account).Number)).Update(AccountNumber, Description);
+            }
+
+            if (selectedItem is WorkTask)
+            {
+                ContainerLocator.Container.Resolve<DataManager>().FindCorrespondingAccount(selectedItem as WorkTask).AssignedTasks.First(d => d.Title.Equals((selectedItem as WorkTask).Title)).Title = Description;
+            }
         }
 
         #region Command functions
@@ -83,7 +121,12 @@ namespace KronosUI.Controls
 
         private bool CanSaveChanges(Window window)
         {
-            return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(AccountNumber);
+            if (selectedItem is null)
+            {
+                return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(AccountNumber);
+            }
+
+            return !string.IsNullOrWhiteSpace(Description);
         }
 
         private void Abort(Window window)
@@ -95,6 +138,15 @@ namespace KronosUI.Controls
         #endregion
 
         #region Properties
+
+        public Visibility IsNumberVisible
+        {
+            get { return isNumberVisible; }
+            set
+            {
+                SetProperty(ref isNumberVisible, value);
+            }
+        }
 
         public string Title
         {

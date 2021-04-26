@@ -16,6 +16,12 @@ namespace KronosData.Model
             AssignedTasks = new ObservableCollection<WorkTask>();
         }
 
+        public void Update(string number, string title)
+        {
+            Number = number;
+            Title = title;
+        }
+
         #region Overrides
 
         public override string ToString()
@@ -40,7 +46,7 @@ namespace KronosData.Model
         /// <summary>
         /// The account number
         /// </summary>
-        public string Number { get; }
+        public string Number { get; private set; }
 
         /// <summary>
         /// The title of the account

@@ -203,6 +203,11 @@ namespace KronosData.Logic
             return false;
         }
 
+        public Account FindCorrespondingAccount(WorkTask task)
+        {
+            return Accounts.Where(d => d.AssignedTasks.Contains(task)).FirstOrDefault();
+        }
+
         #region Properties
 
         /// <summary>

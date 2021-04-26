@@ -25,8 +25,8 @@
             </StackPanel>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Titel" FontSize="16" Margin="5" />
             <TextBox Grid.Row="1" Grid.Column="1" Width="300" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Kontierungsnummer" FontSize="16" Margin="5" />
-            <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="5" Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Kontierungsnummer" FontSize="16" Margin="5" Visibility="{Binding IsNumberVisible}" />
+            <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="5" Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsNumberVisible}" />
             <Button Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}" Style="{StaticResource SaveButtonStyle}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
