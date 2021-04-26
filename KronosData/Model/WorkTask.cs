@@ -12,7 +12,7 @@ namespace KronosData.Model
         public WorkTask(string title, Account assignedAccount)
         {
             Title = title;
-            AssignedAccountNumber = assignedAccount.Number;
+            AssignedAccountNumber = assignedAccount == null ? string.Empty : assignedAccount.Number;
         }
 
         #region Overrides

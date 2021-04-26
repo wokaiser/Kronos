@@ -27,11 +27,11 @@ namespace KronosUI
             dataManager.SwitchUser(new User("simpsonho") { FirstName = "Homer", LastName = "Simpson" });
 
             dataManager.Accounts.Add(new Account("AC-123-456-01") { Title = "Research more C#" });
-            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ", dataManager.Accounts[0].Number));
-            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research multi-threading", dataManager.Accounts[0].Number));
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ", dataManager.Accounts[0]));
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research multi-threading", dataManager.Accounts[0]));
             dataManager.Accounts.Add(new Account("AC-789-012-34") { Title = "Do chores" });
-            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Do the dishes", dataManager.Accounts[1].Number));
-            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Take out the trash", dataManager.Accounts[1].Number));
+            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Do the dishes", dataManager.Accounts[1]));
+            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Take out the trash", dataManager.Accounts[1]));
 
             var task1 = dataManager.Accounts[0].AssignedTasks[0];
             var task2 = dataManager.Accounts[0].AssignedTasks[1];
