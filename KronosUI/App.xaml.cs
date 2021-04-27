@@ -42,10 +42,14 @@ namespace KronosUI
             };
             day1.WorkTime.Begin = new DateTime(2021, 4, 13, 8, 0, 0);
             day1.WorkTime.End = new DateTime(2021, 4, 13, 17, 0, 0);
+            var break1 = new DateUnit() { Begin = new DateTime(2021, 4, 13, 12, 0, 0), End = new DateTime(2021, 4, 13, 13, 0, 0) };
+            day1.Breaks.Add(break1);
 
             var day2 = new WorkDay(WorkDay.ShiftTypeEnum.X_Shift, WorkDay.DayTypeEnum.HomeOffice);
             day2.WorkTime.Begin = new DateTime(2021, 4, 14, 8, 0, 0);
             day2.WorkTime.End = new DateTime(2021, 4, 14, 17, 0, 0);
+            var break2 = new DateUnit() { Begin = new DateTime(2021, 4, 14, 12, 0, 0), End = new DateTime(2021, 4, 14, 13, 0, 0) };
+            day2.Breaks.Add(break2);
 
             day1.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 13, 7, 30, 0), new DateTime(2021, 4, 13, 12, 0, 0), task1));
             day1.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 13, 12, 45, 0), new DateTime(2021, 4, 13, 17, 0, 0), task2));

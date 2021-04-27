@@ -42,7 +42,7 @@ namespace KronosData.Model
 
         public TimeSpan TotalWorkTime
         {
-            get { return WorkTime.Duration + TotalBreakTime; }
+            get { return WorkTime.Duration - TotalBreakTime; }
         }
 
         public TimeSpan TotalBreakTime
