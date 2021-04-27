@@ -9,6 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Converters:DateUnitToStringConverter x:Key="dateUnitConverter" />
+        <Converters:TimeSpanToStringConverter x:Key="timeSpanConverter" />
     </UserControl.Resources>
     <Border Background="LightSeaGreen" CornerRadius="8" Margin="5">
         <Grid Margin="5">
@@ -22,8 +23,8 @@
                     <DataGridTextColumn Header="Tag" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=DATE}" />
                     <DataGridTextColumn Header="Von" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" />
                     <DataGridTextColumn Header="Bis" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" />
-                    <DataGridTextColumn Header="Pause" Binding="{Binding TotalBreakTime}" />
-                    <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime}" />
+                    <DataGridTextColumn Header="Pause" Binding="{Binding TotalBreakTime, Converter={StaticResource timeSpanConverter}}" />
+                    <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Differenz" />
                     <DataGridTextColumn Header="Task1" />
                     <DataGridTextColumn Header="Task2" />
