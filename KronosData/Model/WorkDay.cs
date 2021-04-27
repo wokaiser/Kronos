@@ -50,6 +50,11 @@ namespace KronosData.Model
             get { return new TimeSpan(Breaks.Sum(d => d.Duration.Ticks)); }
         }
 
+        public TimeSpan TotalOverTime
+        {
+            get { return TotalWorkTime - DailyWorkTime; }
+        }
+
         /// <summary>
         /// The assigned work items of this day
         /// </summary>

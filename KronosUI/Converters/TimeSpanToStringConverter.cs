@@ -13,7 +13,7 @@ namespace KronosUI.Converters
                 throw new ArgumentException(string.Format("{0} is not from type {1}", nameof(value), nameof(TimeSpan)));
             }
 
-            if (((TimeSpan)value).Ticks == 0)
+            if (!System.Convert.ToBoolean(parameter) && ((TimeSpan)value).Ticks == 0)
             {
                 return string.Empty;
             }
