@@ -21,13 +21,14 @@ namespace KronosUI.Controls
         private string description;
         private string accountNumber;
 
-        private EditorStyle editorStyle;
-        private object selectedItem;
+        private readonly EditorStyle editorStyle;
+        private readonly object selectedItem;
 
         public AccountEditorViewModel(EditorStyle editorStyle, object selectedItem)
         {
             this.editorStyle = editorStyle;
             this.selectedItem = selectedItem;
+
             description = string.Empty;
             accountNumber = string.Empty;
 
@@ -39,7 +40,7 @@ namespace KronosUI.Controls
             SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
             AbortCommand = new DelegateCommand<Window>(Abort);
 
-            Title = selectedItem == null ? "Kontierung" : "Arbeitspaket";
+            Title = selectedItem == null || selectedItem is Account ? "Kontierung" : "Arbeitspaket";
             IsNumberVisible = selectedItem == null || selectedItem is Account ? Visibility.Visible : Visibility.Collapsed;
 
             if (editorStyle == EditorStyle.Add)

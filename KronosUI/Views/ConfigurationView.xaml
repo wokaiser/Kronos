@@ -31,6 +31,11 @@
                                         <TextBlock Text="{Binding Title}" />
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
+                                <HierarchicalDataTemplate DataType="{x:Type model:WorkTask}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
                             </TreeView.Resources>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedItemChanged">
