@@ -92,12 +92,12 @@ namespace KronosUI.Controls
 
             if (selectedItem is Account)
             {
-                ContainerLocator.Container.Resolve<DataManager>().Accounts.First(d => d.Number.Equals((selectedItem as Account).Number)).Update(AccountNumber, Description);
+                (selectedItem as Account).Update(AccountNumber, Description);
             }
 
             if (selectedItem is WorkTask)
             {
-                ContainerLocator.Container.Resolve<DataManager>().FindCorrespondingAccount(selectedItem as WorkTask).AssignedTasks.First(d => d.Title.Equals((selectedItem as WorkTask).Title)).Title = Description;
+                (selectedItem as WorkTask).Title = Description;
             }
         }
 

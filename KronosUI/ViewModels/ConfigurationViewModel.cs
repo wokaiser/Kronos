@@ -7,7 +7,6 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -96,7 +95,6 @@ namespace KronosUI.ViewModels
         {
             if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem).ShowDialog())
             {
-                CurrentAccounts = dataManger.Accounts;
                 PendingChanges = true;
             }
         }
@@ -110,7 +108,6 @@ namespace KronosUI.ViewModels
         {
             if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Edit, SelectedItem).ShowDialog())
             {
-                CurrentAccounts = dataManger.Accounts;
                 PendingChanges = true;
             }
         }

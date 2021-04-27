@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace KronosData.Model
 {
-    public class Account : DB_Access
+    public class Account : DB_Access, INotifyPropertyChanged
     {
+        private string number;
+        private string title;
+        private ObservableCollection<WorkTask> assignedTasks;
+
         /// <summary>
         /// Creates a new Account object
         /// </summary>
@@ -21,6 +26,20 @@ namespace KronosData.Model
             Number = number;
             Title = title;
         }
+
+        #region IPropertyChanged implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
 
         #region Overrides
 
@@ -46,17 +65,41 @@ namespace KronosData.Model
         /// <summary>
         /// The account number
         /// </summary>
-        public string Number { get; private set; }
+        public string Number
+        {
+            get { return number; }
+            private set
+            {
+                number = value;
+                OnPropertyChanged(nameof(Number));
+            }
+        }
 
         /// <summary>
         /// The title of the account
         /// </summary>
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                OnPropertyChanged(nameof(Title));
+            }
+        }
 
         /// <summary>
         /// A collection of the tasks assigned to this account
         /// </summary>
-        public ObservableCollection<WorkTask> AssignedTasks { get; }
+        public ObservableCollection<WorkTask> AssignedTasks
+        {
+            get { return assignedTasks; }
+            set
+            {
+                assignedTasks = value;
+                OnPropertyChanged(nameof(AssignedTasks));
+            }
+        }
 
         #endregion
     }
