@@ -164,7 +164,7 @@ namespace KronosData.Logic
                 return new TimeSpan(0);
             }
 
-            return day.GetTotalWorkTime().Subtract(day.DailyWorkTime);
+            return day.TotalWorkTime.Subtract(day.DailyWorkTime);
         }
 
         /// <summary>

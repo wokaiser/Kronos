@@ -1,7 +1,9 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
 using Prism.Ioc;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace KronosUI.ViewModels
 {
@@ -20,9 +22,26 @@ namespace KronosUI.ViewModels
 
         private void FillWorkWeek()
         {
-            CurrentWorkWeek = dataManager.CurrentUser.AssignedWorkDays;
+            CurrentWorkWeek = new ObservableCollection<WorkDay>();
 
+            for (int i = 1; i < 6; i++)
+            {
+                AddWorkDay((DayOfWeek)i);
+            }
+        }
 
+        private void AddWorkDay(DayOfWeek dow)
+        {
+            var wDay = new WorkDay(0, 0);
+            wDay.WorkTime.Begin = CalcDayOfWeek(currentTimeFrame, dow);
+            wDay.WorkTime.End = wDay.WorkTime.Begin;
+
+            CurrentWorkWeek.Add(dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Begin.Date.Equals(wDay.WorkTime.Begin.Date)) ?? wDay);            
+        }
+
+        private static DateTime CalcDayOfWeek(DateTime val, DayOfWeek reqDay)
+        {
+            return val.AddDays(reqDay - val.DayOfWeek);
         }
 
         #region Inherited method implementation and overrides
@@ -48,12 +67,14 @@ namespace KronosUI.ViewModels
             currentTimeFrame = currentTimeFrame.AddDays(-7);
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToPrevious();
+            FillWorkWeek();
         }
 
         public override void SwitchToCurrent()
         {
             base.SwitchToCurrent();
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
+            FillWorkWeek();
         }
 
         public override void SwitchToNext()
@@ -61,6 +82,7 @@ namespace KronosUI.ViewModels
             currentTimeFrame = currentTimeFrame.AddDays(7);
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToNext();
+            FillWorkWeek();
         }
 
         #endregion

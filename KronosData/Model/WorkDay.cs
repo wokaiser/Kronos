@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -18,16 +17,6 @@ namespace KronosData.Model
             DayType = dayType;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
             DailyWorkTime = new TimeSpan(7, 0, 0);
-        }
-
-        public TimeSpan GetTotalWorkTime()
-        {
-            return WorkTime.Duration + GetTotalBreakTime();
-        }
-
-        public TimeSpan GetTotalBreakTime()
-        {
-            return new TimeSpan(Breaks.Sum(d => d.Duration.Ticks));
         }
 
         #region Properties
@@ -50,6 +39,16 @@ namespace KronosData.Model
         /// The total time of work to be done at a day
         /// </summary>
         public TimeSpan DailyWorkTime { get; set; }
+
+        public TimeSpan TotalWorkTime
+        {
+            get { return WorkTime.Duration + TotalBreakTime; }
+        }
+
+        public TimeSpan TotalBreakTime
+        {
+            get { return new TimeSpan(Breaks.Sum(d => d.Duration.Ticks)); }
+        }
 
         /// <summary>
         /// The assigned work items of this day

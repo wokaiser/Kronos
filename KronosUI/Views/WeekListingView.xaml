@@ -17,13 +17,13 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
-            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkDays}" IsReadOnly="True">
+            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkWeek}" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Tag" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=DATE}" />
                     <DataGridTextColumn Header="Von" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" />
                     <DataGridTextColumn Header="Bis" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" />
-                    <DataGridTextColumn Header="Pause" />
-                    <DataGridTextColumn Header="Arbeitszeit" />
+                    <DataGridTextColumn Header="Pause" Binding="{Binding TotalBreakTime}" />
+                    <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime}" />
                     <DataGridTextColumn Header="Differenz" />
                     <DataGridTextColumn Header="Task1" />
                     <DataGridTextColumn Header="Task2" />
