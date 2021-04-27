@@ -99,14 +99,14 @@ namespace KronosData.Logic
         /// </summary>
         /// <param name="desiredDay">The day to lookup</param>
         /// <returns>All work items created at the given day</returns>
-        public List<WorkItem> GetItemsOfDay(DateTime desiredDay)
+        public ObservableCollection<WorkItem> GetItemsOfDay(DateTime desiredDay)
         {
             if (CurrentUser == null)
             {
                 return null;
             }
 
-            var day = CurrentUser.AssignedWorkDays.Find(d => d.Date.Date.Equals(desiredDay.Date));
+            var day = CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Date.Equals(desiredDay.Date)).FirstOrDefault();
 
             if (day == null)
             {
@@ -125,7 +125,7 @@ namespace KronosData.Logic
         {
             var retVal = new List<WorkItem>();
 
-            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.Date.Year == desiredMonth.Year && d.Date.Month == desiredMonth.Month))
+            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Year == desiredMonth.Year && d.WorkTime.Begin.Month == desiredMonth.Month))
             {
                 retVal.AddRange(item.AssignedWorkItems);
             }
@@ -142,7 +142,7 @@ namespace KronosData.Logic
         {
             var retVal = new List<WorkItem>();
 
-            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.Date.Year == desiredYear.Year))
+            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Year == desiredYear.Year))
             {
                 retVal.AddRange(item.AssignedWorkItems);
             }
@@ -157,7 +157,7 @@ namespace KronosData.Logic
         /// <returns>The total overtime. Note that the overtime can be negative</returns>
         public TimeSpan GetOvertimeOfDay(DateTime desiredDay)
         {
-            var day = CurrentUser.AssignedWorkDays.Find(d => d.Date.Date.Equals(desiredDay.Date));
+            var day = CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Date.Equals(desiredDay.Date)).FirstOrDefault();
 
             if (day == null)
             {

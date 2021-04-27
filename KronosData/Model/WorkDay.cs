@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace KronosData.Model
 {
@@ -8,38 +10,31 @@ namespace KronosData.Model
         public enum DayTypeEnum { Default = 0, HomeOffice }
         public enum ShiftTypeEnum { None = 0, X_Shift, Y_Shift, Person_C }
 
-        public WorkDay(DateTime date, ShiftTypeEnum shift, DayTypeEnum dayType)
+        public WorkDay(ShiftTypeEnum shift, DayTypeEnum dayType)
         {
-            Date = date;
+            WorkTime = new DateUnit();
+            Breaks = new ObservableCollection<DateUnit>();
             Shift = shift;
             DayType = dayType;
-            AssignedWorkItems = new List<WorkItem>();
+            AssignedWorkItems = new ObservableCollection<WorkItem>();
             DailyWorkTime = new TimeSpan(7, 0, 0);
         }
 
         public TimeSpan GetTotalWorkTime()
         {
-            var retVal = new TimeSpan(0);
+            return WorkTime.Duration + GetTotalBreakTime();
+        }
 
-            foreach (var item in AssignedWorkItems)
-            {
-                retVal += item.Duration;
-            }
-
-            if (DayType == DayTypeEnum.Default)
-            {
-                retVal -= new TimeSpan(0, 15, 0);
-            }
-
-            return retVal;
+        public TimeSpan GetTotalBreakTime()
+        {
+            return new TimeSpan(Breaks.Sum(d => d.Duration.Ticks));
         }
 
         #region Properties
 
-        /// <summary>
-        /// The date of the work day
-        /// </summary>
-        public DateTime Date { get; }
+        public DateUnit WorkTime { get; set; }
+
+        public ObservableCollection<DateUnit> Breaks { get; }
 
         /// <summary>
         /// The type of workday
@@ -59,7 +54,7 @@ namespace KronosData.Model
         /// <summary>
         /// The assigned work items of this day
         /// </summary>
-        public List<WorkItem> AssignedWorkItems { get; }
+        public ObservableCollection<WorkItem> AssignedWorkItems { get; }
 
         #endregion
     }

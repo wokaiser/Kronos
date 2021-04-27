@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace KronosData.Model
 {
@@ -14,7 +14,7 @@ namespace KronosData.Model
             UserName = username;
             FirstName = string.Empty;
             LastName = string.Empty;
-            AssignedWorkDays = new List<WorkDay>();
+            AssignedWorkDays = new ObservableCollection<WorkDay>();
         }
 
         #region Overrides
@@ -56,7 +56,7 @@ namespace KronosData.Model
         /// <summary>
         /// The work items assigned to the user
         /// </summary>
-        public List<WorkDay> AssignedWorkDays { get; }
+        public ObservableCollection<WorkDay> AssignedWorkDays { get; }
 
         #endregion
 
