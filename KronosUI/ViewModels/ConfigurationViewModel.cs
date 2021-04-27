@@ -6,19 +6,20 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
+using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
 namespace KronosUI.ViewModels
 {
-    public class ConfigurationViewModel : BindableBase
+    public class ConfigurationViewModel : BindableBase, INavigationAware
     {
         private ObservableCollection<Account> currentAccounts;
         private object selectedItem;
         private bool pendingChanges;
 
-        private DataManager dataManger;
+        private readonly DataManager dataManger;
 
         public ConfigurationViewModel()
         {
@@ -50,9 +51,11 @@ namespace KronosUI.ViewModels
                 dataManger.Accounts.Remove(account);
 
                 PublishStatusMessage(tmp + " gelöscht");
+
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         private bool RemoveTask(WorkTask task)
@@ -69,9 +72,11 @@ namespace KronosUI.ViewModels
                 dataManger.FindCorrespondingAccount(task).AssignedTasks.Remove(task);
 
                 PublishStatusMessage(task.ToString() + " gelöscht");
+
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         #region Command functions
@@ -165,6 +170,25 @@ namespace KronosUI.ViewModels
         private bool CanRevokeChanges()
         {
             return pendingChanges;
+        }
+
+        #endregion
+
+        #region INavigationAware implementation
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            SelectedItem = null;
         }
 
         #endregion

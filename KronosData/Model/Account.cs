@@ -23,7 +23,16 @@ namespace KronosData.Model
 
         public void Update(string number, string title)
         {
-            Number = number;
+            if (!Number.Equals(number))
+            {
+                Number = number;
+
+                foreach (var item in AssignedTasks)
+                {
+                    item.Update(item.Title, this);
+                }
+            }
+
             Title = title;
         }
 

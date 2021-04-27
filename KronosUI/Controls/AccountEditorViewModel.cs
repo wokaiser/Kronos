@@ -3,11 +3,6 @@ using KronosData.Model;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace KronosUI.Controls
@@ -38,18 +33,17 @@ namespace KronosUI.Controls
         private void Initialize()
         {
             SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
-            AbortCommand = new DelegateCommand<Window>(Abort);
-
-            Title = selectedItem == null || selectedItem is Account ? "Kontierung" : "Arbeitspaket";
-            IsNumberVisible = selectedItem == null || selectedItem is Account ? Visibility.Visible : Visibility.Collapsed;
+            AbortCommand = new DelegateCommand<Window>(Abort);            
 
             if (editorStyle == EditorStyle.Add)
             {
-                Title += " hinzufügen";
+                Title = selectedItem == null ? "Kontierung hinzufügen" : "Arbeitspaket hinzufügen";
+                IsNumberVisible = selectedItem == null ? Visibility.Visible : Visibility.Collapsed;
             }
             else if (editorStyle == EditorStyle.Edit)
             {
-                Title += " bearbeiten";
+                Title = selectedItem is Account || selectedItem is WorkItem ? "Kontierung bearbeiten" : "Arbeitspaket bearbeiten";
+                IsNumberVisible = selectedItem is Account ? Visibility.Visible : Visibility.Collapsed;
 
                 if (selectedItem is Account)
                 {

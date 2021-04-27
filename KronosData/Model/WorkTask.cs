@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 
 namespace KronosData.Model
@@ -75,10 +76,11 @@ namespace KronosData.Model
         /// <summary>
         /// The assigned account number
         /// </summary>
+        [JsonProperty]
         public string AssignedAccountNumber
         {
             get { return assignedAccountNumber; }
-            set
+            private set
             {
                 assignedAccountNumber = value;
                 OnPropertyChanged(nameof(AssignedAccountNumber));
