@@ -10,7 +10,7 @@
         Height="450" Width="800"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
-    <Border BorderBrush="SteelBlue" Background="White" BorderThickness="3" CornerRadius="8">
+    <Border BorderBrush="DarkOliveGreen" Background="White" BorderThickness="3" CornerRadius="8">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />

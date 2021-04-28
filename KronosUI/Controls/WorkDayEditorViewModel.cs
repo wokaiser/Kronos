@@ -35,6 +35,9 @@ namespace KronosUI.Controls
 
         public void SaveChanges(Window window)
         {
+            //TODO: Do save changes
+
+            PendingChanges = false;
             window.DialogResult = true;
             window.Close();
         }
@@ -46,6 +49,7 @@ namespace KronosUI.Controls
 
         public void RevokeChanges(Window window)
         {
+            PendingChanges = false;
             window.DialogResult = false;
             window.Close();
         }
