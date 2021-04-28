@@ -1,5 +1,7 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Controls;
+using Prism.Commands;
 using Prism.Ioc;
 using System;
 using System.Collections.ObjectModel;
@@ -11,6 +13,7 @@ namespace KronosUI.ViewModels
     {
         private ObservableCollection<WorkDay> currentWorkWeek;
         private WorkDay currentWorkDay;
+        private bool pendingChanges;
 
         private readonly DataManager dataManager;
 
@@ -19,6 +22,7 @@ namespace KronosUI.ViewModels
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
 
             FillWorkWeek();
+            InitializeCommands();
         }
 
         private void FillWorkWeek()
@@ -44,6 +48,50 @@ namespace KronosUI.ViewModels
         {
             return val.AddDays(reqDay - val.DayOfWeek);
         }
+
+        #region Command implementations
+
+        private void InitializeCommands()
+        {
+            EditItemCommand = new DelegateCommand(EditItem, CanEditItem);
+            RevokeChangesCommand = new DelegateCommand(RevokeChanges, CanRevokeChanges);
+            SaveChangesCommand = new DelegateCommand(SaveChanges, CanSaveChanges);
+        }
+
+        public void EditItem()
+        {
+            if ((bool)new WorkDayEditor(CurrentWorkDay).ShowDialog())
+            {
+                PendingChanges = true;
+            }
+        }
+
+        public bool CanEditItem()
+        {
+            return CurrentWorkDay != null;
+        }
+
+        public void RevokeChanges()
+        {
+            PendingChanges = false;
+        }
+
+        public bool CanRevokeChanges()
+        {
+            return PendingChanges;
+        }
+
+        public void SaveChanges()
+        {
+            PendingChanges = false;
+        }
+
+        public bool CanSaveChanges()
+        {
+            return PendingChanges;
+        }
+
+        #endregion
 
         #region Inherited method implementation and overrides
 
@@ -90,6 +138,12 @@ namespace KronosUI.ViewModels
 
         #region Properties
 
+        public DelegateCommand EditItemCommand { get; private set; }
+
+        public DelegateCommand RevokeChangesCommand { get; private set; }
+
+        public DelegateCommand SaveChangesCommand { get; private set; }
+
         public ObservableCollection<WorkDay> CurrentWorkWeek
         {
             get { return currentWorkWeek; }
@@ -105,6 +159,18 @@ namespace KronosUI.ViewModels
             set
             {
                 SetProperty(ref currentWorkDay, value);
+                EditItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool PendingChanges
+        {
+            get { return pendingChanges; }
+            set
+            {
+                SetProperty(ref pendingChanges, value);
+                RevokeChangesCommand.RaiseCanExecuteChanged();
+                SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
 
