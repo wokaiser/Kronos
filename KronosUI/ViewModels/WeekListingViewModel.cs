@@ -10,6 +10,7 @@ namespace KronosUI.ViewModels
     public class WeekListingViewModel : ListingViewModelBase
     {
         private ObservableCollection<WorkDay> currentWorkWeek;
+        private WorkDay currentWorkDay;
 
         private readonly DataManager dataManager;
 
@@ -95,6 +96,15 @@ namespace KronosUI.ViewModels
             set
             {
                 SetProperty(ref currentWorkWeek, value);
+            }
+        }
+
+        public WorkDay CurrentWorkDay
+        {
+            get { return currentWorkDay; }
+            set
+            {
+                SetProperty(ref currentWorkDay, value);
             }
         }
 

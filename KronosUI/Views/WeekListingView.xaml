@@ -18,14 +18,14 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
-            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkWeek}" IsReadOnly="True">
+            <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkWeek}" IsReadOnly="True" SelectedItem="{Binding CurrentWorkDay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Tag" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=DATE}" />
                     <DataGridTextColumn Header="Von" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" />
                     <DataGridTextColumn Header="Bis" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" />
                     <DataGridTextColumn Header="Pause" Binding="{Binding TotalBreakTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" />
-                    <DataGridTextColumn Header="Differenz" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}, ConverterParameter=True}" />
+                    <DataGridTextColumn Header="Differenz" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Task1" />
                     <DataGridTextColumn Header="Task2" />
                 </DataGrid.Columns>

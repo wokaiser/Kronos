@@ -1,0 +1,21 @@
+﻿<Window x:Class="KronosUI.Controls.WorkDayEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KronosUI.Controls"
+        mc:Ignorable="d"
+        Title="WorkDayEditor" Height="450" Width="800"
+        AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
+    <Border BorderBrush="SteelBlue" Background="White" BorderThickness="3" CornerRadius="8">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
+                <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold" Margin="5,0,0,0" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

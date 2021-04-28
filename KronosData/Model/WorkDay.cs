@@ -52,7 +52,7 @@ namespace KronosData.Model
 
         public TimeSpan TotalOverTime
         {
-            get { return TotalWorkTime - DailyWorkTime; }
+            get { return TotalWorkTime.Ticks > 0 ? TotalWorkTime - DailyWorkTime : new TimeSpan(0); }
         }
 
         /// <summary>
