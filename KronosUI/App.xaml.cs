@@ -51,10 +51,10 @@ namespace KronosUI
             var break2 = new DateUnit() { Begin = new DateTime(2021, 4, 14, 12, 0, 0), End = new DateTime(2021, 4, 14, 13, 0, 0) };
             day2.Breaks.Add(break2);
 
-            day1.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 13, 7, 30, 0), new DateTime(2021, 4, 13, 12, 0, 0), task1));
-            day1.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 13, 12, 45, 0), new DateTime(2021, 4, 13, 17, 0, 0), task2));
-            day2.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 14, 8, 30, 0), new DateTime(2021, 4, 14, 12, 0, 0), task2));
-            day2.AssignedWorkItems.Add(new WorkItem(new DateTime(2021, 4, 14, 12, 45, 0), new DateTime(2021, 4, 14, 17, 0, 0), task1));
+            day1.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 30, 0), task1));
+            day1.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 15, 0), task2));
+            day2.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 30, 0), task2));
+            day2.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 15, 0), task1));
 
             dataManager.CurrentUser.AssignedWorkDays.Add(day1);
             dataManager.CurrentUser.AssignedWorkDays.Add(day2);

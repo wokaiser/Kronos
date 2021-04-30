@@ -72,6 +72,14 @@ namespace KronosUI.Controls
 
         public DelegateCommand<Window> RevokeChangesCommand { get; private set; }
 
+        public DelegateCommand AddBreakCommand { get; private set; }
+
+        public DelegateCommand RemoveBreakCommand { get; private set; }
+
+        public DelegateCommand AddWorkItemCommand { get; private set; }
+
+        public DelegateCommand RemoveWorkItemCommand { get; private set; }
+
         public string Title
         {
             get { return title; }

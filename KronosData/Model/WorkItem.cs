@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace KronosData.Model
 {
@@ -8,13 +7,11 @@ namespace KronosData.Model
         /// <summary>
         /// Creats a new work item object
         /// </summary>
-        /// <param name="begin">The datetime the user began with the work</param>
-        /// <param name="end">The datetime the user ended with the work</param>
+        /// <param name="duration">The duration of the work task</param>
         /// <param name="assignedWorkTask">The work task being worked on</param>
-        public WorkItem(DateTime begin, DateTime end, WorkTask assignedWorkTask)
+        public WorkItem(TimeSpan duration, WorkTask assignedWorkTask)
         {
-            Begin = begin;
-            End = end;
+            Duration = duration;
             AssignedWorkTask = assignedWorkTask;
         }
 
@@ -22,7 +19,7 @@ namespace KronosData.Model
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}: {2}", Begin, End, AssignedWorkTask);
+            return Duration.ToString(@"hh\:mm");
         }
 
         #endregion
@@ -30,23 +27,9 @@ namespace KronosData.Model
         #region Properties
 
         /// <summary>
-        /// The datetime where the work started
-        /// </summary>
-        public DateTime Begin { get; }
-
-        /// <summary>
-        /// The datetemime where the work ended 
-        /// </summary>
-        public DateTime End { get; }
-
-        /// <summary>
         /// The duration of the work item
         /// </summary>
-        [JsonIgnore]
-        public TimeSpan Duration
-        {
-            get { return End - Begin; }
-        }
+        public TimeSpan Duration { get; set; }
 
         /// <summary>
         /// The assigned work task

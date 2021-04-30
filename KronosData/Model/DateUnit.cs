@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace KronosData.Model
 {
@@ -16,6 +17,7 @@ namespace KronosData.Model
 
         public DateTime End { get; set; }
 
+        [JsonIgnore]
         public TimeSpan Duration { get { return End - Begin; } }
 
         #endregion
