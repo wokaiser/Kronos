@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
              xmlns:Converters="clr-namespace:KronosUI.Converters"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -29,6 +30,11 @@
                     <DataGridTextColumn Header="Task1" />
                     <DataGridTextColumn Header="Task2" />
                 </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding EditItemCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </Grid>
     </Border>
