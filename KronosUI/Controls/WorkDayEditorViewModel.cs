@@ -20,9 +20,8 @@ namespace KronosUI.Controls
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
         {
-            InitializeEditor(selectedItem);
-
             InitializeCommands();
+            InitializeEditor(selectedItem);
         }
 
         private void InitializeEditor(WorkDay selectedItem)
@@ -41,6 +40,10 @@ namespace KronosUI.Controls
         {
             SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
+            AddBreakCommand = new DelegateCommand(AddBreak);
+            RemoveBreakCommand = new DelegateCommand(RemoveBreak, CanRemoveBreak);
+            AddWorkItemCommand = new DelegateCommand(AddWorkItem);
+            RemoveWorkItemCommand = new DelegateCommand(RemoveWorkItem, CanRemoveWorkItem);
         }
 
         public void SaveChanges(Window window)
@@ -62,6 +65,36 @@ namespace KronosUI.Controls
             PendingChanges = false;
             window.DialogResult = false;
             window.Close();
+        }
+
+        public void AddBreak()
+        {
+
+        }
+
+        public void RemoveBreak()
+        {
+
+        }
+
+        public bool CanRemoveBreak()
+        {
+            return false;
+        }
+
+        public void AddWorkItem()
+        {
+
+        }
+
+        public void RemoveWorkItem()
+        {
+
+        }
+
+        public bool CanRemoveWorkItem()
+        {
+            return false;
         }
 
         #endregion
@@ -105,6 +138,7 @@ namespace KronosUI.Controls
             set
             {
                 SetProperty(ref beginOfDay, value);
+                SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -114,6 +148,7 @@ namespace KronosUI.Controls
             set
             {
                 SetProperty(ref endOfDay, value);
+                SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
 

@@ -81,10 +81,10 @@
                             <DataGridTemplateColumn Header="Bis" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Grid.Row="2" HorizontalAlignment="Left">
+                    <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding RemoveBreakCommand}">
                         <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
                     </Button>
-                    <Button Grid.Row="2" HorizontalAlignment="Right">
+                    <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding AddBreakCommand}">
                         <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
                     </Button>
                 </Grid>
@@ -103,10 +103,10 @@
                             <DataGridTemplateColumn Header="Dauer" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Grid.Row="2" HorizontalAlignment="Left">
+                    <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding RemoveWorkItemCommand}">
                         <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
                     </Button>
-                    <Button Grid.Row="2" HorizontalAlignment="Right">
+                    <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding AddWorkItemCommand}">
                         <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
                     </Button>
                 </Grid>
