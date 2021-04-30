@@ -40,13 +40,15 @@ namespace KronosUI
             {
                 DailyWorkTime = new TimeSpan(8, 0, 0),
             };
-            day1.WorkTime.Begin = new DateTime(2021, 4, 13, 8, 0, 0);
-            day1.WorkTime.End = new DateTime(2021, 4, 13, 17, 0, 0);
+            day1.WorkTime.Date = new DateTime(2021, 4, 13);
+            day1.WorkTime.Begin = new TimeSpan(8, 0, 0);
+            day1.WorkTime.End = new TimeSpan(17, 0, 0);
             day1.BreakTime = new TimeSpan(0, 45, 0);
 
             var day2 = new WorkDay(WorkDay.ShiftTypeEnum.X_Shift, WorkDay.DayTypeEnum.HomeOffice);
-            day2.WorkTime.Begin = new DateTime(2021, 4, 14, 8, 0, 0);
-            day2.WorkTime.End = new DateTime(2021, 4, 14, 17, 0, 0);
+            day2.WorkTime.Date = new DateTime(2021, 4, 14);
+            day2.WorkTime.Begin = new TimeSpan(8, 0, 0);
+            day2.WorkTime.End = new TimeSpan(17, 0, 0);
             day2.BreakTime = new TimeSpan(0, 45, 0);
 
             day1.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 30, 0), task1));

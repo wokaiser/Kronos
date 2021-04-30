@@ -31,15 +31,15 @@ namespace KronosUI.Controls
         private void InitializeEditor(WorkDay selectedItem)
         {
             Title = string.Format("{0}, den {1} bearbeiten",
-                CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.Begin.DayOfWeek),
-                selectedItem.WorkTime.Begin.Date.ToShortDateString());
+                CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.Date.DayOfWeek),
+                selectedItem.WorkTime.Date.Date.ToShortDateString());
 
             SetupCurrentWorkDay(selectedItem);
         }
 
         private void SetupCurrentWorkDay(WorkDay workDay)
         {
-            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Begin.Date.Equals(workDay.WorkTime.Begin.Date));
+            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(workDay.WorkTime.Date.Date));
 
             if (tmp != null)
             {
@@ -49,8 +49,8 @@ namespace KronosUI.Controls
             }
 
             CurrentDay = new WorkDay(WorkDay.ShiftTypeEnum.None, WorkDay.DayTypeEnum.Default);
-            CurrentDay.WorkTime.Begin = new DateTime(1984, 12, 30, 09, 0, 0);
-            CurrentDay.WorkTime.End = new DateTime(1984, 12, 30, 17, 0, 0);
+            CurrentDay.WorkTime.Begin = new TimeSpan(9, 0, 0);
+            CurrentDay.WorkTime.End = new TimeSpan(17, 0, 0);
             CurrentDay.BreakTime = new TimeSpan(0, 45, 0);
         }
 
@@ -130,10 +130,10 @@ namespace KronosUI.Controls
 
         public TimeSpan BeginOfDay
         {
-            get { return CurrentDay.WorkTime.Begin.TimeOfDay; }
+            get { return CurrentDay.WorkTime.Begin; }
             set
             {
-                CurrentDay.WorkTime.Begin = CurrentDay.WorkTime.Begin.Date + value;
+                CurrentDay.WorkTime.Begin = value;
                 RaisePropertyChanged(nameof(BeginOfDay));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
@@ -141,10 +141,10 @@ namespace KronosUI.Controls
 
         public TimeSpan EndOfDay
         {
-            get { return CurrentDay.WorkTime.End.TimeOfDay; }
+            get { return CurrentDay.WorkTime.End; }
             set
             {
-                CurrentDay.WorkTime.End = CurrentDay.WorkTime.End.Date + value;
+                CurrentDay.WorkTime.End = value;
                 RaisePropertyChanged(nameof(EndOfDay));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }

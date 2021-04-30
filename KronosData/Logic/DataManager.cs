@@ -106,7 +106,7 @@ namespace KronosData.Logic
                 return null;
             }
 
-            var day = CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Date.Equals(desiredDay.Date)).FirstOrDefault();
+            var day = CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Date.Date.Equals(desiredDay.Date)).FirstOrDefault();
 
             if (day == null)
             {
@@ -125,7 +125,7 @@ namespace KronosData.Logic
         {
             var retVal = new List<WorkItem>();
 
-            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Year == desiredMonth.Year && d.WorkTime.Begin.Month == desiredMonth.Month))
+            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Date.Year == desiredMonth.Year && d.WorkTime.Date.Month == desiredMonth.Month))
             {
                 retVal.AddRange(item.AssignedWorkItems);
             }
@@ -142,7 +142,7 @@ namespace KronosData.Logic
         {
             var retVal = new List<WorkItem>();
 
-            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Year == desiredYear.Year))
+            foreach (var item in CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Date.Year == desiredYear.Year))
             {
                 retVal.AddRange(item.AssignedWorkItems);
             }
@@ -157,7 +157,7 @@ namespace KronosData.Logic
         /// <returns>The total overtime. Note that the overtime can be negative</returns>
         public TimeSpan GetOvertimeOfDay(DateTime desiredDay)
         {
-            var day = CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Begin.Date.Equals(desiredDay.Date)).FirstOrDefault();
+            var day = CurrentUser.AssignedWorkDays.Where(d => d.WorkTime.Date.Date.Equals(desiredDay.Date)).FirstOrDefault();
 
             if (day == null)
             {

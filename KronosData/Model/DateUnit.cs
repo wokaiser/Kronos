@@ -7,16 +7,31 @@ namespace KronosData.Model
     {
         public DateUnit()
         {
-            Begin = DateTime.Now;
-            End = DateTime.Now;
+            Date = DateTime.Now;
+            Begin = new TimeSpan(0);
+            End = new TimeSpan(0);
         }
 
         #region Properties
 
-        public DateTime Begin { get; set; }
+        /// <summary>
+        /// The date of the DateUnit
+        /// </summary>
+        public DateTime Date { get; set; }
 
-        public DateTime End { get; set; }
+        /// <summary>
+        /// The time where the DateUnit started
+        /// </summary>
+        public TimeSpan Begin { get; set; }
 
+        /// <summary>
+        /// The time where the DateUnit ended
+        /// </summary>
+        public TimeSpan End { get; set; }
+
+        /// <summary>
+        /// The duration of the DateUnit
+        /// </summary>
         [JsonIgnore]
         public TimeSpan Duration { get { return End - Begin; } }
 

@@ -38,10 +38,9 @@ namespace KronosUI.ViewModels
         private void AddWorkDay(DayOfWeek dow)
         {
             var wDay = new WorkDay(0, 0);
-            wDay.WorkTime.Begin = CalcDayOfWeek(currentTimeFrame, dow);
-            wDay.WorkTime.End = wDay.WorkTime.Begin;
+            wDay.WorkTime.Date = CalcDayOfWeek(currentTimeFrame, dow);
 
-            CurrentWorkWeek.Add(dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Begin.Date.Equals(wDay.WorkTime.Begin.Date)) ?? wDay);            
+            CurrentWorkWeek.Add(dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(wDay.WorkTime.Date.Date)) ?? wDay);            
         }
 
         private static DateTime CalcDayOfWeek(DateTime val, DayOfWeek reqDay)

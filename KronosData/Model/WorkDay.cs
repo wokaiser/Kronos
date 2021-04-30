@@ -21,8 +21,14 @@ namespace KronosData.Model
 
         #region Properties
 
+        /// <summary>
+        /// The worktime of the day
+        /// </summary>
         public DateUnit WorkTime { get; set; }
 
+        /// <summary>
+        /// The sum of breaks taken this day
+        /// </summary>
         public TimeSpan BreakTime { get; set; }
 
         /// <summary>
@@ -40,11 +46,17 @@ namespace KronosData.Model
         /// </summary>
         public TimeSpan DailyWorkTime { get; set; }
 
+        /// <summary>
+        /// Returns the total time of work
+        /// </summary>
         public TimeSpan TotalWorkTime
         {
             get { return WorkTime.Duration - BreakTime; }
         }
 
+        /// <summary>
+        /// Returns the total overtime
+        /// </summary>
         public TimeSpan TotalOverTime
         {
             get { return TotalWorkTime.Ticks > 0 ? TotalWorkTime - DailyWorkTime : new TimeSpan(0); }

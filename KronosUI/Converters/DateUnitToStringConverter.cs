@@ -20,13 +20,13 @@ namespace KronosUI.Converters
             {
                 default:
                 case "DATE":
-                    return tmp.Begin.ToShortDateString();
+                    return tmp.Date.ToShortDateString();
 
                 case "BEGIN":
-                    return tmp.Begin.Hour == tmp.End.Hour && tmp.Begin.Minute == tmp.End.Minute ? string.Empty : tmp.Begin.ToShortTimeString();
+                    return tmp.Begin.Hours == tmp.End.Hours && tmp.Begin.Minutes == tmp.End.Minutes ? string.Empty : tmp.Begin.ToString(@"hh\:mm");
 
                 case "END":
-                    return tmp.Begin.Hour == tmp.End.Hour && tmp.Begin.Minute == tmp.End.Minute ? string.Empty : tmp.End.ToShortTimeString();
+                    return tmp.Begin.Hours == tmp.End.Hours && tmp.Begin.Minutes == tmp.End.Minutes ? string.Empty : tmp.End.ToString(@"hh\:mm");
             }
         }
 
