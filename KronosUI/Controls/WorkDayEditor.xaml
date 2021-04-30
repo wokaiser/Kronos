@@ -11,27 +11,106 @@
         Height="450" Width="800"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
-    <Border BorderBrush="DarkOliveGreen" Background="White" BorderThickness="3" CornerRadius="8">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="3" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+    <Border BorderBrush="DarkOliveGreen" Background="LightSeaGreen">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
-                <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold" Margin="5,0,0,0" />
+                <TextBlock Text="{Binding Title}" Margin="5,0,0,0" />
             </StackPanel>
-            <Button Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource SaveButtonStyle}" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
+            <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource SaveButtonStyle}" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
-            <Button Grid.Row="3" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
+            <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
                 <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
             </Button>
-            <controls:TimePicker Grid.Row="1" Value="{Binding BeginOfDay}" />
+            <Border Grid.Row="2" BorderBrush="DarkGreen" Margin="5,5,0,0" HorizontalAlignment="Left">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Arbeitsbeginn" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <controls:TimePicker Grid.Row="1" Grid.Column="0" Value="{Binding BeginOfDay}" />
+                    <GridSplitter Grid.RowSpan="2" Grid.Column="1" Width="5" Margin="5,0,5,0" IsEnabled="False" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Arbeitsende" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <controls:TimePicker Grid.Row="1" Grid.Column="2" Value="{Binding EndOfDay}" />
+                </Grid>
+            </Border>
+            <Border Grid.Row="3" BorderBrush="DarkGreen" Margin="5,5,0,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="AUTO" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Pausen" HorizontalAlignment="Center" />
+                    <DataGrid Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Von" />
+                            <DataGridTemplateColumn Header="Bis" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Grid.Row="2" HorizontalAlignment="Left">
+                        <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
+                    </Button>
+                    <Button Grid.Row="2" HorizontalAlignment="Right">
+                        <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
+                    </Button>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="AUTO" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
+                    <DataGrid Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Arbeitspaket" />
+                            <DataGridTemplateColumn Header="Dauer" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Grid.Row="2" HorizontalAlignment="Left">
+                        <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
+                    </Button>
+                    <Button Grid.Row="2" HorizontalAlignment="Right">
+                        <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
+                    </Button>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </Window>
