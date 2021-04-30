@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 namespace KronosUI.ViewModels
@@ -29,7 +30,8 @@ namespace KronosUI.ViewModels
         {
             CurrentWorkWeek = new ObservableCollection<WorkDay>();
 
-            for (int i = 1; i < 6; i++)
+            var start = (int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            for (var i =  start; i < start + 7; i++)
             {
                 AddWorkDay((DayOfWeek)i);
             }
