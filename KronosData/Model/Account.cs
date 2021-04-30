@@ -36,7 +36,7 @@ namespace KronosData.Model
             Title = title;
         }
 
-        #region IPropertyChanged implementation
+        #region INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler PropertyChanged;
 

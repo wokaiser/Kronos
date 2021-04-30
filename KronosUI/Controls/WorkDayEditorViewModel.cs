@@ -15,14 +15,24 @@ namespace KronosUI.Controls
     {
         private string title;
         private bool pendingChanges = false;
+        private TimeSpan beginOfDay;
+        private TimeSpan endOfDay;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
+        {
+            InitializeEditor(selectedItem);
+
+            InitializeCommands();
+        }
+
+        private void InitializeEditor(WorkDay selectedItem)
         {
             Title = string.Format("{0}, den {1} bearbeiten",
                 CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.Begin.DayOfWeek),
                 selectedItem.WorkTime.Begin.Date.ToShortDateString());
 
-            InitializeCommands();
+            BeginOfDay = new TimeSpan(09, 00, 0);
+            EndOfDay = new TimeSpan(17, 0, 0);
         }
 
         #region Command implementations
@@ -78,6 +88,24 @@ namespace KronosUI.Controls
             {
                 SetProperty(ref pendingChanges, value);
                 SaveChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public TimeSpan BeginOfDay
+        {
+            get { return beginOfDay; }
+            set
+            {
+                SetProperty(ref beginOfDay, value);
+            }
+        }
+
+        public TimeSpan EndOfDay
+        {
+            get { return endOfDay; }
+            set
+            {
+                SetProperty(ref endOfDay, value);
             }
         }
 
