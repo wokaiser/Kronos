@@ -12,7 +12,7 @@ namespace KronosData.Model
         public WorkDay(ShiftTypeEnum shift, DayTypeEnum dayType)
         {
             WorkTime = new DateUnit();
-            Breaks = new ObservableCollection<DateUnit>();
+            BreakTime = new TimeSpan(0);
             Shift = shift;
             DayType = dayType;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
@@ -23,7 +23,7 @@ namespace KronosData.Model
 
         public DateUnit WorkTime { get; set; }
 
-        public ObservableCollection<DateUnit> Breaks { get; }
+        public TimeSpan BreakTime { get; set; }
 
         /// <summary>
         /// The type of workday
@@ -42,12 +42,7 @@ namespace KronosData.Model
 
         public TimeSpan TotalWorkTime
         {
-            get { return WorkTime.Duration - TotalBreakTime; }
-        }
-
-        public TimeSpan TotalBreakTime
-        {
-            get { return new TimeSpan(Breaks.Sum(d => d.Duration.Ticks)); }
+            get { return WorkTime.Duration - BreakTime; }
         }
 
         public TimeSpan TotalOverTime

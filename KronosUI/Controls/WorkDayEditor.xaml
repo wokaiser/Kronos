@@ -71,22 +71,10 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="AUTO" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Pausen" HorizontalAlignment="Center" />
-                    <DataGrid Grid.Row="1">
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Von" />
-                            <DataGridTemplateColumn Header="Bis" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding RemoveBreakCommand}">
-                        <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
-                    </Button>
-                    <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding AddBreakCommand}">
-                        <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
-                    </Button>
+                    <TextBlock Grid.Row="0" Text="Pausenzeit" HorizontalAlignment="Center" />
+                    <controls:TimePicker Grid.Row="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
                 </Grid>
             </Border>
             <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">

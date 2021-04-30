@@ -24,7 +24,7 @@
                     <DataGridTextColumn Header="Tag" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=DATE}" />
                     <DataGridTextColumn Header="Von" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" />
                     <DataGridTextColumn Header="Bis" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" />
-                    <DataGridTextColumn Header="Pause" Binding="{Binding TotalBreakTime, Converter={StaticResource timeSpanConverter}}" />
+                    <DataGridTextColumn Header="Pause" Binding="{Binding BreakTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Differenz" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Task1" />

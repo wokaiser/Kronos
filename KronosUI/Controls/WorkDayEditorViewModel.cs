@@ -1,5 +1,7 @@
-﻿using KronosData.Model;
+﻿using KronosData.Logic;
+using KronosData.Model;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -15,11 +17,13 @@ namespace KronosUI.Controls
     {
         private string title;
         private bool pendingChanges = false;
-        private TimeSpan beginOfDay;
-        private TimeSpan endOfDay;
+        private WorkDay currentDay;
+        private readonly DataManager dataManager;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
         {
+            dataManager = ContainerLocator.Container.Resolve<DataManager>();
+
             InitializeCommands();
             InitializeEditor(selectedItem);
         }
@@ -30,8 +34,24 @@ namespace KronosUI.Controls
                 CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.Begin.DayOfWeek),
                 selectedItem.WorkTime.Begin.Date.ToShortDateString());
 
-            BeginOfDay = new TimeSpan(09, 00, 0);
-            EndOfDay = new TimeSpan(17, 0, 0);
+            SetupCurrentWorkDay(selectedItem);
+        }
+
+        private void SetupCurrentWorkDay(WorkDay workDay)
+        {
+            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Begin.Date.Equals(workDay.WorkTime.Begin.Date));
+
+            if (tmp != null)
+            {
+                CurrentDay = tmp;
+
+                return;
+            }
+
+            CurrentDay = new WorkDay(WorkDay.ShiftTypeEnum.None, WorkDay.DayTypeEnum.Default);
+            CurrentDay.WorkTime.Begin = new DateTime(1984, 12, 30, 09, 0, 0);
+            CurrentDay.WorkTime.End = new DateTime(1984, 12, 30, 17, 0, 0);
+            CurrentDay.BreakTime = new TimeSpan(0, 45, 0);
         }
 
         #region Command implementations
@@ -40,8 +60,6 @@ namespace KronosUI.Controls
         {
             SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
-            AddBreakCommand = new DelegateCommand(AddBreak);
-            RemoveBreakCommand = new DelegateCommand(RemoveBreak, CanRemoveBreak);
             AddWorkItemCommand = new DelegateCommand(AddWorkItem);
             RemoveWorkItemCommand = new DelegateCommand(RemoveWorkItem, CanRemoveWorkItem);
         }
@@ -67,21 +85,6 @@ namespace KronosUI.Controls
             window.Close();
         }
 
-        public void AddBreak()
-        {
-
-        }
-
-        public void RemoveBreak()
-        {
-
-        }
-
-        public bool CanRemoveBreak()
-        {
-            return false;
-        }
-
         public void AddWorkItem()
         {
 
@@ -105,10 +108,6 @@ namespace KronosUI.Controls
 
         public DelegateCommand<Window> RevokeChangesCommand { get; private set; }
 
-        public DelegateCommand AddBreakCommand { get; private set; }
-
-        public DelegateCommand RemoveBreakCommand { get; private set; }
-
         public DelegateCommand AddWorkItemCommand { get; private set; }
 
         public DelegateCommand RemoveWorkItemCommand { get; private set; }
@@ -116,10 +115,7 @@ namespace KronosUI.Controls
         public string Title
         {
             get { return title; }
-            set
-            {
-                SetProperty(ref title, value);
-            }
+            set { SetProperty(ref title, value); }
         }
 
         public bool PendingChanges
@@ -134,22 +130,41 @@ namespace KronosUI.Controls
 
         public TimeSpan BeginOfDay
         {
-            get { return beginOfDay; }
+            get { return CurrentDay.WorkTime.Begin.TimeOfDay; }
             set
             {
-                SetProperty(ref beginOfDay, value);
+                CurrentDay.WorkTime.Begin = CurrentDay.WorkTime.Begin.Date + value;
+                RaisePropertyChanged(nameof(BeginOfDay));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
 
         public TimeSpan EndOfDay
         {
-            get { return endOfDay; }
+            get { return CurrentDay.WorkTime.End.TimeOfDay; }
             set
             {
-                SetProperty(ref endOfDay, value);
+                CurrentDay.WorkTime.End = CurrentDay.WorkTime.End.Date + value;
+                RaisePropertyChanged(nameof(EndOfDay));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public TimeSpan BreakTime
+        {
+            get { return CurrentDay.BreakTime; }
+            set
+            {
+                CurrentDay.BreakTime = value;
+                RaisePropertyChanged(nameof(BreakTime));
+                SaveChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public WorkDay CurrentDay
+        {
+            get { return currentDay; }
+            set { SetProperty(ref currentDay, value); }
         }
 
         #endregion
