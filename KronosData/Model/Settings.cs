@@ -1,9 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace KronosData.Model
 {
-    public class Settings
+    public class Settings : INotifyPropertyChanged
     {
+        private TimeSpan defaultDailyWorkTime;
+        private TimeSpan defaultBeginOfWork;
+        private TimeSpan defaultEndOfWork;
+
         public Settings()
         {
             DefaultDailyWorkTime = new TimeSpan(0);
@@ -11,13 +16,51 @@ namespace KronosData.Model
             DefaultEndOfWork = new TimeSpan(0);
         }
 
+        #region INotifyPropertyChanged implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
         #region Properties
 
-        public TimeSpan DefaultDailyWorkTime { get; set; }
+        public TimeSpan DefaultDailyWorkTime 
+        {
+            get { return defaultDailyWorkTime; }
+            set
+            {
+                defaultDailyWorkTime = value;
+                OnPropertyChanged(nameof(DefaultDailyWorkTime));
+            }
+        }
 
-        public TimeSpan DefaultBeginOfWork { get; set; }
+        public TimeSpan DefaultBeginOfWork
+        {
+            get { return defaultBeginOfWork; }
+            set
+            {
+                defaultBeginOfWork = value;
+                OnPropertyChanged(nameof(DefaultBeginOfWork));
+            }
+        }
 
-        public TimeSpan DefaultEndOfWork { get; set; }
+        public TimeSpan DefaultEndOfWork
+        {
+            get { return defaultEndOfWork; }
+            set
+            {
+                defaultEndOfWork = value;
+                OnPropertyChanged(nameof(DefaultEndOfWork));
+            }
+        }
 
         #endregion
     }

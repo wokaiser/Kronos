@@ -6,15 +6,29 @@
              xmlns:model="clr-namespace:KronosData.Model;assembly=KronosData"
              xmlns:local="clr-namespace:KronosUI.Views"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:controls="clr-namespace:KronosUI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="600">
-    <Border Background="LightSteelBlue" CornerRadius="8" Margin="5">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="3" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderBrush" Value="SteelBlue" />
+        </Style>
+        <Style TargetType="{x:Type controls:TimePicker}">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+    </UserControl.Resources>
+    <Border Background="LightSteelBlue" Margin="5">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" CornerRadius="8" BorderThickness="5" BorderBrush="SteelBlue" Margin="0,0,0,5">
+            <Border Grid.Row="0" Margin="0,0,0,5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
@@ -26,14 +40,14 @@
                             <TreeView.Resources>
                                 <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Number}" />
-                                        <TextBlock Text=": " />
-                                        <TextBlock Text="{Binding Title}" />
+                                        <TextBlock Text="{Binding Number}" FontSize="14" FontWeight="Bold" />
+                                        <TextBlock Text=": " FontSize="14" />
+                                        <TextBlock Text="{Binding Title}" FontSize="14" />
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                                 <HierarchicalDataTemplate DataType="{x:Type model:WorkTask}">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Title}" />
+                                        <TextBlock Text="{Binding Title}" FontSize="14" />
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                             </TreeView.Resources>
@@ -46,13 +60,40 @@
                     </ScrollViewer>
                 </Grid>
             </Border>
-            <Border Grid.Row="1" CornerRadius="8" BorderThickness="5" BorderBrush="SteelBlue">
+            <Border Grid.Row="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Sonstiges" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Einstellungen" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
+                    <Border Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="AUTO" />
+                                <ColumnDefinition Width="AUTO" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="Arbeitstag" HorizontalAlignment="Center" />
+                            <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Arbeitsbegin" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
+                            <controls:TimePicker Grid.Row="2" Grid.Column="1" Value="{Binding DefaultBeginOfWork}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Arbeitsende" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
+                            <controls:TimePicker Grid.Row="3" Grid.Column="1" Value="{Binding DefaultEndOfWork}" />
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Soll-Arbeitszeit" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
+                            <controls:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding DefaultDailyWorkTime}" />
+                        </Grid>
+                    </Border>
                 </Grid>
             </Border>
         </Grid>

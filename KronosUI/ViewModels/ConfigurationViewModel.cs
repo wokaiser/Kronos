@@ -7,6 +7,7 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -18,17 +19,30 @@ namespace KronosUI.ViewModels
         private ObservableCollection<Account> currentAccounts;
         private object selectedItem;
         private bool pendingChanges;
+        private Settings defaultSettings;
 
         private readonly DataManager dataManger;
 
         public ConfigurationViewModel()
         {
-            dataManger = ContainerLocator.Container.Resolve<DataManager>();
-            CurrentAccounts = dataManger.Accounts;
-            selectedItem = null;
-            pendingChanges = false;
-
             InitializeCommands();
+
+            dataManger = ContainerLocator.Container.Resolve<DataManager>();
+
+            InitializeProperties();
+        }
+
+        private void InitializeProperties()
+        {
+            CurrentAccounts = dataManger.Accounts;
+            defaultSettings = dataManger.CurrentUser.UserSettings;
+
+            SelectedItem = null;
+            PendingChanges = false;
+
+            RaisePropertyChanged(nameof(DefaultBeginOfWork));
+            RaisePropertyChanged(nameof(DefaultEndOfWork));
+            RaisePropertyChanged(nameof(DefaultDailyWorkTime));
         }
 
         private void PublishStatusMessage(string message)
@@ -149,7 +163,9 @@ namespace KronosUI.ViewModels
         private void SaveChanges()
         {
             PendingChanges = false;
+
             dataManger.SaveChanges();
+
             PublishStatusMessage("Änderungen erfolgreich gespeichert");
         }
 
@@ -161,9 +177,9 @@ namespace KronosUI.ViewModels
         private void RevokeChanges()
         {
             dataManger.LoadFromFile();
-            CurrentAccounts = dataManger.Accounts;
-            SelectedItem = null;
-            PendingChanges = false;
+
+            InitializeProperties();
+
             PublishStatusMessage("Änderungen verworfen");
         }
 
@@ -224,6 +240,39 @@ namespace KronosUI.ViewModels
                 SetProperty(ref pendingChanges, value);
                 SaveChangesCommand.RaiseCanExecuteChanged();
                 RevokeChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public TimeSpan DefaultBeginOfWork
+        {
+            get { return defaultSettings.DefaultBeginOfWork; }
+            set
+            {
+                defaultSettings.DefaultBeginOfWork = value;
+                RaisePropertyChanged(nameof(DefaultBeginOfWork));
+                PendingChanges = true;
+            }
+        }
+
+        public TimeSpan DefaultEndOfWork
+        {
+            get { return defaultSettings.DefaultEndOfWork; }
+            set
+            {
+                defaultSettings.DefaultEndOfWork = value;
+                RaisePropertyChanged(nameof(DefaultEndOfWork));
+                PendingChanges = true;
+            }
+        }
+
+        public TimeSpan DefaultDailyWorkTime
+        {
+            get { return defaultSettings.DefaultDailyWorkTime; }
+            set
+            {
+                defaultSettings.DefaultDailyWorkTime = value;
+                RaisePropertyChanged(nameof(DefaultDailyWorkTime));
+                PendingChanges = true;
             }
         }
 
