@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 
 namespace KronosData.Model
@@ -15,6 +16,7 @@ namespace KronosData.Model
             FirstName = string.Empty;
             LastName = string.Empty;
             AssignedWorkDays = new ObservableCollection<WorkDay>();
+            UserSettings = new Settings();
         }
 
         #region Overrides
@@ -57,6 +59,12 @@ namespace KronosData.Model
         /// The work items assigned to the user
         /// </summary>
         public ObservableCollection<WorkDay> AssignedWorkDays { get; }
+
+        /// <summary>
+        /// The settings for the user
+        /// </summary>
+        [JsonProperty]
+        public Settings UserSettings { get; private set; }
 
         #endregion
 

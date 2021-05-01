@@ -26,6 +26,10 @@ namespace KronosUI
 
             dataManager.SwitchUser(new User("simpsonho") { FirstName = "Homer", LastName = "Simpson" });
 
+            dataManager.CurrentUser.UserSettings.DefaultDailyWorkTime = new TimeSpan(7, 0, 0);
+            dataManager.CurrentUser.UserSettings.DefaultBeginOfWork = new TimeSpan(8, 0, 0);
+            dataManager.CurrentUser.UserSettings.DefaultEndOfWork = new TimeSpan(16, 0, 0);
+
             dataManager.Accounts.Add(new Account("AC-123-456-01") { Title = "Research more C#" });
             dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ", dataManager.Accounts[0]));
             dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research multi-threading", dataManager.Accounts[0]));
