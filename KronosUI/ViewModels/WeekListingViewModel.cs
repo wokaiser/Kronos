@@ -98,7 +98,6 @@ namespace KronosUI.ViewModels
 
         protected override void Initialize()
         {
-            CalendarValue = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
         }
 

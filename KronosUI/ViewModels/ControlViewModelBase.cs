@@ -9,7 +9,6 @@ namespace KronosUI.ViewModels
 {
     public abstract class ControlViewModelBase : BindableBase
     {
-        private string calendarValue;
         private readonly IEventAggregator eventAggregator;
 
         protected DateTime currentTimeFrame;
@@ -64,12 +63,6 @@ namespace KronosUI.ViewModels
         #endregion
 
         #region Properties
-
-        public string CalendarValue
-        {
-            get { return calendarValue; }
-            set { SetProperty(ref calendarValue, value); }
-        }
 
         public DelegateCommand SwitchToPreviousCommand { get; private set; }
 

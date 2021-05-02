@@ -4,7 +4,7 @@
     {
         protected override void Initialize()
         {
-            CalendarValue = currentTimeFrame.Year.ToString();
+
         }
 
         public override bool CanSwitchToPrevious()

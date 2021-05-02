@@ -6,7 +6,7 @@ namespace KronosUI.ViewModels
     {
         protected override void Initialize()
         {
-            CalendarValue = DateHelper.GetMonthNameFormDate(currentTimeFrame);
+
         }
 
         public override bool CanSwitchToPrevious()
