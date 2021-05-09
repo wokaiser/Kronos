@@ -21,9 +21,16 @@
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Text="Arbeitstag" FontSize="18" FontWeight="Bold" Foreground="DarkGreen" Margin="5" />
-                    <Button Grid.Row="1" ToolTip="Kontierung/Task bearbeiten" HorizontalAlignment="Left" Margin="5" Command="{Binding EditItemCommand}">
+                    <Button Grid.Row="1" ToolTip="Arbeitstag bearbeiten" HorizontalAlignment="Left" Margin="5" Command="{Binding EditItemCommand}">
                         <svgc:SvgViewbox Source="/Images/edit.svg" Margin="5" />
+                    </Button>
+                    <Button Grid.Column="1" Grid.Row="1" ToolTip="Arbeitstag löschen" HorizontalAlignment="Left" Margin="5" Command="{Binding DeleteItemCommand}">
+                        <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
                     </Button>
                 </Grid>
             </Border>

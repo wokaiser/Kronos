@@ -43,7 +43,7 @@
                 <TextBlock Text="{Binding Title}" Margin="5,0,0,0" />
             </StackPanel>
             <Separator Grid.Row="1" Grid.ColumnSpan="2" />
-            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource SaveButtonStyle}" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
+            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
             <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">

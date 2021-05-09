@@ -63,6 +63,7 @@ namespace KronosUI.ViewModels
             EditItemCommand = new DelegateCommand(EditItem, CanEditItem);
             RevokeChangesCommand = new DelegateCommand(RevokeChanges, CanRevokeChanges);
             SaveChangesCommand = new DelegateCommand(SaveChanges, CanSaveChanges);
+            DeleteItemCommand = new DelegateCommand(DeleteItem, CanDeleteItem);
         }
 
         public void EditItem()
@@ -76,6 +77,16 @@ namespace KronosUI.ViewModels
         public bool CanEditItem()
         {
             return CurrentWorkDay != null;
+        }
+
+        public void DeleteItem()
+        {
+
+        }
+
+        public bool CanDeleteItem()
+        {
+            return false;
         }
 
         public void RevokeChanges()
@@ -149,6 +160,8 @@ namespace KronosUI.ViewModels
         public DelegateCommand RevokeChangesCommand { get; private set; }
 
         public DelegateCommand SaveChangesCommand { get; private set; }
+
+        public DelegateCommand DeleteItemCommand { get; private set; }
 
         public ObservableCollection<WorkDay> CurrentWorkWeek
         {

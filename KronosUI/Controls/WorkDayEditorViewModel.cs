@@ -16,7 +16,6 @@ namespace KronosUI.Controls
     public class WorkDayEditorViewModel : BindableBase
     {
         private string title;
-        private bool pendingChanges = false;
         private WorkDay currentDay;
         private readonly DataManager dataManager;
 
@@ -58,7 +57,7 @@ namespace KronosUI.Controls
 
         public void InitializeCommands()
         {
-            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
+            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
             AddWorkItemCommand = new DelegateCommand(AddWorkItem);
             RemoveWorkItemCommand = new DelegateCommand(RemoveWorkItem, CanRemoveWorkItem);
@@ -68,19 +67,12 @@ namespace KronosUI.Controls
         {
             //TODO: Do save changes
 
-            PendingChanges = false;
             window.DialogResult = true;
             window.Close();
         }
 
-        public bool CanSaveChanges(Window window)
-        {
-            return PendingChanges;
-        }
-
         public void RevokeChanges(Window window)
         {
-            PendingChanges = false;
             window.DialogResult = false;
             window.Close();
         }
@@ -116,16 +108,6 @@ namespace KronosUI.Controls
         {
             get { return title; }
             set { SetProperty(ref title, value); }
-        }
-
-        public bool PendingChanges
-        {
-            get { return pendingChanges; }
-            set
-            {
-                SetProperty(ref pendingChanges, value);
-                SaveChangesCommand.RaiseCanExecuteChanged();
-            }
         }
 
         public TimeSpan BeginOfDay
