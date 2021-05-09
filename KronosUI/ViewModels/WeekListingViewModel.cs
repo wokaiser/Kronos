@@ -22,8 +22,8 @@ namespace KronosUI.ViewModels
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
 
-            FillWorkWeek();
             InitializeCommands();
+            FillWorkWeek();
         }
 
         private void FillWorkWeek()
@@ -42,12 +42,18 @@ namespace KronosUI.ViewModels
             var wDay = new WorkDay(0, 0);
             wDay.WorkTime.Date = CalcDayOfWeek(currentTimeFrame, dow);
 
-            CurrentWorkWeek.Add(dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(wDay.WorkTime.Date.Date)) ?? wDay);            
+            var dayToAdd = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(wDay.WorkTime.Date.Date)) ?? wDay;
+            CurrentWorkWeek.Add(dayToAdd);
+
+            if (dayToAdd.WorkTime.Date.Date.Equals(DateTime.Now.Date))
+            {
+                CurrentWorkDay = dayToAdd;
+            }
         }
 
         private static DateTime CalcDayOfWeek(DateTime val, DayOfWeek reqDay)
         {
-            return val.AddDays(reqDay - val.DayOfWeek);
+            return val.AddDays((int)reqDay - (val.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)val.DayOfWeek));
         }
 
         #region Command implementations
