@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:KronosUI.Controls"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         x:Name="PictographicMessageBox"
-        mc:Ignorable="d" Width="400"
-        SizeToContent="Height" AllowsTransparency="True" Background="Transparent"
+        mc:Ignorable="d" MinWidth="400" MaxWidth="600"
+        SizeToContent="WidthAndHeight" AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -27,11 +27,11 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Header}" FontWeight="Bold" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Message}" />
-            <Button Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Click="Accept_Click">
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Message}" TextWrapping="Wrap" />
+            <Button Grid.Row="2" Grid.Column="0" Name="B_Accept" HorizontalAlignment="Center" Click="Accept_Click">
                 <svgc:SvgViewbox Source="/Images/tick.svg" Margin="5" />
             </Button>
-            <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Click="Deny_Click">
+            <Button Grid.Row="2" Grid.Column="1" Name="B_Deny" HorizontalAlignment="Center" Click="Deny_Click">
                 <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
             </Button>
         </Grid>

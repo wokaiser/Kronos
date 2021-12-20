@@ -54,12 +54,12 @@ namespace KronosUI.ViewModels
         {
             if (dataManger.IsAccountInUse(account))
             {
-                MessageBox.Show("Die Kontierung: '" + account.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Kontierung in Verwendung", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PictoMsgBox.ShowMessage("Die Kontierung: '" + account.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Kontierung in Verwendung");
 
                 return false;
             }
 
-            if (MessageBox.Show("Die Kontierung: '" + account.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if ((bool)PictoMsgBox.ShowMessage("Die Kontierung: '" + account.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", PictoMsgBoxButton.YesNo))
             {
                 var tmp = account.ToString();
                 dataManger.Accounts.Remove(account);
@@ -76,12 +76,12 @@ namespace KronosUI.ViewModels
         {
             if (dataManger.IsTaskInUse(task))
             {
-                MessageBox.Show("Das Arbeitspaket: '" + task.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Arbeitspaket in Verwendung", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PictoMsgBox.ShowMessage("Das Arbeitspaket: '" + task.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Arbeitspaket in Verwendung");
 
                 return false;
             }
 
-            if (MessageBox.Show("Das Arbeitspaket: '" + task.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if ((bool)PictoMsgBox.ShowMessage("Das Arbeitspaket: '" + task.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", PictoMsgBoxButton.YesNo))
             {
                 dataManger.FindCorrespondingAccount(task).AssignedTasks.Remove(task);
 

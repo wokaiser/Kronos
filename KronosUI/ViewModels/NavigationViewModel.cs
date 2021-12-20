@@ -119,7 +119,7 @@ namespace KronosUI.ViewModels
 
         void Exit()
         {            
-            if ((bool)PictoMsgBox.ShowMessage("Beenden", "Möchten Sie wirklich das Programm beenden?"))
+            if ((bool)PictoMsgBox.ShowMessage("Möchten Sie wirklich das Programm beenden?", "Beenden", PictoMsgBoxButton.YesNo))
             {
                 Application.Current.Shutdown();
             }
