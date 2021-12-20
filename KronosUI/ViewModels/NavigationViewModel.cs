@@ -1,4 +1,5 @@
 ﻿using KronosData.Logic;
+using KronosUI.Controls;
 using KronosUI.Events;
 using KronosUI.Model;
 using KronosUI.Views;
@@ -117,10 +118,8 @@ namespace KronosUI.ViewModels
         }
 
         void Exit()
-        {
-            var res = MessageBox.Show("Möchten Sie wirklich das Programm beenden?", "Beenden", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (res == MessageBoxResult.Yes)
+        {            
+            if ((bool)PictoMsgBox.ShowMessage("Beenden", "Möchten Sie wirklich das Programm beenden?"))
             {
                 Application.Current.Shutdown();
             }

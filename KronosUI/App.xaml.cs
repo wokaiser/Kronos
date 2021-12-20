@@ -1,5 +1,6 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Controls;
 using KronosUI.ViewModels;
 using KronosUI.Views;
 using Prism.Ioc;
