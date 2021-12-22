@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace KronosData.Model
 {
@@ -48,6 +49,7 @@ namespace KronosData.Model
         /// <summary>
         /// Returns the total time of work
         /// </summary>
+        [JsonIgnore]
         public TimeSpan TotalWorkTime
         {
             get { return WorkTime.Duration - BreakTime; }
@@ -56,6 +58,7 @@ namespace KronosData.Model
         /// <summary>
         /// Returns the total overtime
         /// </summary>
+        [JsonIgnore]
         public TimeSpan TotalOverTime
         {
             get { return TotalWorkTime.Ticks > 0 ? TotalWorkTime - DailyWorkTime : new TimeSpan(0); }

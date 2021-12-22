@@ -26,9 +26,7 @@
                     <DataGridTextColumn Header="Bis" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" />
                     <DataGridTextColumn Header="Pause" Binding="{Binding BreakTime, Converter={StaticResource timeSpanConverter}}" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" />
-                    <DataGridTextColumn Header="Differenz" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" />
-                    <DataGridTextColumn Header="Task1" />
-                    <DataGridTextColumn Header="Task2" />
+                    <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" />
                 </DataGrid.Columns>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">

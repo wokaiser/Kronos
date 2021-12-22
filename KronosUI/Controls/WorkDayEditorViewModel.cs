@@ -4,11 +4,8 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace KronosUI.Controls
@@ -51,6 +48,18 @@ namespace KronosUI.Controls
             CurrentDay.WorkTime.Begin = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
             CurrentDay.WorkTime.End = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
             CurrentDay.BreakTime = new TimeSpan(0, 45, 0);
+        }
+
+        private TimeSpan GetAccountedTime()
+        {
+            var retVal = new TimeSpan(0);
+
+            foreach (var wItem in CurrentDay.AssignedWorkItems)
+            {
+                retVal += wItem.Duration;
+            }
+
+            return retVal;
         }
 
         #region Command implementations
@@ -118,6 +127,7 @@ namespace KronosUI.Controls
                 CurrentDay.WorkTime.Begin = value;
                 RaisePropertyChanged(nameof(BeginOfDay));
                 RaisePropertyChanged(nameof(TotalWorkHours));
+                RaisePropertyChanged(nameof(UnaccountedHours));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
@@ -130,6 +140,7 @@ namespace KronosUI.Controls
                 CurrentDay.WorkTime.End = value;
                 RaisePropertyChanged(nameof(EndOfDay));
                 RaisePropertyChanged(nameof(TotalWorkHours));
+                RaisePropertyChanged(nameof(UnaccountedHours));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
@@ -142,6 +153,20 @@ namespace KronosUI.Controls
                 CurrentDay.BreakTime = value;
                 RaisePropertyChanged(nameof(BreakTime));
                 RaisePropertyChanged(nameof(TotalWorkHours));
+                RaisePropertyChanged(nameof(UnaccountedHours));
+                SaveChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public TimeSpan DailyWorkTime
+        {
+            get { return CurrentDay.DailyWorkTime; }
+            set
+            {
+                CurrentDay.DailyWorkTime = value;
+                RaisePropertyChanged(nameof(DailyWorkTime));
+                RaisePropertyChanged(nameof(TotalWorkHours));
+                RaisePropertyChanged(nameof(UnaccountedHours));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
@@ -159,7 +184,9 @@ namespace KronosUI.Controls
         {
             get
             {
-                return "7 h";
+                var uaHours = EndOfDay - BeginOfDay - BreakTime - GetAccountedTime();
+                var retVal = string.Format("{0} h", uaHours.ToString(@"hh\:mm"));
+                return uaHours < TimeSpan.Zero ? "-" + retVal : retVal;
             }
         }
 
