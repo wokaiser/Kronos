@@ -1,6 +1,5 @@
 ﻿using KronosData.Model;
-using KronosUI.Views;
-using Prism.Ioc;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,7 +15,7 @@ namespace KronosUI.Controls
             InitializeComponent();
 
             DataContext = new WorkDayEditorViewModel(selectedItem);
-            Owner = ContainerLocator.Container.Resolve<Shell>();
+            Owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         }
 
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)

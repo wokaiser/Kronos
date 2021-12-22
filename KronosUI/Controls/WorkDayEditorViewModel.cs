@@ -117,6 +117,7 @@ namespace KronosUI.Controls
             {
                 CurrentDay.WorkTime.Begin = value;
                 RaisePropertyChanged(nameof(BeginOfDay));
+                RaisePropertyChanged(nameof(TotalWorkHours));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
@@ -128,6 +129,7 @@ namespace KronosUI.Controls
             {
                 CurrentDay.WorkTime.End = value;
                 RaisePropertyChanged(nameof(EndOfDay));
+                RaisePropertyChanged(nameof(TotalWorkHours));
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }
@@ -139,7 +141,25 @@ namespace KronosUI.Controls
             {
                 CurrentDay.BreakTime = value;
                 RaisePropertyChanged(nameof(BreakTime));
+                RaisePropertyChanged(nameof(TotalWorkHours));
                 SaveChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public string TotalWorkHours
+        {
+            get
+            {
+                var wHours = EndOfDay - BeginOfDay - BreakTime;
+                return string.Format("{0} h", wHours.ToString(@"hh\:mm"));
+            }
+        }
+
+        public string UnaccountedHours
+        {
+            get
+            {
+                return "7 h";
             }
         }
 

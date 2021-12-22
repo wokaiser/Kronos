@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace KronosData.Model
 {
-    public class Account : DB_Access, INotifyPropertyChanged
+    public class Account : INotifyPropertyChanged
     {
         private string number;
         private string title;

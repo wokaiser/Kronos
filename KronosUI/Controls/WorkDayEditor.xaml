@@ -72,9 +72,20 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Pausenzeit" HorizontalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Pausenzeit" HorizontalAlignment="Center" />
+                    <controls:TimePicker Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Totale Arbeitszeit:" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding TotalWorkHours}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Unkontierte Stunden:" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding UnaccountedHours}" />
                 </Grid>
             </Border>
             <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">

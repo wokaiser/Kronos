@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace KronosData.Model
 {
-    public class User : DB_Access
+    public class User
     {
         /// <summary>
         /// Creates a new user object
