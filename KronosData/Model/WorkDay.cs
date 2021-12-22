@@ -61,7 +61,16 @@ namespace KronosData.Model
         [JsonIgnore]
         public TimeSpan TotalOverTime
         {
-            get { return TotalWorkTime.Ticks > 0 ? TotalWorkTime - DailyWorkTime : new TimeSpan(0); }
+            get
+            {
+                if (TotalWorkTime > TimeSpan.Zero)
+                {
+                    var overTime = TotalWorkTime - DailyWorkTime;
+                    return overTime < TimeSpan.Zero ? new TimeSpan(0) : overTime;
+                }
+
+                return new TimeSpan(0);
+            }
         }
 
         /// <summary>

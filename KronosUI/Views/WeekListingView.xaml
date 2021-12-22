@@ -22,8 +22,8 @@
             <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkWeek}" IsReadOnly="True" SelectedItem="{Binding CurrentWorkDay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Tag" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=DATE}" Width="*" />
-                    <DataGridTextColumn Header="Von" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" Width="100" />
-                    <DataGridTextColumn Header="Bis" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" Width="100" />
+                    <DataGridTextColumn Header="Beginn" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" Width="100" />
+                    <DataGridTextColumn Header="Ende" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" Width="100" />
                     <DataGridTextColumn Header="Pause" Binding="{Binding BreakTime, Converter={StaticResource timeSpanConverter}}" Width="100" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" Width="100" />
                     <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" MinWidth="100" />

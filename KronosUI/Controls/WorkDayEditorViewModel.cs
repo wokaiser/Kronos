@@ -62,6 +62,15 @@ namespace KronosUI.Controls
             return retVal;
         }
 
+        private void UpdateProperties()
+        {
+            RaisePropertyChanged(nameof(DailyWorkTime));
+            RaisePropertyChanged(nameof(TotalWorkHours));
+            RaisePropertyChanged(nameof(TotalOvertime));
+            RaisePropertyChanged(nameof(UnaccountedHours));
+            SaveChangesCommand.RaiseCanExecuteChanged();
+        }
+
         #region Command implementations
 
         public void InitializeCommands()
@@ -125,10 +134,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.WorkTime.Begin = value;
-                RaisePropertyChanged(nameof(BeginOfDay));
-                RaisePropertyChanged(nameof(TotalWorkHours));
-                RaisePropertyChanged(nameof(UnaccountedHours));
-                SaveChangesCommand.RaiseCanExecuteChanged();
+                UpdateProperties();
             }
         }
 
@@ -138,10 +144,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.WorkTime.End = value;
-                RaisePropertyChanged(nameof(EndOfDay));
-                RaisePropertyChanged(nameof(TotalWorkHours));
-                RaisePropertyChanged(nameof(UnaccountedHours));
-                SaveChangesCommand.RaiseCanExecuteChanged();
+                UpdateProperties();
             }
         }
 
@@ -151,10 +154,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.BreakTime = value;
-                RaisePropertyChanged(nameof(BreakTime));
-                RaisePropertyChanged(nameof(TotalWorkHours));
-                RaisePropertyChanged(nameof(UnaccountedHours));
-                SaveChangesCommand.RaiseCanExecuteChanged();
+                UpdateProperties();
             }
         }
 
@@ -164,10 +164,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.DailyWorkTime = value;
-                RaisePropertyChanged(nameof(DailyWorkTime));
-                RaisePropertyChanged(nameof(TotalWorkHours));
-                RaisePropertyChanged(nameof(UnaccountedHours));
-                SaveChangesCommand.RaiseCanExecuteChanged();
+                UpdateProperties();
             }
         }
 
@@ -177,6 +174,14 @@ namespace KronosUI.Controls
             {
                 var wHours = EndOfDay - BeginOfDay - BreakTime;
                 return string.Format("{0} h", wHours.ToString(@"hh\:mm"));
+            }
+        }
+
+        public string TotalOvertime
+        {
+            get
+            {
+                return string.Format("{0} h", CurrentDay.TotalOverTime.ToString(@"hh\:mm"));
             }
         }
 
