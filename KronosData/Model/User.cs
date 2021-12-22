@@ -56,15 +56,15 @@ namespace KronosData.Model
         public string LastName { get; set; }
 
         /// <summary>
-        /// The work items assigned to the user
-        /// </summary>
-        public ObservableCollection<WorkDay> AssignedWorkDays { get; }
-
-        /// <summary>
         /// The settings for the user
         /// </summary>
         [JsonProperty]
         public Settings UserSettings { get; private set; }
+
+        /// <summary>
+        /// The work items assigned to the user
+        /// </summary>
+        public ObservableCollection<WorkDay> AssignedWorkDays { get; }
 
         #endregion
 
