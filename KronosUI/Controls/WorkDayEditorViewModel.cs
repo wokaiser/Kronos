@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace KronosUI.Controls
     {
         private string title;
         private WorkDay currentDay;
+        private WorkItem currentWorkItem;
         private readonly DataManager dataManager;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
@@ -62,13 +64,15 @@ namespace KronosUI.Controls
             return retVal;
         }
 
-        private void UpdateProperties()
+        private void RaisePropertiesChanged()
         {
             RaisePropertyChanged(nameof(DailyWorkTime));
             RaisePropertyChanged(nameof(TotalWorkHours));
             RaisePropertyChanged(nameof(TotalOvertime));
             RaisePropertyChanged(nameof(UnaccountedHours));
+            RaisePropertyChanged(nameof(WorkItems));
             SaveChangesCommand.RaiseCanExecuteChanged();
+            EditWorkItemCommand.RaiseCanExecuteChanged();
         }
 
         #region Command implementations
@@ -78,6 +82,7 @@ namespace KronosUI.Controls
             SaveChangesCommand = new DelegateCommand<Window>(SaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
             AddWorkItemCommand = new DelegateCommand(AddWorkItem);
+            EditWorkItemCommand = new DelegateCommand(EditWorkItem, CanEditWorkItem);
             RemoveWorkItemCommand = new DelegateCommand(RemoveWorkItem, CanRemoveWorkItem);
         }
 
@@ -97,17 +102,27 @@ namespace KronosUI.Controls
 
         public void AddWorkItem()
         {
+            PictoMsgBox.ShowMessage("Add WorkItem");
+        }
 
+        public void EditWorkItem()
+        {
+            PictoMsgBox.ShowMessage("Edit WorkItem");
         }
 
         public void RemoveWorkItem()
         {
+            PictoMsgBox.ShowMessage("Remove WorkItem");
+        }
 
+        public bool CanEditWorkItem()
+        {
+            return CurrentWorkItem != null;
         }
 
         public bool CanRemoveWorkItem()
         {
-            return false;
+            return CurrentWorkItem != null;
         }
 
         #endregion
@@ -120,7 +135,26 @@ namespace KronosUI.Controls
 
         public DelegateCommand AddWorkItemCommand { get; private set; }
 
+        public DelegateCommand EditWorkItemCommand { get; private set; }
+
         public DelegateCommand RemoveWorkItemCommand { get; private set; }
+
+        public WorkDay CurrentDay
+        {
+            get { return currentDay; }
+            set { SetProperty(ref currentDay, value); }
+        }
+
+        public WorkItem CurrentWorkItem
+        {
+            get { return currentWorkItem; }
+            set 
+            {
+                SetProperty(ref currentWorkItem, value);
+                RemoveWorkItemCommand.RaiseCanExecuteChanged();
+                EditWorkItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         public string Title
         {
@@ -134,7 +168,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.WorkTime.Begin = value;
-                UpdateProperties();
+                RaisePropertiesChanged();
             }
         }
 
@@ -144,7 +178,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.WorkTime.End = value;
-                UpdateProperties();
+                RaisePropertiesChanged();
             }
         }
 
@@ -154,7 +188,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.BreakTime = value;
-                UpdateProperties();
+                RaisePropertiesChanged();
             }
         }
 
@@ -164,7 +198,7 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.DailyWorkTime = value;
-                UpdateProperties();
+                RaisePropertiesChanged();
             }
         }
 
@@ -195,10 +229,12 @@ namespace KronosUI.Controls
             }
         }
 
-        public WorkDay CurrentDay
+        public ObservableCollection<WorkItem> WorkItems
         {
-            get { return currentDay; }
-            set { SetProperty(ref currentDay, value); }
+            get
+            {
+                return CurrentDay.AssignedWorkItems;
+            }
         }
 
         #endregion

@@ -2,16 +2,19 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:local="clr-namespace:KronosUI.Controls"
         xmlns:controls="clr-namespace:KronosUI.Controls"
+        xmlns:Converters="clr-namespace:KronosUI.Converters"
         mc:Ignorable="d"
         x:Name="WDayEditor"
         Height="450" Width="800"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
+        <Converters:TimeSpanToStringConverter x:Key="timeSpanConverter" />
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontWeight" Value="Bold" />
@@ -102,17 +105,36 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="AUTO" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
-                    <DataGrid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
+                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding WorkItems}" SelectedItem="{Binding CurrentWorkItem}" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Arbeitspaket" Width="*" />
-                            <DataGridTemplateColumn Header="Dauer" Width="100" />
+                            <DataGridTextColumn Header="Arbeitspaket" Binding="{Binding AssignedWorkTask}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, Converter={StaticResource timeSpanConverter}}" Width="100" />
                         </DataGrid.Columns>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding EditWorkItemCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </DataGrid>
-                    <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding RemoveWorkItemCommand}">
+                    <Button Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" ToolTip="Arbeitspaket entfernen" Command="{Binding RemoveWorkItemCommand}" Margin="5">
                         <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
                     </Button>
-                    <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding AddWorkItemCommand}">
+                    <Button Grid.Row="2" Grid.Column="1" ToolTip="Arbeitspaket bearbeiten" Command="{Binding EditWorkItemCommand}" Margin="5">
+                        <svgc:SvgViewbox Source="/Images/edit.svg" Margin="5" />
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="2" ToolTip="Arbeitspaket hinzufügen" Command="{Binding AddWorkItemCommand}" Margin="5">
                         <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
                     </Button>
                 </Grid>
