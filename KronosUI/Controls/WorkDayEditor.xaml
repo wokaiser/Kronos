@@ -102,8 +102,8 @@
                     <TextBlock Grid.Row="0" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
                     <DataGrid Grid.Row="1">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Arbeitspaket" />
-                            <DataGridTemplateColumn Header="Dauer" />
+                            <DataGridTemplateColumn Header="Arbeitspaket" Width="*" />
+                            <DataGridTemplateColumn Header="Dauer" Width="100" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding RemoveWorkItemCommand}">
