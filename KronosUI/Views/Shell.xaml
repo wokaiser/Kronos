@@ -7,8 +7,9 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:KronosUI.Views"
         mc:Ignorable="d"
+        AllowsTransparency="True" Background="Transparent"
         Title="Kronos Viewer" Width="1000" Height="700" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico" WindowStyle="None" ResizeMode="NoResize">
-    <Border BorderThickness="1" BorderBrush="DarkGray">
+    <Border BorderThickness="3" BorderBrush="DarkGray" CornerRadius="8" Background="White">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />
@@ -21,7 +22,7 @@
                 <ColumnDefinition Width="360" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
-                <TextBlock Text="Kronos Viewer" FontSize="16" FontWeight="Bold" Margin="10,0,0,0" />
+                <TextBlock Text="Kronos Zeiterfassung" FontSize="16" FontWeight="Bold" Margin="10,0,0,0" />
             </StackPanel>
             <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
             <ContentControl Grid.Row="2" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
