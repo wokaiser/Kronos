@@ -3,6 +3,7 @@ using KronosData.Model;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -13,16 +14,21 @@ namespace KronosUI.Controls
     {
         private readonly DataManager dataManager;
 
-        private object selectedItem;
+        private bool hasChanged;
+        private WorkTask selectedItem;
         private WorkItem currentWorkItem;
         private ObservableCollection<Account> currentAccounts;
 
         public WorkItemEditorViewModel(WorkItem selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
-            CurrentWorkItem = selectedItem;
 
             Initialize();
+            
+            CurrentWorkItem = selectedItem;
+            SelectedItem = CurrentWorkItem.AssignedWorkTask;
+
+            hasChanged = false;
         }
 
         private void Initialize()
@@ -37,16 +43,19 @@ namespace KronosUI.Controls
         private void InitializeCommands()
         {
             ItemSelectionChangedCommand = new DelegateCommand<object>(ItemSelectionChanged);
-            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges);
+            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
         }
 
         private void ItemSelectionChanged(object param)
         {
-            SelectedItem = param;
+            if (param is WorkTask)
+            {
+                SelectedItem = param as WorkTask;
+            }
         }
 
-        public void SaveChanges(Window window)
+        private void SaveChanges(Window window)
         {
             //TODO: Do save changes
 
@@ -54,10 +63,15 @@ namespace KronosUI.Controls
             window.Close();
         }
 
-        public void RevokeChanges(Window window)
+        private void RevokeChanges(Window window)
         {
             window.DialogResult = false;
             window.Close();
+        }
+
+        private bool CanSaveChanges(Window window)
+        {
+            return hasChanged;
         }
 
         #endregion
@@ -82,10 +96,37 @@ namespace KronosUI.Controls
             set { SetProperty(ref currentAccounts, value); }
         }
 
-        public object SelectedItem
+        public WorkTask SelectedItem
         {
             get { return selectedItem; }
-            set { SetProperty(ref selectedItem, value); }
+            set
+            {
+                if (value is WorkTask)
+                {
+                    hasChanged = true;
+                    SetProperty(ref selectedItem, value);
+                    RaisePropertyChanged(nameof(SelectedWorkTask));
+                    SaveChangesCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public string SelectedWorkTask
+        {
+            get { return string.Format("{0}\n{1}", SelectedItem.AssignedAccountNumber, SelectedItem.Title); }
+        }
+
+        public TimeSpan Duration
+        {
+            get { return CurrentWorkItem.Duration; }
+            set
+            {
+                hasChanged = true;
+                CurrentWorkItem.Duration = value;
+                RaisePropertyChanged(nameof(CurrentWorkItem));
+                RaisePropertyChanged(nameof(Duration));
+                SaveChangesCommand.RaiseCanExecuteChanged();
+            }
         }
 
         #endregion

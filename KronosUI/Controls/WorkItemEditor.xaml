@@ -31,6 +31,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -62,12 +64,15 @@
                     </i:Interaction.Triggers>
                 </TreeView>
             </ScrollViewer>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Dauer" />
-            <local:TimePicker Grid.Row="3" Grid.Column="1" />
-            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}">
+            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Dauer:" HorizontalAlignment="Right" />
+            <local:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding Duration}" Margin="5" />            
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Ausgewähltes Arbeitspaket:" />
+            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedWorkTask}" Foreground="LightGray" />
+            <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}" Style="{StaticResource SaveButtonStyle}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
-            <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}">
+            <Button Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}">
                 <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
             </Button>
         </Grid>
