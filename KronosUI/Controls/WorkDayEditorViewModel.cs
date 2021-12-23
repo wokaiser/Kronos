@@ -107,7 +107,7 @@ namespace KronosUI.Controls
 
         public void EditWorkItem()
         {
-            PictoMsgBox.ShowMessage("Edit WorkItem");
+            new WorkItemEditor(CurrentWorkItem).ShowDialog();
         }
 
         public void RemoveWorkItem()
