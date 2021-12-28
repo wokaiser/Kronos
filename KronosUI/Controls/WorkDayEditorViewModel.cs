@@ -71,6 +71,7 @@ namespace KronosUI.Controls
             RaisePropertyChanged(nameof(TotalOvertime));
             RaisePropertyChanged(nameof(UnaccountedHours));
             RaisePropertyChanged(nameof(WorkItems));
+            RaisePropertyChanged(nameof(IsMobileOffice));
             SaveChangesCommand.RaiseCanExecuteChanged();
             EditWorkItemCommand.RaiseCanExecuteChanged();
         }
@@ -198,6 +199,16 @@ namespace KronosUI.Controls
             set
             {
                 CurrentDay.DailyWorkTime = value;
+                RaisePropertiesChanged();
+            }
+        }
+
+        public bool IsMobileOffice
+        {
+            get { return CurrentDay.DayType == WorkDay.DayTypeEnum.HomeOffice; }
+            set
+            {
+                CurrentDay.DayType = value ? WorkDay.DayTypeEnum.HomeOffice : WorkDay.DayTypeEnum.Default;
                 RaisePropertiesChanged();
             }
         }
