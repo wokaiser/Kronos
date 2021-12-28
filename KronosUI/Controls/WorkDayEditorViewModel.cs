@@ -17,12 +17,12 @@ namespace KronosUI.Controls
         private WorkDay currentDay;
         private WorkItem currentWorkItem;
         private readonly DataManager dataManager;
+        private bool hasChanged;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
 
-            InitializeCommands();
             InitializeEditor(selectedItem);
         }
 
@@ -33,6 +33,10 @@ namespace KronosUI.Controls
                 selectedItem.WorkTime.Date.Date.ToShortDateString());
 
             SetupCurrentWorkDay(selectedItem);
+
+            hasChanged = false;
+
+            InitializeCommands();
         }
 
         private void SetupCurrentWorkDay(WorkDay workDay)
@@ -66,6 +70,7 @@ namespace KronosUI.Controls
 
         private void RaisePropertiesChanged()
         {
+            hasChanged = true;
             RaisePropertyChanged(nameof(DailyWorkTime));
             RaisePropertyChanged(nameof(TotalWorkHours));
             RaisePropertyChanged(nameof(TotalOvertime));
@@ -80,14 +85,14 @@ namespace KronosUI.Controls
 
         public void InitializeCommands()
         {
-            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges);
+            SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
             AddWorkItemCommand = new DelegateCommand(AddWorkItem);
             EditWorkItemCommand = new DelegateCommand(EditWorkItem, CanEditWorkItem);
             RemoveWorkItemCommand = new DelegateCommand(RemoveWorkItem, CanRemoveWorkItem);
         }
 
-        public void SaveChanges(Window window)
+        private void SaveChanges(Window window)
         {
             //TODO: Do save changes
 
@@ -95,33 +100,38 @@ namespace KronosUI.Controls
             window.Close();
         }
 
-        public void RevokeChanges(Window window)
+        private bool CanSaveChanges(Window windowd)
+        {
+            return hasChanged;
+        }
+
+        private void RevokeChanges(Window window)
         {
             window.DialogResult = false;
             window.Close();
         }
 
-        public void AddWorkItem()
+        private void AddWorkItem()
         {
             PictoMsgBox.ShowMessage("Add WorkItem");
         }
 
-        public void EditWorkItem()
+        private void EditWorkItem()
         {
             new WorkItemEditor(CurrentWorkItem).ShowDialog();
         }
 
-        public void RemoveWorkItem()
-        {
-            PictoMsgBox.ShowMessage("Remove WorkItem");
-        }
-
-        public bool CanEditWorkItem()
+        private bool CanEditWorkItem()
         {
             return CurrentWorkItem != null;
         }
 
-        public bool CanRemoveWorkItem()
+        private void RemoveWorkItem()
+        {
+            PictoMsgBox.ShowMessage("Remove WorkItem");
+        }
+
+        private bool CanRemoveWorkItem()
         {
             return CurrentWorkItem != null;
         }
