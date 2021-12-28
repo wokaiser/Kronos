@@ -46,7 +46,7 @@ namespace KronosUI.Controls
                 return;
             }
 
-            CurrentDay = new WorkDay(WorkDay.ShiftTypeEnum.None, WorkDay.DayTypeEnum.Default);
+            CurrentDay = new WorkDay(WorkDay.DayTypeEnum.Default);
             CurrentDay.WorkTime.Begin = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
             CurrentDay.WorkTime.End = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
             CurrentDay.BreakTime = new TimeSpan(0, 45, 0);

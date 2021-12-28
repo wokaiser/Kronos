@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Header}" FontWeight="Bold" />
-            <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+            <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="DodgerBlue" Height="3" />
             <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Message}" TextWrapping="Wrap" />
             <Button Grid.Row="3" Grid.Column="0" Name="B_Accept" HorizontalAlignment="Center" Click="Accept_Click">
                 <svgc:SvgViewbox Source="/Images/tick.svg" Margin="5" />

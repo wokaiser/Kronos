@@ -15,6 +15,7 @@
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="AUTO" />
@@ -23,14 +24,15 @@
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
                 <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold" Margin="5,0,0,0" />
             </StackPanel>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Titel" FontSize="16" Margin="5" />
-            <TextBox Grid.Row="1" Grid.Column="1" Width="300" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Kontierungsnummer" FontSize="16" Margin="5" Visibility="{Binding IsNumberVisible}" />
-            <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="5" Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsNumberVisible}" />
-            <Button Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}" Style="{StaticResource SaveButtonStyle}">
+            <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="SteelBlue" Height="3" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Titel" FontSize="16" Margin="5" />
+            <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Kontierungsnummer" FontSize="16" Margin="5" Visibility="{Binding IsNumberVisible}" />
+            <TextBox Grid.Row="3" Grid.Column="1" Width="300" Margin="5" Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsNumberVisible}" />
+            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}" Style="{StaticResource SaveButtonStyle}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
-            <Button Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding AbortCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}">
+            <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding AbortCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}">
                 <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
             </Button>
         </Grid>

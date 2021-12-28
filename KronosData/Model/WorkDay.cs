@@ -7,13 +7,11 @@ namespace KronosData.Model
     public class WorkDay
     {
         public enum DayTypeEnum { Default = 0, HomeOffice }
-        public enum ShiftTypeEnum { None = 0, X_Shift, Y_Shift, Person_C }
 
-        public WorkDay(ShiftTypeEnum shift, DayTypeEnum dayType)
+        public WorkDay(DayTypeEnum dayType)
         {
             WorkTime = new DateUnit();
             BreakTime = new TimeSpan(0);
-            Shift = shift;
             DayType = dayType;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
             DailyWorkTime = new TimeSpan(7, 0, 0);
@@ -35,11 +33,6 @@ namespace KronosData.Model
         /// The type of workday
         /// </summary>
         public DayTypeEnum DayType  { get; set; }
-
-        /// <summary>
-        /// The type of shift of the workday
-        /// </summary>
-        public ShiftTypeEnum Shift { get; set; }
 
         /// <summary>
         /// The total time of work to be done at a day

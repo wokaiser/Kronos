@@ -45,15 +45,15 @@
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
                 <TextBlock Text="{Binding Title}" Margin="5,0,0,0" />
             </StackPanel>
-            <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+            <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkOliveGreen" />
             <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
             <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
                 <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
             </Button>
-            <Border Grid.Row="2" BorderBrush="DarkGreen" Margin="5,5,0,0" HorizontalAlignment="Left">
-                <Grid Margin="5">
+            <Border Grid.Row="2" BorderBrush="DarkGreen" Margin="5,5,0,0" HorizontalAlignment="Stretch">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -63,11 +63,11 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="AUTO" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Arbeitsbeginn" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="1" Grid.Column="0" Value="{Binding BeginOfDay}" />
-                    <GridSplitter Grid.RowSpan="2" Grid.Column="1" Width="5" Margin="5,0,5,0" IsEnabled="False" />
-                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Arbeitsende" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="1" Grid.Column="2" Value="{Binding EndOfDay}" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Beginn" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <controls:TimePicker Grid.Row="1" Grid.Column="0" Value="{Binding BeginOfDay}" HorizontalAlignment="Center" Margin="5" />
+                    <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" Fill="DarkGreen" Width="3" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Ende" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <controls:TimePicker Grid.Row="1" Grid.Column="2" Value="{Binding EndOfDay}" HorizontalAlignment="Center" Margin="5" />
                 </Grid>
             </Border>
             <Border Grid.Row="3" BorderBrush="DarkGreen" Margin="5,5,0,5">
@@ -76,25 +76,27 @@
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="AUTO" />
-                        <ColumnDefinition Width="AUTO" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Soll-Arbeitszeit" HorizontalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="Pausenzeit" HorizontalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Totale Arbeitszeit:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Soll-Arbeitszeit" />
+                    <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
+                    <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Arbeit" />
+                    <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
+                    <Rectangle Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Arbeitszeit:" />
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding TotalWorkHours}" />
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Überstunden:" />
                     <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TotalOvertime}" />
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Unkontierte Stunden:" />
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Unkontiert:" />
                     <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding UnaccountedHours}" />
                 </Grid>
             </Border>
