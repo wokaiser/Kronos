@@ -46,7 +46,7 @@ namespace KronosUI.Controls
                 return;
             }
 
-            CurrentDay = new WorkDay(WorkDay.DayTypeEnum.Default);
+            CurrentDay = new WorkDay(false);
             CurrentDay.WorkTime.Begin = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
             CurrentDay.WorkTime.End = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
             CurrentDay.BreakTime = new TimeSpan(0, 45, 0);
@@ -205,10 +205,10 @@ namespace KronosUI.Controls
 
         public bool IsMobileOffice
         {
-            get { return CurrentDay.DayType == WorkDay.DayTypeEnum.HomeOffice; }
+            get { return CurrentDay.IsMobileDay; }
             set
             {
-                CurrentDay.DayType = value ? WorkDay.DayTypeEnum.HomeOffice : WorkDay.DayTypeEnum.Default;
+                CurrentDay.IsMobileDay = value;
                 RaisePropertiesChanged();
             }
         }

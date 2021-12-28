@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:KronosUI.Views"
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
-        Title="Kronos Viewer" Width="1000" Height="700" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico" WindowStyle="None" ResizeMode="NoResize">
+        Title="Kronos Viewer" Width="1060" Height="700" WindowStartupLocation="CenterScreen" Icon="/Images/clock.ico" WindowStyle="None" ResizeMode="NoResize">
     <Border BorderThickness="3" BorderBrush="DarkGray" CornerRadius="8" Background="White">
         <Grid>
             <Grid.RowDefinitions>

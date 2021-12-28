@@ -6,13 +6,11 @@ namespace KronosData.Model
 {
     public class WorkDay
     {
-        public enum DayTypeEnum { Default = 0, HomeOffice }
-
-        public WorkDay(DayTypeEnum dayType)
+        public WorkDay(bool isMobileDay)
         {
             WorkTime = new DateUnit();
             BreakTime = new TimeSpan(0);
-            DayType = dayType;
+            IsMobileDay = isMobileDay;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
             DailyWorkTime = new TimeSpan(7, 0, 0);
         }
@@ -30,9 +28,9 @@ namespace KronosData.Model
         public TimeSpan BreakTime { get; set; }
 
         /// <summary>
-        /// The type of workday
+        /// Whether the day is spend mobile
         /// </summary>
-        public DayTypeEnum DayType  { get; set; }
+        public bool IsMobileDay { get; set; }
 
         /// <summary>
         /// The total time of work to be done at a day

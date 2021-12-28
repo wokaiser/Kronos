@@ -27,6 +27,7 @@
                     <DataGridTextColumn Header="Pause" Binding="{Binding BreakTime, Converter={StaticResource timeSpanConverter}}" Width="100" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" Width="100" />
                     <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" MinWidth="100" />
+                    <DataGridCheckBoxColumn Header="Mobil" Binding="{Binding IsMobileDay}" />
                 </DataGrid.Columns>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
