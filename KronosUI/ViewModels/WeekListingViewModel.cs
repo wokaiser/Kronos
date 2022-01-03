@@ -82,6 +82,11 @@ namespace KronosUI.ViewModels
 
         public void DeleteItem()
         {
+            if (!(bool)PictoMsgBox.ShowMessage("Delete workday", "Are you sure to delete the selected workday?", PictoMsgBoxButton.YesNo))
+            {
+                return;
+            }
+
             dataManager.CurrentUser.AssignedWorkDays.Remove(CurrentWorkDay);
             FillWorkWeek();
             PendingChanges = true;

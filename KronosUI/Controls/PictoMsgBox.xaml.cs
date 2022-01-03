@@ -57,7 +57,7 @@ namespace KronosUI.Controls
         /// <returns>Returns true</returns>
         public static bool? ShowMessage(string title, string message)
         {
-            return new PictoMsgBox(message, title, PictoMsgBoxButton.OK).ShowDialog();
+            return new PictoMsgBox(title, message, PictoMsgBoxButton.OK).ShowDialog();
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace KronosUI.Controls
         /// <returns>Return value depends on what kind of buttons was pressed</returns>
         public static bool? ShowMessage(string title, string message, PictoMsgBoxButton button)
         {
-            return new PictoMsgBox(message, title, button).ShowDialog();
+            return new PictoMsgBox(title, message, button).ShowDialog();
         }
 
         #endregion
