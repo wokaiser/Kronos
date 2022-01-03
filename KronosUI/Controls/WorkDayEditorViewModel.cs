@@ -29,8 +29,8 @@ namespace KronosUI.Controls
         private void InitializeEditor(WorkDay selectedItem)
         {
             Title = string.Format("{0}, den {1} bearbeiten",
-                CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.Date.DayOfWeek),
-                selectedItem.WorkTime.Date.Date.ToShortDateString());
+                CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.DateOfWork.DayOfWeek),
+                selectedItem.WorkTime.DateOfWork.Date.ToShortDateString());
 
             hasChanged = false;
 
@@ -41,8 +41,8 @@ namespace KronosUI.Controls
 
         private void SetupCurrentWorkDay(WorkDay workDay)
         {
-            CurrentDay = new WorkDay(workDay.WorkTime.Date);
-            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(workDay.WorkTime.Date.Date));
+            CurrentDay = new WorkDay(workDay.WorkTime.DateOfWork);
+            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Equals(workDay.WorkTime.DateOfWork.Date));
 
             if (tmp != null)
             {
@@ -96,7 +96,7 @@ namespace KronosUI.Controls
 
         private void SaveChanges(Window window)
         {
-            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(CurrentDay.WorkTime.Date.Date));
+            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Equals(CurrentDay.WorkTime.DateOfWork.Date));
 
             if (tmp != null)
             {

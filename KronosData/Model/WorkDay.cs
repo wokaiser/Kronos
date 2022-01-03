@@ -8,7 +8,7 @@ namespace KronosData.Model
     {
         public WorkDay()
         {
-            WorkTime = new DateUnit();
+            WorkTime = new WorkDate();
             BreakTime = new TimeSpan(0);
             IsMobileDay = false;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
@@ -17,7 +17,7 @@ namespace KronosData.Model
 
         public WorkDay(DateTime currentDate)
         {
-            WorkTime = new DateUnit(currentDate);
+            WorkTime = new WorkDate(currentDate);
             BreakTime = new TimeSpan(0);
             IsMobileDay = false;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
@@ -32,7 +32,7 @@ namespace KronosData.Model
         {
             WorkTime.Begin = update.WorkTime.Begin;
             WorkTime.End = update.WorkTime.End;
-            WorkTime.Date = update.WorkTime.Date;
+            WorkTime.DateOfWork = update.WorkTime.DateOfWork;
             BreakTime = update.BreakTime;
             IsMobileDay = update.IsMobileDay;
             DailyWorkTime = update.DailyWorkTime;
@@ -49,7 +49,7 @@ namespace KronosData.Model
         /// <summary>
         /// The worktime of the day
         /// </summary>
-        public DateUnit WorkTime { get; set; }
+        public WorkDate WorkTime { get; set; }
 
         /// <summary>
         /// The sum of breaks taken this day

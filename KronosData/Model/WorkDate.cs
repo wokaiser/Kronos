@@ -3,18 +3,18 @@ using System;
 
 namespace KronosData.Model
 {
-    public class DateUnit
+    public class WorkDate
     {
-        public DateUnit()
+        public WorkDate()
         {
-            Date = DateTime.Now;
+            DateOfWork = DateTime.Now;
             Begin = new TimeSpan(0);
             End = new TimeSpan(0);
         }
 
-        public DateUnit(DateTime date)
+        public WorkDate(DateTime date)
         {
-            Date = date;
+            DateOfWork = date;
             Begin = new TimeSpan(0);
             End = new TimeSpan(0);
         }
@@ -22,22 +22,22 @@ namespace KronosData.Model
         #region Properties
 
         /// <summary>
-        /// The date of the DateUnit
+        /// The date of the WorkDate
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime DateOfWork { get; set; }
 
         /// <summary>
-        /// The time where the DateUnit started
+        /// The time where the WorkDate started
         /// </summary>
         public TimeSpan Begin { get; set; }
 
         /// <summary>
-        /// The time where the DateUnit ended
+        /// The time where the WorkDate ended
         /// </summary>
         public TimeSpan End { get; set; }
 
         /// <summary>
-        /// The duration of the DateUnit
+        /// The duration of the WorkDate
         /// </summary>
         [JsonIgnore]
         public TimeSpan Duration { get { return End - Begin; } }

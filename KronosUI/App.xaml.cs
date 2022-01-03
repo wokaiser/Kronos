@@ -45,13 +45,13 @@ namespace KronosUI
             {
                 DailyWorkTime = new TimeSpan(8, 0, 0),
             };
-            day1.WorkTime.Date = new DateTime(2021, 4, 13);
+            day1.WorkTime.DateOfWork = new DateTime(2021, 4, 13);
             day1.WorkTime.Begin = new TimeSpan(8, 0, 0);
             day1.WorkTime.End = new TimeSpan(17, 0, 0);
             day1.BreakTime = new TimeSpan(0, 45, 0);
 
             var day2 = new WorkDay();
-            day2.WorkTime.Date = new DateTime(2021, 4, 14);
+            day2.WorkTime.DateOfWork = new DateTime(2021, 4, 14);
             day2.WorkTime.Begin = new TimeSpan(8, 0, 0);
             day2.WorkTime.End = new TimeSpan(17, 0, 0);
             day2.BreakTime = new TimeSpan(0, 45, 0);

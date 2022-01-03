@@ -9,18 +9,18 @@ namespace KronosUI.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is DateUnit))
+            if (!(value is WorkDate))
             {
-                throw new ArgumentException(string.Format("{0} is not from type {1}", nameof(value), nameof(DateUnit)));
+                throw new ArgumentException(string.Format("{0} is not from type {1}", nameof(value), nameof(WorkDate)));
             }
 
-            var tmp = (value as DateUnit);
+            var tmp = (value as WorkDate);
 
             switch (parameter.ToString().ToUpper())
             {
                 default:
                 case "DATE":
-                    return tmp.Date.ToShortDateString();
+                    return tmp.DateOfWork.ToShortDateString();
 
                 case "BEGIN":
                     return tmp.Begin.Hours == tmp.End.Hours && tmp.Begin.Minutes == tmp.End.Minutes ? string.Empty : tmp.Begin.ToString(@"hh\:mm");
