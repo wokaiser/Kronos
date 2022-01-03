@@ -32,9 +32,9 @@ namespace KronosUI.Controls
                 CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.Date.DayOfWeek),
                 selectedItem.WorkTime.Date.Date.ToShortDateString());
 
-            SetupCurrentWorkDay(selectedItem);
-
             hasChanged = false;
+
+            SetupCurrentWorkDay(selectedItem);
 
             InitializeCommands();
         }
@@ -54,6 +54,8 @@ namespace KronosUI.Controls
             CurrentDay.WorkTime.Begin = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
             CurrentDay.WorkTime.End = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
             CurrentDay.BreakTime = dataManager.CurrentUser.UserSettings.DefaultBreakTime;
+
+            hasChanged = true;
         }
 
         private TimeSpan GetAccountedTime()
