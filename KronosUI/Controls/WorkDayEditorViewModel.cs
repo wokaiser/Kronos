@@ -125,12 +125,15 @@ namespace KronosUI.Controls
 
         private void AddWorkItem()
         {
-            //new WorkItemEditor(CurrentWorkItem).ShowDialog();
+            if (WorkItemEditor.AddWorkItem(CurrentDay))
+            {
+                RaisePropertiesChanged();
+            }
         }
 
         private void EditWorkItem()
         {
-            if ((bool)new WorkItemEditor(CurrentWorkItem).ShowDialog())
+            if (WorkItemEditor.EditWorkItem(CurrentWorkItem))
             {
                 RaisePropertiesChanged();
             }
@@ -143,7 +146,11 @@ namespace KronosUI.Controls
 
         private void RemoveWorkItem()
         {
-            PictoMsgBox.ShowMessage("Remove WorkItem");
+            if ((bool)PictoMsgBox.ShowMessage("Remove WorkItem", "Are you sure to remove the selected work item?", PictoMsgBoxButton.YesNo))
+            {
+                CurrentDay.AssignedWorkItems.Remove(CurrentWorkItem);
+                RaisePropertiesChanged();
+            }
         }
 
         private bool CanRemoveWorkItem()
