@@ -41,19 +41,19 @@ namespace KronosUI.Controls
 
         private void SetupCurrentWorkDay(WorkDay workDay)
         {
+            CurrentDay = new WorkDay(workDay.WorkTime.Date);
             var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(workDay.WorkTime.Date.Date));
 
             if (tmp != null)
             {
-                CurrentDay = tmp;
+                CurrentDay.Update(tmp);
 
                 return;
             }
 
-            CurrentDay = new WorkDay(false);
             CurrentDay.WorkTime.Begin = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
             CurrentDay.WorkTime.End = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
-            CurrentDay.BreakTime = new TimeSpan(0, 45, 0);
+            CurrentDay.BreakTime = dataManager.CurrentUser.UserSettings.DefaultBreakTime;
         }
 
         private TimeSpan GetAccountedTime()
@@ -94,7 +94,16 @@ namespace KronosUI.Controls
 
         private void SaveChanges(Window window)
         {
-            //TODO: Do save changes
+            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(CurrentDay.WorkTime.Date.Date));
+
+            if (tmp != null)
+            {
+                tmp.Update(CurrentDay);
+            }
+            else
+            {
+                dataManager.CurrentUser.AssignedWorkDays.Add(CurrentDay);
+            }
 
             window.DialogResult = true;
             window.Close();
@@ -107,18 +116,22 @@ namespace KronosUI.Controls
 
         private void RevokeChanges(Window window)
         {
+            hasChanged = false;
             window.DialogResult = false;
             window.Close();
         }
 
         private void AddWorkItem()
         {
-            PictoMsgBox.ShowMessage("Add WorkItem");
+            //new WorkItemEditor(CurrentWorkItem).ShowDialog();
         }
 
         private void EditWorkItem()
         {
-            new WorkItemEditor(CurrentWorkItem).ShowDialog();
+            if ((bool)new WorkItemEditor(CurrentWorkItem).ShowDialog())
+            {
+                RaisePropertiesChanged();
+            }
         }
 
         private bool CanEditWorkItem()

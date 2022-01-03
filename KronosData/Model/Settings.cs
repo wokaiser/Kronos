@@ -8,12 +8,14 @@ namespace KronosData.Model
         private TimeSpan defaultDailyWorkTime;
         private TimeSpan defaultBeginOfWork;
         private TimeSpan defaultEndOfWork;
+        private TimeSpan defaultBreakTime;
 
         public Settings()
         {
             DefaultDailyWorkTime = new TimeSpan(0);
             DefaultBeginOfWork = new TimeSpan(0);
             DefaultEndOfWork = new TimeSpan(0);
+            DefaultBreakTime = new TimeSpan(0);
         }
 
         #region INotifyPropertyChanged implementation
@@ -59,6 +61,16 @@ namespace KronosData.Model
             {
                 defaultEndOfWork = value;
                 OnPropertyChanged(nameof(DefaultEndOfWork));
+            }
+        }
+
+        public TimeSpan DefaultBreakTime
+        {
+            get { return defaultBreakTime; }
+            set
+            {
+                defaultBreakTime = value;
+                OnPropertyChanged(nameof(defaultBreakTime));
             }
         }
 

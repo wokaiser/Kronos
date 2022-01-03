@@ -78,6 +78,7 @@
                                 <RowDefinition Height="AUTO" />
                                 <RowDefinition Height="AUTO" />
                                 <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="AUTO" />
@@ -91,6 +92,8 @@
                             <controls:TimePicker Grid.Row="3" Grid.Column="1" Value="{Binding DefaultEndOfWork}" />
                             <TextBlock Grid.Row="4" Grid.Column="0" Text="Soll-Arbeitszeit" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
                             <controls:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding DefaultDailyWorkTime}" />
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Pausenzeit" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
+                            <controls:TimePicker Grid.Row="5" Grid.Column="1" Value="{Binding DefaultBreakTime}" />
                         </Grid>
                     </Border>
                 </Grid>

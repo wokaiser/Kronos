@@ -41,7 +41,7 @@ namespace KronosUI
             var task1 = dataManager.Accounts[0].AssignedTasks[0];
             var task2 = dataManager.Accounts[0].AssignedTasks[1];
 
-            var day1 = new WorkDay(false)
+            var day1 = new WorkDay()
             {
                 DailyWorkTime = new TimeSpan(8, 0, 0),
             };
@@ -50,7 +50,7 @@ namespace KronosUI
             day1.WorkTime.End = new TimeSpan(17, 0, 0);
             day1.BreakTime = new TimeSpan(0, 45, 0);
 
-            var day2 = new WorkDay(true);
+            var day2 = new WorkDay();
             day2.WorkTime.Date = new DateTime(2021, 4, 14);
             day2.WorkTime.Begin = new TimeSpan(8, 0, 0);
             day2.WorkTime.End = new TimeSpan(17, 0, 0);

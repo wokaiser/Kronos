@@ -6,13 +6,42 @@ namespace KronosData.Model
 {
     public class WorkDay
     {
-        public WorkDay(bool isMobileDay)
+        public WorkDay()
         {
             WorkTime = new DateUnit();
             BreakTime = new TimeSpan(0);
-            IsMobileDay = isMobileDay;
+            IsMobileDay = false;
             AssignedWorkItems = new ObservableCollection<WorkItem>();
             DailyWorkTime = new TimeSpan(7, 0, 0);
+        }
+
+        public WorkDay(DateTime currentDate)
+        {
+            WorkTime = new DateUnit(currentDate);
+            BreakTime = new TimeSpan(0);
+            IsMobileDay = false;
+            AssignedWorkItems = new ObservableCollection<WorkItem>();
+            DailyWorkTime = new TimeSpan(7, 0, 0);
+        }
+
+        /// <summary>
+        /// Updates this workday with the info of another one
+        /// </summary>
+        /// <param name="update">The workday to update from</param>
+        public void Update(WorkDay update)
+        {
+            WorkTime.Begin = update.WorkTime.Begin;
+            WorkTime.End = update.WorkTime.End;
+            WorkTime.Date = update.WorkTime.Date;
+            BreakTime = update.BreakTime;
+            IsMobileDay = update.IsMobileDay;
+            DailyWorkTime = update.DailyWorkTime;
+
+            AssignedWorkItems.Clear();
+            foreach(var item in update.AssignedWorkItems)
+            {
+                AssignedWorkItems.Add(item);
+            }
         }
 
         #region Properties

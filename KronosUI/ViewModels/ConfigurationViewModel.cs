@@ -275,6 +275,17 @@ namespace KronosUI.ViewModels
             }
         }
 
+        public TimeSpan DefaultBreakTime
+        {
+            get { return defaultSettings.DefaultBreakTime; }
+            set
+            {
+                defaultSettings.DefaultBreakTime = value;
+                RaisePropertyChanged(nameof(DefaultBreakTime));
+                PendingChanges = true;
+            }
+        }
+
         public ICommand ItemSelectionChangedCommand { get; private set; }
 
         public DelegateCommand AddItemCommand { get; private set; }

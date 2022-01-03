@@ -39,7 +39,7 @@ namespace KronosUI.ViewModels
 
         private void AddWorkDay(DayOfWeek dow)
         {
-            var wDay = new WorkDay(false);
+            var wDay = new WorkDay();
             wDay.WorkTime.Date = CalcDayOfWeek(currentTimeFrame, dow);
 
             var dayToAdd = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.Date.Date.Equals(wDay.WorkTime.Date.Date)) ?? wDay;
@@ -70,6 +70,7 @@ namespace KronosUI.ViewModels
         {
             if ((bool)new WorkDayEditor(CurrentWorkDay).ShowDialog())
             {
+                FillWorkWeek();
                 PendingChanges = true;
             }
         }
@@ -91,6 +92,9 @@ namespace KronosUI.ViewModels
 
         public void RevokeChanges()
         {
+            dataManager.LoadFromFile();
+            FillWorkWeek();
+
             PendingChanges = false;
         }
 
@@ -101,6 +105,7 @@ namespace KronosUI.ViewModels
 
         public void SaveChanges()
         {
+            dataManager.SaveChanges();
             PendingChanges = false;
         }
 

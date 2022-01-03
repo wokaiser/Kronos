@@ -12,6 +12,13 @@ namespace KronosData.Model
             End = new TimeSpan(0);
         }
 
+        public DateUnit(DateTime date)
+        {
+            Date = date;
+            Begin = new TimeSpan(0);
+            End = new TimeSpan(0);
+        }
+
         #region Properties
 
         /// <summary>
