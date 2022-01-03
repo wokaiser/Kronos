@@ -82,11 +82,18 @@ namespace KronosUI.ViewModels
 
         public void DeleteItem()
         {
-
+            dataManager.CurrentUser.AssignedWorkDays.Remove(CurrentWorkDay);
+            FillWorkWeek();
+            PendingChanges = true;
         }
 
         public bool CanDeleteItem()
         {
+            if (CurrentWorkDay != null)
+            {
+                return CurrentWorkDay.WorkTime.Duration > TimeSpan.Zero;
+            }
+
             return false;
         }
 
@@ -184,6 +191,7 @@ namespace KronosUI.ViewModels
             {
                 SetProperty(ref currentWorkDay, value);
                 EditItemCommand.RaiseCanExecuteChanged();
+                DeleteItemCommand.RaiseCanExecuteChanged();
             }
         }
 
