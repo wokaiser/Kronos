@@ -1,6 +1,5 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
-using KronosUI.Controls;
 using KronosUI.ViewModels;
 using KronosUI.Views;
 using Prism.Ioc;
@@ -21,7 +20,8 @@ namespace KronosUI
             Setup();
         }
 
-        private void Save()
+        //TODO: Remove
+        private void SetupSampleDB()
         {
             var dataManager = new DataManager(true);
 
@@ -30,6 +30,7 @@ namespace KronosUI
             dataManager.CurrentUser.UserSettings.DefaultDailyWorkTime = new TimeSpan(7, 0, 0);
             dataManager.CurrentUser.UserSettings.DefaultBeginOfWork = new TimeSpan(8, 0, 0);
             dataManager.CurrentUser.UserSettings.DefaultEndOfWork = new TimeSpan(16, 0, 0);
+            dataManager.CurrentUser.UserSettings.DefaultBreakTime = new TimeSpan(0, 45, 0);
 
             dataManager.Accounts.Add(new Account("AC-123-456-01") { Title = "Research more C#" });
             dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ", dataManager.Accounts[0]));
@@ -40,36 +41,28 @@ namespace KronosUI
 
             var task1 = dataManager.Accounts[0].AssignedTasks[0];
             var task2 = dataManager.Accounts[0].AssignedTasks[1];
+            var day = new DateTime(2021, 1, 1);
 
-            var day1 = new WorkDay()
+            for (int i = 0; i < 365; i++)
             {
-                DailyWorkTime = new TimeSpan(8, 0, 0),
-            };
-            day1.WorkTime.DateOfWork = new DateTime(2021, 4, 13);
-            day1.WorkTime.Begin = new TimeSpan(8, 0, 0);
-            day1.WorkTime.End = new TimeSpan(17, 0, 0);
-            day1.BreakTime = new TimeSpan(0, 45, 0);
-
-            var day2 = new WorkDay();
-            day2.WorkTime.DateOfWork = new DateTime(2021, 4, 14);
-            day2.WorkTime.Begin = new TimeSpan(8, 0, 0);
-            day2.WorkTime.End = new TimeSpan(17, 0, 0);
-            day2.BreakTime = new TimeSpan(0, 45, 0);
-
-            day1.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 30, 0), task1));
-            day1.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 15, 0), task2));
-            day2.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 30, 0), task2));
-            day2.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 15, 0), task1));
-
-            dataManager.CurrentUser.AssignedWorkDays.Add(day1);
-            dataManager.CurrentUser.AssignedWorkDays.Add(day2);
+                dataManager.CurrentUser.AssignedWorkDays.Add(CreateWorkDaySample(day.AddDays(i), task1, task2));
+            }
 
             dataManager.SaveChanges();
         }
 
-        private void Load()
+        //TODO: Remove
+        private WorkDay CreateWorkDaySample(DateTime day, WorkTask task1, WorkTask task2)
         {
-            var dataManager = new DataManager();
+            var retVal = new WorkDay(day);
+            retVal.WorkTime.Begin = new TimeSpan(8, 0, 0);
+            retVal.WorkTime.End = new TimeSpan(17, 0, 0);
+            retVal.BreakTime = new TimeSpan(0, 45, 0);
+
+            retVal.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 0, 0), task1));
+            retVal.AssignedWorkItems.Add(new WorkItem(new TimeSpan(4, 15, 0), task2));
+
+            return retVal;
         }
 
         private void Setup()
@@ -86,7 +79,7 @@ namespace KronosUI
             }
             catch (FileNotFoundException)
             {
-                Save();
+                SetupSampleDB();
             }
         }
 
