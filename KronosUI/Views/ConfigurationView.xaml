@@ -35,7 +35,7 @@
                         <RowDefinition Height="200" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Kontierungen" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
-                    <TreeView Grid.Row="1" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
+                    <TreeView Grid.Row="1" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0" Margin="0,0,0,5">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
                                 <StackPanel Orientation="Horizontal">
