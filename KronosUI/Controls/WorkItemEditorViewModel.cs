@@ -1,11 +1,12 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,29 +14,25 @@ namespace KronosUI.Controls
 {
     public class WorkItemEditorViewModel : BindableBase
     {
+        private readonly IEventAggregator eventAggregator;
         private readonly DataManager dataManager;
 
         private bool hasChanged;
-        private bool addItem;
         private TimeSpan duration;
         private WorkTask selectedTask;
-        private WorkDay currentWorkDay;
-        private WorkItem selecteWorkItem;
         private ObservableCollection<Account> currentAccounts;
 
-        public WorkItemEditorViewModel(WorkDay currentDay, WorkItem selectedItem)
+        public WorkItemEditorViewModel(WorkItem selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
+            eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
 
             Initialize();
 
-            currentWorkDay = currentDay;
-            selecteWorkItem = selectedItem;
             SelectedTask = selectedItem.AssignedWorkTask;
             Duration = selectedItem.Duration;
 
             hasChanged = false;
-            addItem = selectedItem.Equals(WorkItem.Empty);
         }
 
         private void Initialize()
@@ -64,16 +61,7 @@ namespace KronosUI.Controls
 
         private void SaveChanges(Window window)
         {
-            if (addItem)
-            {
-                currentWorkDay.AssignedWorkItems.Add(new WorkItem(Duration, SelectedTask));
-            }
-            else
-            {
-                currentWorkDay.AssignedWorkItems.First(d => d.Equals(selecteWorkItem)).Update(new WorkItem(Duration, SelectedTask));
-            }
-
-            dataManager.CurrentUser.AssignedWorkDays.First(d => d.WorkTime.DateOfWork.Date.Equals(currentWorkDay.WorkTime.DateOfWork.Date)).Update(currentWorkDay);
+            eventAggregator.GetEvent<WorkItemChangedEvent>().Publish(new WorkItem(Duration, SelectedTask));
 
             window.DialogResult = true;
             window.Close();
@@ -87,7 +75,7 @@ namespace KronosUI.Controls
 
         private bool CanSaveChanges(Window window)
         {
-            return hasChanged && SelectedTaskTitle != string.Empty;
+            return hasChanged && SelectedTaskTitle != string.Empty && Duration > TimeSpan.Zero;
         }
 
         #endregion

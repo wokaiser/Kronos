@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace KronosData.Model
 {
-    public class WorkItem
+    public class WorkItem : INotifyPropertyChanged
     {
+        private TimeSpan duration;
+        private WorkTask assignedWorkTask;
+
         /// <summary>
         /// Creats a new work item object
         /// </summary>
@@ -24,6 +28,20 @@ namespace KronosData.Model
             Duration = update.Duration;
             AssignedWorkTask = update.AssignedWorkTask;
         }
+
+        #region IPropertyChanged implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
 
         #region Overrides
 
@@ -60,12 +78,28 @@ namespace KronosData.Model
         /// <summary>
         /// The duration of the work item
         /// </summary>
-        public TimeSpan Duration { get; set; }
+        public TimeSpan Duration
+        {
+            get { return duration; }
+            set
+            {
+                duration = value;
+                OnPropertyChanged(nameof(Duration));
+            }
+        }
 
         /// <summary>
         /// The assigned work task
         /// </summary>
-        public WorkTask AssignedWorkTask { get; private set; }
+        public WorkTask AssignedWorkTask
+        {
+            get { return assignedWorkTask; }
+            private set
+            {
+                assignedWorkTask = value;
+                OnPropertyChanged(nameof(AssignedWorkTask));
+            }
+        }
 
         #endregion
     }

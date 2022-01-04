@@ -10,26 +10,22 @@ namespace KronosUI.Controls
     /// </summary>
     public partial class WorkItemEditor : Window
     {
-        private WorkItemEditor(WorkDay currentDay, WorkItem selectedItem)
+        private WorkItemEditor(WorkItem selectedItem)
         {
             InitializeComponent();
 
-            DataContext = new WorkItemEditorViewModel(currentDay, selectedItem);
+            DataContext = new WorkItemEditorViewModel(selectedItem);
             Owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         }
 
-        public static bool EditWorkItem(WorkDay workDay, WorkItem workItem)
+        public static bool EditWorkItem(WorkItem workItem)
         {
-            var editor = new WorkItemEditor(workDay, workItem);
-
-            return (bool)editor.ShowDialog();
+            return (bool)new WorkItemEditor(workItem).ShowDialog();
         }
 
-        public static bool AddWorkItem(WorkDay currentDay)
+        public static bool AddWorkItem()
         {
-            var editor = new WorkItemEditor(currentDay, WorkItem.Empty);
-
-            return (bool)editor.ShowDialog();
+            return (bool)new WorkItemEditor(WorkItem.Empty).ShowDialog();
         }
 
         private void DragMove_MouseDown(object sender, MouseButtonEventArgs e)

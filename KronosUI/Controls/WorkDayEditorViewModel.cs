@@ -1,6 +1,8 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System;
@@ -13,15 +15,20 @@ namespace KronosUI.Controls
 {
     public class WorkDayEditorViewModel : BindableBase
     {
+        private readonly DataManager dataManager;
+
         private string title;
         private WorkDay currentDay;
         private WorkItem currentWorkItem;
-        private readonly DataManager dataManager;
+        private bool addWorkItem;
         private bool hasChanged;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
+            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<WorkItemChangedEvent>().Subscribe(WorkItemChangedEventHandler);
+
+            addWorkItem = false;
 
             InitializeEditor(selectedItem);
         }
@@ -83,6 +90,26 @@ namespace KronosUI.Controls
             EditWorkItemCommand.RaiseCanExecuteChanged();
         }
 
+        #region Event handler
+
+        private void WorkItemChangedEventHandler(WorkItem changedItem)
+        {
+            if (addWorkItem)
+            {
+                WorkItems.Add(changedItem);
+                addWorkItem = false;
+            }
+            else
+            {
+                WorkItems.First(d => d.Equals(CurrentWorkItem)).Update(changedItem);
+                //CurrentWorkItem.Update(changedItem);
+            }
+
+            //RaisePropertiesChanged();
+        }
+
+        #endregion
+
         #region Command implementations
 
         public void InitializeCommands()
@@ -118,27 +145,19 @@ namespace KronosUI.Controls
 
         private void RevokeChanges(Window window)
         {
-            hasChanged = false;
             window.DialogResult = false;
             window.Close();
         }
 
         private void AddWorkItem()
         {
-            if (WorkItemEditor.AddWorkItem(CurrentDay))
-            {
-                InitializeEditor(CurrentDay);
-                RaisePropertiesChanged();
-            }
+            addWorkItem = true;
+            WorkItemEditor.AddWorkItem();
         }
 
         private void EditWorkItem()
         {
-            if (WorkItemEditor.EditWorkItem(CurrentDay, CurrentWorkItem))
-            {
-                InitializeEditor(CurrentDay);
-                RaisePropertiesChanged();
-            }
+            WorkItemEditor.EditWorkItem(CurrentWorkItem);
         }
 
         private bool CanEditWorkItem()
