@@ -5,6 +5,7 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,20 +16,24 @@ namespace KronosUI.Controls
         private readonly DataManager dataManager;
 
         private bool hasChanged;
-        private WorkTask selectedItem;
-        private WorkItem currentWorkItem;
+        private bool addItem;
+        private TimeSpan duration;
+        private WorkTask selectedTask;
+        private WorkDay currentWorkDay;
         private ObservableCollection<Account> currentAccounts;
 
-        public WorkItemEditorViewModel(WorkItem selectedItem)
+        public WorkItemEditorViewModel(WorkDay currentDay, WorkItem selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
 
             Initialize();
-            
-            CurrentWorkItem = selectedItem;
-            SelectedItem = CurrentWorkItem.AssignedWorkTask;
+
+            currentWorkDay = currentDay;
+            SelectedTask = selectedItem.AssignedWorkTask;
+            Duration = selectedItem.Duration;
 
             hasChanged = false;
+            addItem = selectedItem.Equals(WorkItem.Empty);
         }
 
         private void Initialize()
@@ -51,13 +56,28 @@ namespace KronosUI.Controls
         {
             if (param is WorkTask)
             {
-                SelectedItem = param as WorkTask;
+                SelectedTask = param as WorkTask;
             }
         }
 
         private void SaveChanges(Window window)
         {
-            //TODO: Do save changes
+
+            if (addItem)
+            {
+                currentWorkDay.AssignedWorkItems.Add(new WorkItem(Duration, SelectedTask));
+            }
+            else
+            {
+
+            }
+
+            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Equals(currentWorkDay.WorkTime.DateOfWork.Date));
+
+            if (tmp != null)
+            {
+                tmp.Update(currentWorkDay);
+            }
 
             window.DialogResult = true;
             window.Close();
@@ -71,7 +91,7 @@ namespace KronosUI.Controls
 
         private bool CanSaveChanges(Window window)
         {
-            return hasChanged;
+            return hasChanged && SelectedWorkTask != string.Empty;
         }
 
         #endregion
@@ -84,49 +104,41 @@ namespace KronosUI.Controls
 
         public ICommand ItemSelectionChangedCommand { get; private set; }
 
-        public WorkItem CurrentWorkItem
-        {
-            get { return currentWorkItem; }
-            set { SetProperty(ref currentWorkItem, value); }
-        }
-
         public ObservableCollection<Account> CurrentAccounts
         {
             get { return currentAccounts; }
             set { SetProperty(ref currentAccounts, value); }
         }
 
-        public WorkTask SelectedItem
+        public WorkTask SelectedTask
         {
-            get { return selectedItem; }
+            get { return selectedTask; }
             set
             {
                 if (value is WorkTask)
                 {
                     hasChanged = true;
-                    SetProperty(ref selectedItem, value);
+                    SetProperty(ref selectedTask, value);
                     RaisePropertyChanged(nameof(SelectedWorkTask));
                     SaveChangesCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        public string SelectedWorkTask
-        {
-            get { return string.Format("{0}\n{1}", SelectedItem.AssignedAccountNumber, SelectedItem.Title); }
-        }
-
         public TimeSpan Duration
         {
-            get { return CurrentWorkItem.Duration; }
+            get { return duration; }
             set
             {
                 hasChanged = true;
-                CurrentWorkItem.Duration = value;
-                RaisePropertyChanged(nameof(CurrentWorkItem));
-                RaisePropertyChanged(nameof(Duration));
+                SetProperty(ref duration, value);
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public string SelectedWorkTask
+        {
+            get { return string.Format("{0}\n{1}", SelectedTask.AssignedAccountNumber, SelectedTask.Title); }
         }
 
         #endregion
