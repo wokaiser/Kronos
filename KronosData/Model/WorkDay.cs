@@ -67,6 +67,11 @@ namespace KronosData.Model
         public TimeSpan DailyWorkTime { get; set; }
 
         /// <summary>
+        /// The assigned work items of this day
+        /// </summary>
+        public ObservableCollection<WorkItem> AssignedWorkItems { get; }
+
+        /// <summary>
         /// Returns the total time of work
         /// </summary>
         [JsonIgnore]
@@ -94,9 +99,23 @@ namespace KronosData.Model
         }
 
         /// <summary>
-        /// The assigned work items of this day
+        /// Returns the total accounted time for the day
         /// </summary>
-        public ObservableCollection<WorkItem> AssignedWorkItems { get; }
+        [JsonIgnore]
+        public TimeSpan TotalAccountedTime
+        {
+            get
+            {
+                var retVal = TimeSpan.Zero;
+
+                foreach (var item in AssignedWorkItems)
+                {
+                    retVal = retVal.Add(item.Duration);
+                }
+
+                return retVal;
+            }
+        }
 
         #endregion
     }
