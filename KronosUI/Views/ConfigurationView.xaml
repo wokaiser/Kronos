@@ -35,28 +35,26 @@
                         <RowDefinition Height="200" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Kontierungen" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <TreeView ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Number}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
-                                        <TextBlock Text="{Binding Title}" FontSize="14" />
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="True" />
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectedItemChanged">
-                                    <i:InvokeCommandAction Command="{Binding ItemSelectionChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=AccountTreeView}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TreeView>
-                    </ScrollViewer>
+                    <TreeView Grid.Row="1" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Number}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
+                                    <TextBlock Text="{Binding Title}" FontSize="14" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="IsExpanded" Value="True" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedItemChanged">
+                                <i:InvokeCommandAction Command="{Binding ItemSelectionChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=AccountTreeView}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TreeView>
                 </Grid>
             </Border>
             <Border Grid.Row="1">
