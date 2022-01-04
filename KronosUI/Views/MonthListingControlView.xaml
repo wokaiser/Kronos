@@ -6,8 +6,8 @@
              xmlns:controls="clr-namespace:KronosUI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="360">
-    <Border Background="Gray" CornerRadius="8" Margin="0,0,5,5">
-        <Grid Margin="5">
+    <Border Background="LightSalmon" CornerRadius="8" Margin="0,0,5,5">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="*" />

@@ -1,8 +1,11 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
 using KronosUI.Controls;
+using KronosUI.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Ioc;
+using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -10,7 +13,7 @@ using System.Linq;
 
 namespace KronosUI.ViewModels
 {
-    public class WeekListingViewModel : ListingViewModelBase
+    public class WeekListingViewModel : ListingViewModelBase, INavigationAware
     {
         private ObservableCollection<WorkDay> currentWorkWeek;
         private WorkDay currentWorkDay;
@@ -21,6 +24,7 @@ namespace KronosUI.ViewModels
         public WeekListingViewModel()
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
+            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
 
             InitializeCommands();
             FillWorkWeek();
@@ -55,6 +59,15 @@ namespace KronosUI.ViewModels
         {
             return val.AddDays((int)reqDay - (val.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)val.DayOfWeek));
         }
+
+        #region Evenhandler
+
+        private void TimeFrameUpdatedEventHandler(DateTime newTimeframe)
+        {
+            currentTimeFrame = newTimeframe;
+        }
+
+        #endregion
 
         #region Command implementations
 
@@ -166,6 +179,22 @@ namespace KronosUI.ViewModels
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToNext();
             FillWorkWeek();
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
+            FillWorkWeek();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            // Unused
         }
 
         #endregion

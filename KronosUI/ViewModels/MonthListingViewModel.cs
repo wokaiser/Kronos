@@ -1,9 +1,33 @@
 ﻿using KronosData.Logic;
+using KronosUI.Events;
+using Prism.Ioc;
+using Prism.Events;
+using System;
+using Prism.Regions;
 
 namespace KronosUI.ViewModels
 {
-    public class MonthListingViewModel : ControlViewModelBase
+    public class MonthListingViewModel : ControlViewModelBase, INavigationAware
     {
+        private readonly DataManager dataManager;
+
+        public MonthListingViewModel()
+        {
+            dataManager = ContainerLocator.Container.Resolve<DataManager>();
+            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
+        }
+
+        #region Eventhandler
+
+        private void TimeFrameUpdatedEventHandler(DateTime newTimeFrame)
+        {
+            currentTimeFrame = newTimeFrame;
+        }
+
+        #endregion
+
+        #region Inherited method implementation and overrides
+
         protected override void Initialize()
         {
 
@@ -30,5 +54,22 @@ namespace KronosUI.ViewModels
             currentTimeFrame = currentTimeFrame.AddMonths(1);
             base.SwitchToNext();
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            // Unused
+        }
+
+        #endregion
     }
 }
