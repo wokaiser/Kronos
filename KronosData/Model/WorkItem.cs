@@ -50,16 +50,6 @@ namespace KronosData.Model
             return Duration.ToString(@"hh\:mm");
         }
 
-        /*public override bool Equals(object obj)
-        {
-            return obj is WorkItem item && Duration.Equals(item.Duration) && AssignedWorkTask.Equals(item.AssignedWorkTask);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Duration, AssignedWorkTask);
-        }*/
-
         #endregion
 
         #region Properties

@@ -108,8 +108,7 @@ namespace KronosUI.Controls
                 RaisePropertyChanged(nameof(SelectedWorkItem));
             }
 
-            hasChanged = true;
-            SaveChangesCommand.RaiseCanExecuteChanged();
+            RaisePropertiesChanged();
         }
 
         #endregion
