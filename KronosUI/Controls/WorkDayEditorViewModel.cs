@@ -19,7 +19,8 @@ namespace KronosUI.Controls
 
         private string title;
         private WorkDay currentDay;
-        private WorkItem currentWorkItem;
+        private WorkItem selectedWorkItem;
+        private ObservableCollection<WorkItem> workItems;
         private bool addWorkItem;
         private bool hasChanged;
 
@@ -54,6 +55,7 @@ namespace KronosUI.Controls
             if (tmp != null)
             {
                 CurrentDay.Update(tmp);
+                WorkItems = CurrentDay.AssignedWorkItems;
 
                 return;
             }
@@ -61,6 +63,7 @@ namespace KronosUI.Controls
             CurrentDay.WorkTime.Begin = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
             CurrentDay.WorkTime.End = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
             CurrentDay.BreakTime = dataManager.CurrentUser.UserSettings.DefaultBreakTime;
+            WorkItems = CurrentDay.AssignedWorkItems;
 
             hasChanged = true;
         }
@@ -101,11 +104,12 @@ namespace KronosUI.Controls
             }
             else
             {
-                WorkItems.First(d => d.Equals(CurrentWorkItem)).Update(changedItem);
-                //CurrentWorkItem.Update(changedItem);
+                SelectedWorkItem.Update(changedItem);
+                RaisePropertyChanged(nameof(SelectedWorkItem));
             }
 
-            //RaisePropertiesChanged();
+            hasChanged = true;
+            SaveChangesCommand.RaiseCanExecuteChanged();
         }
 
         #endregion
@@ -157,26 +161,26 @@ namespace KronosUI.Controls
 
         private void EditWorkItem()
         {
-            WorkItemEditor.EditWorkItem(CurrentWorkItem);
+            WorkItemEditor.EditWorkItem(SelectedWorkItem);
         }
 
         private bool CanEditWorkItem()
         {
-            return CurrentWorkItem != null;
+            return SelectedWorkItem != null;
         }
 
         private void RemoveWorkItem()
         {
             if ((bool)PictoMsgBox.ShowMessage("Remove WorkItem", "Are you sure to remove the selected work item?", PictoMsgBoxButton.YesNo))
             {
-                CurrentDay.AssignedWorkItems.Remove(CurrentWorkItem);
+                CurrentDay.AssignedWorkItems.Remove(SelectedWorkItem);
                 RaisePropertiesChanged();
             }
         }
 
         private bool CanRemoveWorkItem()
         {
-            return CurrentWorkItem != null;
+            return SelectedWorkItem != null;
         }
 
         #endregion
@@ -199,12 +203,18 @@ namespace KronosUI.Controls
             set { SetProperty(ref currentDay, value); }
         }
 
-        public WorkItem CurrentWorkItem
+        public ObservableCollection<WorkItem> WorkItems
         {
-            get { return currentWorkItem; }
+            get { return workItems; }
+            set { SetProperty(ref workItems, value); }
+        }
+
+        public WorkItem SelectedWorkItem
+        {
+            get { return selectedWorkItem; }
             set 
             {
-                SetProperty(ref currentWorkItem, value);
+                SetProperty(ref selectedWorkItem, value);
                 RemoveWorkItemCommand.RaiseCanExecuteChanged();
                 EditWorkItemCommand.RaiseCanExecuteChanged();
             }
@@ -290,14 +300,6 @@ namespace KronosUI.Controls
                 var uaHours = EndOfDay - BeginOfDay - BreakTime - GetAccountedTime();
                 var retVal = string.Format("{0} h", uaHours.ToString(@"hh\:mm"));
                 return uaHours < TimeSpan.Zero ? "-" + retVal : retVal;
-            }
-        }
-
-        public ObservableCollection<WorkItem> WorkItems
-        {
-            get
-            {
-                return CurrentDay.AssignedWorkItems;
             }
         }
 

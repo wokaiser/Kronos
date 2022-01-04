@@ -113,7 +113,7 @@
                         <ColumnDefinition Width="AUTO" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
-                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding WorkItems}" SelectedItem="{Binding CurrentWorkItem}" IsReadOnly="True">
+                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding WorkItems}" SelectedItem="{Binding SelectedWorkItem}" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Arbeitspaket" Binding="{Binding AssignedWorkTask}" Width="*">
                                 <DataGridTextColumn.ElementStyle>
