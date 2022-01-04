@@ -68,7 +68,7 @@
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Dauer:" HorizontalAlignment="Right" />
             <local:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding Duration}" Margin="5" />            
             <TextBlock Grid.Row="5" Grid.Column="0" Text="Ausgewähltes Arbeitspaket:" />
-            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedWorkTask}" Foreground="LightGray" />
+            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedTaskTitle}" Foreground="LightGray" />
             <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}" Style="{StaticResource SaveButtonStyle}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>

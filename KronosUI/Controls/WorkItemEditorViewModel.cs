@@ -91,7 +91,7 @@ namespace KronosUI.Controls
 
         private bool CanSaveChanges(Window window)
         {
-            return hasChanged && SelectedWorkTask != string.Empty;
+            return hasChanged && SelectedTaskTitle != string.Empty;
         }
 
         #endregion
@@ -119,7 +119,7 @@ namespace KronosUI.Controls
                 {
                     hasChanged = true;
                     SetProperty(ref selectedTask, value);
-                    RaisePropertyChanged(nameof(SelectedWorkTask));
+                    RaisePropertyChanged(nameof(SelectedTaskTitle));
                     SaveChangesCommand.RaiseCanExecuteChanged();
                 }
             }
@@ -136,7 +136,7 @@ namespace KronosUI.Controls
             }
         }
 
-        public string SelectedWorkTask
+        public string SelectedTaskTitle
         {
             get { return string.Format("{0}\n{1}", SelectedTask.AssignedAccountNumber, SelectedTask.Title); }
         }
