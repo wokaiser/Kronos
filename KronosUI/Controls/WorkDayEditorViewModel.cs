@@ -127,7 +127,7 @@ namespace KronosUI.Controls
         {
             if (WorkItemEditor.AddWorkItem(CurrentDay))
             {
-                //InitializeEditor(CurrentDay);
+                InitializeEditor(CurrentDay);
                 RaisePropertiesChanged();
             }
         }

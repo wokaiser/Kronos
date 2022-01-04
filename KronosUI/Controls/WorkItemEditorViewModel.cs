@@ -20,6 +20,7 @@ namespace KronosUI.Controls
         private TimeSpan duration;
         private WorkTask selectedTask;
         private WorkDay currentWorkDay;
+        private WorkItem selecteWorkItem;
         private ObservableCollection<Account> currentAccounts;
 
         public WorkItemEditorViewModel(WorkDay currentDay, WorkItem selectedItem)
@@ -29,6 +30,7 @@ namespace KronosUI.Controls
             Initialize();
 
             currentWorkDay = currentDay;
+            selecteWorkItem = selectedItem;
             SelectedTask = selectedItem.AssignedWorkTask;
             Duration = selectedItem.Duration;
 
@@ -62,22 +64,16 @@ namespace KronosUI.Controls
 
         private void SaveChanges(Window window)
         {
-
             if (addItem)
             {
                 currentWorkDay.AssignedWorkItems.Add(new WorkItem(Duration, SelectedTask));
             }
             else
             {
-
+                currentWorkDay.AssignedWorkItems.First(d => d.Equals(selecteWorkItem)).Update(new WorkItem(Duration, SelectedTask));
             }
 
-            var tmp = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Equals(currentWorkDay.WorkTime.DateOfWork.Date));
-
-            if (tmp != null)
-            {
-                tmp.Update(currentWorkDay);
-            }
+            dataManager.CurrentUser.AssignedWorkDays.First(d => d.WorkTime.DateOfWork.Date.Equals(currentWorkDay.WorkTime.DateOfWork.Date)).Update(currentWorkDay);
 
             window.DialogResult = true;
             window.Close();

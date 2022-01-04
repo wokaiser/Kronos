@@ -16,14 +16,13 @@ namespace KronosData.Model
         }
 
         /// <summary>
-        /// Returns an empty WorkItem
+        /// Updates this work item with the info of another one
         /// </summary>
-        public static WorkItem Empty
+        /// <param name="update">The work item to update from</param>
+        public void Update(WorkItem update)
         {
-            get
-            {
-                return new WorkItem(TimeSpan.Zero, new WorkTask(string.Empty, new Account(string.Empty)));
-            }
+            Duration = update.Duration;
+            AssignedWorkTask = update.AssignedWorkTask;
         }
 
         #region Overrides
@@ -48,6 +47,17 @@ namespace KronosData.Model
         #region Properties
 
         /// <summary>
+        /// Returns an empty WorkItem
+        /// </summary>
+        public static WorkItem Empty
+        {
+            get
+            {
+                return new WorkItem(TimeSpan.Zero, new WorkTask(string.Empty, new Account(string.Empty)));
+            }
+        }
+
+        /// <summary>
         /// The duration of the work item
         /// </summary>
         public TimeSpan Duration { get; set; }
@@ -55,7 +65,7 @@ namespace KronosData.Model
         /// <summary>
         /// The assigned work task
         /// </summary>
-        public WorkTask AssignedWorkTask { get; }
+        public WorkTask AssignedWorkTask { get; private set; }
 
         #endregion
     }

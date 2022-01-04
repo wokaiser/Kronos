@@ -84,7 +84,7 @@
                                 <ColumnDefinition Width="AUTO" />
                                 <ColumnDefinition Width="AUTO" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="Arbeitstag" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="Standard-Arbeitstag" HorizontalAlignment="Center" />
                             <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="SteelBlue" Height="3" />
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Arbeitsbegin" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
                             <controls:TimePicker Grid.Row="2" Grid.Column="1" Value="{Binding DefaultBeginOfWork}"/>
