@@ -53,12 +53,12 @@ namespace KronosUI.ViewModels
         {
             if (dataManger.IsAccountInUse(account))
             {
-                PictoMsgBox.ShowMessage("Die Kontierung: '" + account.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Kontierung in Verwendung");
+                PictoMsgBox.ShowMessage("Kontierung in Verwendung", "Die Kontierung: '" + account.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.");
 
                 return false;
             }
 
-            if ((bool)PictoMsgBox.ShowMessage("Die Kontierung: '" + account.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", PictoMsgBoxButton.YesNo))
+            if ((bool)PictoMsgBox.ShowMessage("Kontierung löschen", "Die Kontierung: '" + account.ToString() + "' und deren Tasks wirklich löschen?", PictoMsgBoxButton.YesNo))
             {
                 var tmp = account.ToString();
                 dataManger.Accounts.Remove(account);
@@ -75,12 +75,12 @@ namespace KronosUI.ViewModels
         {
             if (dataManger.IsTaskInUse(task))
             {
-                PictoMsgBox.ShowMessage("Das Arbeitspaket: '" + task.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.", "Arbeitspaket in Verwendung");
+                PictoMsgBox.ShowMessage("Arbeitspaket in Verwendung", "Das Arbeitspaket: '" + task.ToString() + "' wird aktuell noch verwendet. Bitte zuvor alle Verweise entfernen.");
 
                 return false;
             }
 
-            if ((bool)PictoMsgBox.ShowMessage("Das Arbeitspaket: '" + task.ToString() + "' und deren Tasks wirklich löschen?", "Kontierung löschen", PictoMsgBoxButton.YesNo))
+            if ((bool)PictoMsgBox.ShowMessage("Kontierung löschen", "Das Arbeitspaket: '" + task.ToString() + "' und deren Tasks wirklich löschen?", PictoMsgBoxButton.YesNo))
             {
                 dataManger.FindCorrespondingAccount(task).AssignedTasks.Remove(task);
 
@@ -97,7 +97,8 @@ namespace KronosUI.ViewModels
         private void InitializeCommands()
         {
             ItemSelectionChangedCommand = new DelegateCommand<object>(ItemSelectionChanged);
-            AddItemCommand = new DelegateCommand(AddItem, CanAddItem);
+            AddAccountCommand = new DelegateCommand(AddAccount, CanAddAccount);
+            AddTaskCommand = new DelegateCommand(AddTask, CanAddTask);
             EditItemCommand = new DelegateCommand(EditItem, CanEditItem);
             RemoveItemCommand = new DelegateCommand(RemoveItem, CanRemoveItem);
             SaveChangesCommand = new DelegateCommand(SaveChanges, CanSaveChanges);
@@ -109,7 +110,7 @@ namespace KronosUI.ViewModels
             SelectedItem = param;
         }
 
-        private void AddItem()
+        private void AddAccount()
         {
             if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem).ShowDialog())
             {
@@ -117,9 +118,22 @@ namespace KronosUI.ViewModels
             }
         }
 
-        private bool CanAddItem()
+        private bool CanAddAccount()
         {
             return true;
+        }
+
+        private void AddTask()
+        {
+            if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem).ShowDialog())
+            {
+                PendingChanges = true;
+            }
+        }
+
+        private bool CanAddTask()
+        {
+            return SelectedItem != null;
         }
 
         private void EditItem()
@@ -225,7 +239,7 @@ namespace KronosUI.ViewModels
             set
             {
                 SetProperty(ref selectedItem, value);
-                AddItemCommand.RaiseCanExecuteChanged();
+                AddTaskCommand.RaiseCanExecuteChanged();
                 EditItemCommand.RaiseCanExecuteChanged();
                 RemoveItemCommand.RaiseCanExecuteChanged();
             }
@@ -288,7 +302,9 @@ namespace KronosUI.ViewModels
 
         public ICommand ItemSelectionChangedCommand { get; private set; }
 
-        public DelegateCommand AddItemCommand { get; private set; }
+        public DelegateCommand AddAccountCommand { get; private set; }
+
+        public DelegateCommand AddTaskCommand { get; private set; }
 
         public DelegateCommand EditItemCommand { get; private set; }
 
