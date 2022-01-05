@@ -112,7 +112,7 @@ namespace KronosUI.ViewModels
 
         private void AddAccount()
         {
-            if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Add, SelectedItem).ShowDialog())
+            if ((bool)new AccountEditor(AccountEditorViewModel.EditorStyle.Add, null).ShowDialog())
             {
                 PendingChanges = true;
             }
