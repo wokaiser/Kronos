@@ -16,6 +16,7 @@ namespace KronosUI.ViewModels
     public class WeekListingViewModel : ListingViewModelBase, INavigationAware
     {
         private ObservableCollection<WorkDay> currentWorkWeek;
+        private SummaryInfo summaryInfo;
         private WorkDay currentWorkDay;
         private bool pendingChanges;
 
@@ -55,9 +56,29 @@ namespace KronosUI.ViewModels
             }
         }
 
+        private void UpdateSummary(WorkDay wDay)
+        {
+            if (wDay != null)
+            {
+                summaryInfo = Summarizer.GetSummaryFromWeek(dataManager.CurrentUser, wDay.WorkTime.DateOfWork);
+                RaisePropertyChanged(nameof(SummaryTotalHours));
+                RaisePropertyChanged(nameof(SummaryTotalRequired));
+                RaisePropertyChanged(nameof(SummaryTotalAccounted));
+                RaisePropertyChanged(nameof(SummaryOvertime));
+            }
+        }
+
         private static DateTime CalcDayOfWeek(DateTime val, DayOfWeek reqDay)
         {
             return val.AddDays((int)reqDay - (val.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)val.DayOfWeek));
+        }
+
+        private static string ToHoursMinutesString(TimeSpan tSpan)
+        {
+            var hours = tSpan.Days * 24 + tSpan.Hours;
+            var minutes = tSpan.Minutes;
+
+            return string.Format("{0:00}:{1:00}", hours, minutes);
         }
 
         #region Evenhandler
@@ -238,6 +259,29 @@ namespace KronosUI.ViewModels
                 RevokeChangesCommand.RaiseCanExecuteChanged();
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public string SummaryTotalHours
+        {
+            get
+            {
+                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalWorkHours) : string.Empty;
+            }
+        }
+
+        public string SummaryTotalRequired
+        {
+            get { return ""; }
+        }
+
+        public string SummaryTotalAccounted
+        {
+            get { return ""; }
+        }
+
+        public string SummaryOvertime
+        {
+            get { return ""; }
         }
 
         #endregion

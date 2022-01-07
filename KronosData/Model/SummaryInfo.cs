@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KronosData.Logic
+namespace KronosData.Model
 {
     public class SummaryInfo
     {
