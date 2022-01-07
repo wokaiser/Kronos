@@ -1,9 +1,10 @@
-﻿using System;
+﻿using KronosData.Model;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace KronosData.Model
+namespace KronosData.Logic
 {
     public static class Summarizer
     {
