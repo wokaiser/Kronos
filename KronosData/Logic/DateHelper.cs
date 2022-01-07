@@ -30,7 +30,7 @@ namespace KronosData.Logic
         /// </summary>
         /// <param name="date">The date to get the month name from</param>
         /// <returns>A string containing the abbreviated month name</returns>
-        public static string GetMonthNameFormDate(DateTime date)
+        public static string GetMonthNameFromDate(DateTime date)
         {
             return date.ToString("MMM", CultureInfo.CurrentCulture);
         }

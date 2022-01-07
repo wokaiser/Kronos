@@ -41,7 +41,7 @@ namespace KronosUI.ViewModels
         private void SetButtonTexts(DateTime date)
         {
             CalendarWeek = DateHelper.GetCalenderWeekFromDate(date);
-            CalendarMonth = DateHelper.GetMonthNameFormDate(date);
+            CalendarMonth = DateHelper.GetMonthNameFromDate(date);
             CalendarYear = date.Year.ToString();
         }
 

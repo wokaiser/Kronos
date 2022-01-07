@@ -45,6 +45,11 @@ namespace KronosUI
 
             for (int i = 0; i < 365; i++)
             {
+                if (day.AddDays(i).DayOfWeek == DayOfWeek.Saturday || day.AddDays(i).DayOfWeek == DayOfWeek.Sunday)
+                {
+                    continue;
+                }
+
                 dataManager.CurrentUser.AssignedWorkDays.Add(CreateWorkDaySample(day.AddDays(i), task1, task2));
             }
 
