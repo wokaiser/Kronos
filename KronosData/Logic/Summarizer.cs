@@ -12,21 +12,45 @@ namespace KronosData.Logic
         private static User currentUser;
         private static DateTime targetDate;
 
+        /// <summary>
+        /// Extracts the SummaryInfo for the specified day
+        /// </summary>
+        /// <param name="user">The user to look in</param>
+        /// <param name="date">The day to look for</param>
+        /// <returns>A SummaryInfo object</returns>
         public static SummaryInfo GetSummaryFromDay(User user, DateTime date)
         {
             return GetSummary(user, date, TimeFrame.Day);
         }
 
+        /// <summary>
+        /// Extracts the SummaryInfo for the specified week
+        /// </summary>
+        /// <param name="user">The user to look in</param>
+        /// <param name="date">A day within the week to look for</param>
+        /// <returns>A SummaryInfo object</returns>
         public static SummaryInfo GetSummaryFromWeek(User user, DateTime date)
         {
             return GetSummary(user, date, TimeFrame.Week);
         }
 
+        /// <summary>
+        /// Extracts the SummaryInfo for the specified day
+        /// </summary>
+        /// <param name="user">The user to look in</param>
+        /// <param name="date">A day within the month to look for</param>
+        /// <returns>A SummaryInfo object</returns>
         public static SummaryInfo GetSummaryFromMonth(User user, DateTime date)
         {
             return GetSummary(user, date, TimeFrame.Month);
         }
 
+        /// <summary>
+        /// Extracts the SummaryInfo for the specified day
+        /// </summary>
+        /// <param name="user">The user to look in</param>
+        /// <param name="date">A day within the year to look for</param>
+        /// <returns>A SummaryInfo object</returns>
         public static SummaryInfo GetSummaryFromYear(User user, DateTime date)
         {
             return GetSummary(user, date, TimeFrame.Year);
@@ -38,14 +62,8 @@ namespace KronosData.Logic
         {
             currentUser = user;
             targetDate = date;
-            var retVal = new SummaryInfo();
 
-            retVal.TotalWorkHours = GetTotalWorkHours(timeFrame);
-            retVal.RequiredWorkHours = GetRequiredWorkHours(timeFrame);
-            retVal.TotalOvertime = GetTotalOvertime(timeFrame);
-            retVal.TotalAccountedHours = GetTotalAccountedHours(timeFrame);
-
-            return retVal;
+            return new SummaryInfo(GetTotalWorkHours(timeFrame), GetRequiredWorkHours(timeFrame), GetTotalOvertime(timeFrame), GetTotalAccountedHours(timeFrame));
         }
 
         private static TimeSpan GetTotalWorkHours(TimeFrame timeframe)
@@ -100,23 +118,36 @@ namespace KronosData.Logic
             return retVal;
         }
 
+        /// <summary>
+        /// Returns the range for the given TimeFrame
+        /// </summary>
+        /// <param name="timeframe">The timeframe to look for</param>
+        /// <returns>All days found wihtin the given TimeFrame</returns>
         private static IEnumerable<WorkDay> GetRange(TimeFrame timeframe)
         {
             switch (timeframe)
             {
                 case TimeFrame.Day:
                     return currentUser.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork == targetDate);
+
                 case TimeFrame.Week:
                     return GetWorkWeek();
+
                 case TimeFrame.Month:
                     return currentUser.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Month == targetDate.Month && d.WorkTime.DateOfWork.Year == targetDate.Year);
+
                 case TimeFrame.Year:
                     return currentUser.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Year == targetDate.Year);
+
                 default:
                     return null;
             }
         }
 
+        /// <summary>
+        /// Extracts work week from specified TimeFrame
+        /// </summary>
+        /// <returns>All days found within given TimeFrame</returns>
         private static IEnumerable<WorkDay> GetWorkWeek()
         {
             var ci = new CultureInfo("de-DE");

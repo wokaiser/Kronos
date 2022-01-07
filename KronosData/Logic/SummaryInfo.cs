@@ -1,19 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KronosData.Logic
 {
     public class SummaryInfo
     {
-        public TimeSpan TotalWorkHours { get; set; }
+        public SummaryInfo(TimeSpan twh, TimeSpan rwh, TimeSpan toh, TimeSpan tah)
+        {
+            TotalWorkHours = twh;
+            RequiredWorkHours = rwh;
+            TotalOvertime = toh;
+            TotalAccountedHours = tah;
+        }
 
-        public TimeSpan RequiredWorkHours { get; set; }
+        public TimeSpan TotalWorkHours { get; }
 
-        public TimeSpan TotalOvertime { get; set; }
+        public TimeSpan RequiredWorkHours { get; }
 
-        public TimeSpan TotalAccountedHours { get; set; }
+        public TimeSpan TotalOvertime { get; }
+
+        public TimeSpan TotalAccountedHours { get; }
     }
 }
