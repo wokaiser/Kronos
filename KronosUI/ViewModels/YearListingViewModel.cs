@@ -1,4 +1,5 @@
 ﻿using KronosData.Logic;
+using KronosData.Model;
 using KronosUI.Events;
 using Prism.Events;
 using Prism.Ioc;
@@ -33,6 +34,18 @@ namespace KronosUI.ViewModels
         #endregion
 
         #region Inherited method implementation and overrides
+
+        protected override void UpdateSummary(User currentUser, WorkDay wDay)
+        {
+            if (wDay != null)
+            {
+                summaryInfo = Summarizer.GetSummaryFromYear(currentUser, wDay.WorkTime.DateOfWork);
+                RaisePropertyChanged(nameof(SummaryTotalHours));
+                RaisePropertyChanged(nameof(SummaryTotalRequired));
+                RaisePropertyChanged(nameof(SummaryTotalAccounted));
+                RaisePropertyChanged(nameof(SummaryTotalOvertime));
+            }
+        }
 
         protected override void Initialize()
         {

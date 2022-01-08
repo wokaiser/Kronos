@@ -15,12 +15,11 @@ namespace KronosUI.ViewModels
 {
     public class WeekListingViewModel : ListingViewModelBase, INavigationAware
     {
+        private readonly DataManager dataManager;
+
         private ObservableCollection<WorkDay> currentWorkWeek;
-        private SummaryInfo summaryInfo;
         private WorkDay currentWorkDay;
         private bool pendingChanges;
-
-        private readonly DataManager dataManager;
 
         public WeekListingViewModel()
         {
@@ -40,7 +39,7 @@ namespace KronosUI.ViewModels
             {
                 AddWorkDay((DayOfWeek)i);
             }
-            UpdateSummary(CurrentWorkWeek.FirstOrDefault());
+            UpdateSummary(dataManager.CurrentUser, CurrentWorkWeek.FirstOrDefault());
         }
 
         private void AddWorkDay(DayOfWeek dow)
@@ -57,29 +56,9 @@ namespace KronosUI.ViewModels
             }
         }
 
-        private void UpdateSummary(WorkDay wDay)
-        {
-            if (wDay != null)
-            {
-                summaryInfo = Summarizer.GetSummaryFromWeek(dataManager.CurrentUser, wDay.WorkTime.DateOfWork);
-                RaisePropertyChanged(nameof(SummaryTotalHours));
-                RaisePropertyChanged(nameof(SummaryTotalRequired));
-                RaisePropertyChanged(nameof(SummaryTotalAccounted));
-                RaisePropertyChanged(nameof(SummaryTotalOvertime));
-            }
-        }
-
         private static DateTime CalcDayOfWeek(DateTime val, DayOfWeek reqDay)
         {
             return val.AddDays((int)reqDay - (val.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)val.DayOfWeek));
-        }
-
-        private static string ToHoursMinutesString(TimeSpan tSpan)
-        {
-            var hours = tSpan.Days * 24 + tSpan.Hours;
-            var minutes = tSpan.Minutes;
-
-            return string.Format("{0:00}:{1:00}", hours, minutes);
         }
 
         #region Evenhandler
@@ -87,6 +66,7 @@ namespace KronosUI.ViewModels
         private void TimeFrameUpdatedEventHandler(DateTime newTimeframe)
         {
             currentTimeFrame = newTimeframe;
+            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
         }
 
         #endregion
@@ -165,6 +145,18 @@ namespace KronosUI.ViewModels
 
         #region Inherited method implementation and overrides
 
+        protected override void UpdateSummary(User currentUser, WorkDay wDay)
+        {
+            if (wDay != null)
+            {
+                summaryInfo = Summarizer.GetSummaryFromWeek(currentUser, wDay.WorkTime.DateOfWork);
+                RaisePropertyChanged(nameof(SummaryTotalHours));
+                RaisePropertyChanged(nameof(SummaryTotalRequired));
+                RaisePropertyChanged(nameof(SummaryTotalAccounted));
+                RaisePropertyChanged(nameof(SummaryTotalOvertime));
+            }
+        }
+
         protected override void Initialize()
         {
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
@@ -183,7 +175,6 @@ namespace KronosUI.ViewModels
         public override void SwitchToPrevious()
         {
             currentTimeFrame = currentTimeFrame.AddDays(-7);
-            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToPrevious();
             FillWorkWeek();
         }
@@ -191,21 +182,18 @@ namespace KronosUI.ViewModels
         public override void SwitchToCurrent()
         {
             base.SwitchToCurrent();
-            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             FillWorkWeek();
         }
 
         public override void SwitchToNext()
         {
             currentTimeFrame = currentTimeFrame.AddDays(7);
-            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             base.SwitchToNext();
             FillWorkWeek();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
             FillWorkWeek();
         }
 
@@ -259,38 +247,6 @@ namespace KronosUI.ViewModels
                 SetProperty(ref pendingChanges, value);
                 RevokeChangesCommand.RaiseCanExecuteChanged();
                 SaveChangesCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        public string SummaryTotalHours
-        {
-            get
-            {
-                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalWorkHours) : string.Empty;
-            }
-        }
-
-        public string SummaryTotalRequired
-        {
-            get
-            {
-                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.RequiredWorkHours) : string.Empty;
-            }
-        }
-
-        public string SummaryTotalAccounted
-        {
-            get
-            {
-                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalAccountedHours) : string.Empty;
-            }
-        }
-
-        public string SummaryTotalOvertime
-        {
-            get
-            {
-                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalOvertime) : string.Empty;
             }
         }
 

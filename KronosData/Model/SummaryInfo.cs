@@ -12,6 +12,14 @@ namespace KronosData.Model
             TotalAccountedHours = tah;
         }
 
+        public static SummaryInfo Zero
+        {
+            get
+            {
+                return new SummaryInfo(new TimeSpan(0), new TimeSpan(0), new TimeSpan(0), new TimeSpan(0));
+            }
+        }
+
         public TimeSpan TotalWorkHours { get; }
 
         public TimeSpan RequiredWorkHours { get; }

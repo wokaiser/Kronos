@@ -4,6 +4,8 @@ using Prism.Ioc;
 using Prism.Events;
 using System;
 using Prism.Regions;
+using System.Linq;
+using KronosData.Model;
 
 namespace KronosUI.ViewModels
 {
@@ -19,7 +21,9 @@ namespace KronosUI.ViewModels
 
         private void UpdateMonthListing()
         {
+            var firstDay = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Year == currentTimeFrame.Year && d.WorkTime.DateOfWork.Date.Month == currentTimeFrame.Month);
 
+            UpdateSummary(dataManager.CurrentUser, firstDay);
         }
 
         #region Eventhandler
@@ -28,15 +32,25 @@ namespace KronosUI.ViewModels
         {
             currentTimeFrame = newTimeFrame;
             PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
+            UpdateMonthListing();
         }
 
         #endregion
 
         #region Inherited method implementation and overrides
 
+        protected override void UpdateSummary(User currentUser, WorkDay wDay)
+        {
+            summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromMonth(currentUser, wDay.WorkTime.DateOfWork);
+            RaisePropertyChanged(nameof(SummaryTotalHours));
+            RaisePropertyChanged(nameof(SummaryTotalRequired));
+            RaisePropertyChanged(nameof(SummaryTotalAccounted));
+            RaisePropertyChanged(nameof(SummaryTotalOvertime));
+        }
+
         protected override void Initialize()
         {
-
+            PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
         }
 
         public override bool CanSwitchToPrevious()
@@ -55,6 +69,11 @@ namespace KronosUI.ViewModels
             base.SwitchToPrevious();
         }
 
+        public override void SwitchToCurrent()
+        {
+            base.SwitchToCurrent();
+        }
+
         public override void SwitchToNext()
         {
             currentTimeFrame = currentTimeFrame.AddMonths(1);
@@ -63,7 +82,7 @@ namespace KronosUI.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
+            UpdateMonthListing();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Views"
+             xmlns:controls="clr-namespace:KronosUI.Controls"
              xmlns:Converters="clr-namespace:KronosUI.Converters"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
@@ -22,8 +23,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
             <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkWeek}" IsReadOnly="True" SelectedItem="{Binding CurrentWorkDay}">
@@ -43,30 +44,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </DataGrid>
-            <Border Grid.Row="2" CornerRadius="8" BorderThickness="3" BorderBrush="DarkGreen" Margin="0,5,0,5">
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Zusammenfassung" FontWeight="Bold" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="h Soll" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="h gearbeitet" />
-                    <TextBlock Grid.Row="1" Grid.Column="2" Text="h kontiert" />
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="&#x0394; h" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" />
-                </Grid>
-            </Border>
+            <controls:SummaryControl Grid.Row="3" />
         </Grid>
     </Border>
 </UserControl>
