@@ -36,10 +36,11 @@ namespace KronosUI.ViewModels
             CurrentWorkWeek = new ObservableCollection<WorkDay>();
 
             var start = (int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
-            for (var i =  start; i < start + 7; i++)
+            for (var i = start; i < start + 7; i++)
             {
                 AddWorkDay((DayOfWeek)i);
             }
+            UpdateSummary(CurrentWorkWeek.FirstOrDefault());
         }
 
         private void AddWorkDay(DayOfWeek dow)
@@ -64,7 +65,7 @@ namespace KronosUI.ViewModels
                 RaisePropertyChanged(nameof(SummaryTotalHours));
                 RaisePropertyChanged(nameof(SummaryTotalRequired));
                 RaisePropertyChanged(nameof(SummaryTotalAccounted));
-                RaisePropertyChanged(nameof(SummaryOvertime));
+                RaisePropertyChanged(nameof(SummaryTotalOvertime));
             }
         }
 
@@ -271,17 +272,26 @@ namespace KronosUI.ViewModels
 
         public string SummaryTotalRequired
         {
-            get { return ""; }
+            get
+            {
+                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.RequiredWorkHours) : string.Empty;
+            }
         }
 
         public string SummaryTotalAccounted
         {
-            get { return ""; }
+            get
+            {
+                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalAccountedHours) : string.Empty;
+            }
         }
 
-        public string SummaryOvertime
+        public string SummaryTotalOvertime
         {
-            get { return ""; }
+            get
+            {
+                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalOvertime) : string.Empty;
+            }
         }
 
         #endregion

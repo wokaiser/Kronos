@@ -61,10 +61,10 @@
                     <TextBlock Grid.Row="1" Grid.Column="1" Text="h gearbeitet" />
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="h kontiert" />
                     <TextBlock Grid.Row="1" Grid.Column="3" Text="&#x0394; h" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="35" FontWeight="Bold" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" />
                     <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" Text="36" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="3" Text="+ 1" FontWeight="Bold" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" />
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" />
                 </Grid>
             </Border>
         </Grid>
