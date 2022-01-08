@@ -288,7 +288,8 @@ namespace KronosUI.Controls
         {
             get
             {
-                return string.Format("{0} h", CurrentDay.TotalOverTime.ToString(@"hh\:mm"));
+                var prefix = CurrentDay.TotalOverTime < TimeSpan.Zero ? "-" : string.Empty;
+                return string.Format("{0}{1} h", prefix, CurrentDay.TotalOverTime.ToString(@"hh\:mm"));
             }
         }
 

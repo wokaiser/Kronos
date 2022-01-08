@@ -18,7 +18,9 @@ namespace KronosUI.Converters
                 return string.Empty;
             }
 
-            return ((TimeSpan)value).ToString(@"hh\:mm");
+            var prefix = (TimeSpan)value < TimeSpan.Zero ? "-" : string.Empty;
+
+            return prefix + ((TimeSpan)value).ToString(@"hh\:mm");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

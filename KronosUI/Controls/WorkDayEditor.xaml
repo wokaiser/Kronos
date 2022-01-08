@@ -93,11 +93,11 @@
                     <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" IsChecked="{Binding IsMobileOffice}" />
                     <Rectangle Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Arbeitszeit:" />
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding TotalWorkHours}" />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding TotalWorkHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Überstunden:" />
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TotalOvertime}" />
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TotalOvertime}" HorizontalAlignment="Right" Margin="5,5,80,5" />
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Unkontiert:" />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding UnaccountedHours}" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding UnaccountedHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
                 </Grid>
             </Border>
             <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
