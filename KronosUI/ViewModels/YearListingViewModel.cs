@@ -5,6 +5,7 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Regions;
 using System;
+using System.Linq;
 
 namespace KronosUI.ViewModels
 {
@@ -16,11 +17,15 @@ namespace KronosUI.ViewModels
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
             ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
+
+            UpdateYearListing();
         }
 
         private void UpdateYearListing()
         {
+            var firstDay = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Year == currentTimeFrame.Year);
 
+            UpdateSummary(dataManager.CurrentUser, firstDay);
         }
 
         #region Eventhandler
@@ -29,6 +34,7 @@ namespace KronosUI.ViewModels
         {
             currentTimeFrame = newTimeFrame;
             PageTitle = currentTimeFrame.Year.ToString();
+            UpdateYearListing();
         }
 
         #endregion
@@ -37,19 +43,16 @@ namespace KronosUI.ViewModels
 
         protected override void UpdateSummary(User currentUser, WorkDay wDay)
         {
-            if (wDay != null)
-            {
-                summaryInfo = Summarizer.GetSummaryFromYear(currentUser, wDay.WorkTime.DateOfWork);
-                RaisePropertyChanged(nameof(SummaryTotalHours));
-                RaisePropertyChanged(nameof(SummaryTotalRequired));
-                RaisePropertyChanged(nameof(SummaryTotalAccounted));
-                RaisePropertyChanged(nameof(SummaryTotalOvertime));
-            }
+            summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromYear(currentUser, wDay.WorkTime.DateOfWork);
+            RaisePropertyChanged(nameof(SummaryTotalHours));
+            RaisePropertyChanged(nameof(SummaryTotalRequired));
+            RaisePropertyChanged(nameof(SummaryTotalAccounted));
+            RaisePropertyChanged(nameof(SummaryTotalOvertime));
         }
 
         protected override void Initialize()
         {
-
+            PageTitle = currentTimeFrame.Year.ToString();
         }
 
         public override bool CanSwitchToPrevious()
@@ -76,7 +79,7 @@ namespace KronosUI.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            PageTitle = currentTimeFrame.Year.ToString();
+            UpdateYearListing();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

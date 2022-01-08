@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Converters="clr-namespace:KronosUI.Converters"
+             xmlns:controls="clr-namespace:KronosUI.Controls"
              xmlns:local="clr-namespace:KronosUI.Views"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -23,8 +24,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
+            <controls:SummaryControl Grid.Row="2" />
         </Grid>
     </Border>
 </UserControl>
