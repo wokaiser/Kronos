@@ -17,6 +17,8 @@ namespace KronosUI.ViewModels
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
             ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
+
+            UpdateMonthListing();
         }
 
         private void UpdateMonthListing()

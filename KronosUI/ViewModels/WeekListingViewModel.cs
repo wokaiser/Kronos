@@ -27,10 +27,11 @@ namespace KronosUI.ViewModels
             ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
 
             InitializeCommands();
-            FillWorkWeek();
+
+            UpdateWeekListing();
         }
 
-        private void FillWorkWeek()
+        private void UpdateWeekListing()
         {
             CurrentWorkWeek = new ObservableCollection<WorkDay>();
 
@@ -39,6 +40,7 @@ namespace KronosUI.ViewModels
             {
                 AddWorkDay((DayOfWeek)i);
             }
+
             UpdateSummary(dataManager.CurrentUser, CurrentWorkWeek.FirstOrDefault());
         }
 
@@ -67,6 +69,7 @@ namespace KronosUI.ViewModels
         {
             currentTimeFrame = newTimeframe;
             PageTitle = DateHelper.GetCalenderWeekFromDate(currentTimeFrame);
+            UpdateWeekListing();
         }
 
         #endregion
@@ -85,7 +88,7 @@ namespace KronosUI.ViewModels
         {
             if ((bool)new WorkDayEditor(CurrentWorkDay).ShowDialog())
             {
-                FillWorkWeek();
+                UpdateWeekListing();
                 PendingChanges = true;
             }
         }
@@ -103,7 +106,7 @@ namespace KronosUI.ViewModels
             }
 
             dataManager.CurrentUser.AssignedWorkDays.Remove(CurrentWorkDay);
-            FillWorkWeek();
+            UpdateWeekListing();
             PendingChanges = true;
         }
 
@@ -120,7 +123,7 @@ namespace KronosUI.ViewModels
         public void RevokeChanges()
         {
             dataManager.LoadFromFile();
-            FillWorkWeek();
+            UpdateWeekListing();
 
             PendingChanges = false;
         }
@@ -147,14 +150,11 @@ namespace KronosUI.ViewModels
 
         protected override void UpdateSummary(User currentUser, WorkDay wDay)
         {
-            if (wDay != null)
-            {
-                summaryInfo = Summarizer.GetSummaryFromWeek(currentUser, wDay.WorkTime.DateOfWork);
-                RaisePropertyChanged(nameof(SummaryTotalHours));
-                RaisePropertyChanged(nameof(SummaryTotalRequired));
-                RaisePropertyChanged(nameof(SummaryTotalAccounted));
-                RaisePropertyChanged(nameof(SummaryTotalOvertime));
-            }
+            summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromWeek(currentUser, wDay.WorkTime.DateOfWork);
+            RaisePropertyChanged(nameof(SummaryTotalHours));
+            RaisePropertyChanged(nameof(SummaryTotalRequired));
+            RaisePropertyChanged(nameof(SummaryTotalAccounted));
+            RaisePropertyChanged(nameof(SummaryTotalOvertime));
         }
 
         protected override void Initialize()
@@ -176,25 +176,22 @@ namespace KronosUI.ViewModels
         {
             currentTimeFrame = currentTimeFrame.AddDays(-7);
             base.SwitchToPrevious();
-            FillWorkWeek();
         }
 
         public override void SwitchToCurrent()
         {
             base.SwitchToCurrent();
-            FillWorkWeek();
         }
 
         public override void SwitchToNext()
         {
             currentTimeFrame = currentTimeFrame.AddDays(7);
             base.SwitchToNext();
-            FillWorkWeek();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            FillWorkWeek();
+            UpdateWeekListing();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
