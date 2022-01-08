@@ -13,10 +13,11 @@ namespace KronosUI.ViewModels
 
         protected static string ToHoursMinutesString(TimeSpan tSpan)
         {
-            var hours = tSpan.Days * 24 + tSpan.Hours;
-            var minutes = tSpan.Minutes;
+            var hours = Math.Abs(tSpan.Days * 24 + tSpan.Hours);
+            var minutes = Math.Abs(tSpan.Minutes);
+            var prefix = tSpan < TimeSpan.Zero ? "-" : string.Empty;
 
-            return string.Format("{0:00}:{1:00}", hours, minutes);
+            return string.Format("{0}{1:00}:{2:00}", prefix, hours, minutes);
         }
 
         #region Properties

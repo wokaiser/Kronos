@@ -90,8 +90,7 @@ namespace KronosData.Model
             {
                 if (TotalWorkTime > TimeSpan.Zero)
                 {
-                    var overTime = TotalWorkTime - DailyWorkTime;
-                    return overTime < TimeSpan.Zero ? new TimeSpan(0) : overTime;
+                    return TotalWorkTime - DailyWorkTime;
                 }
 
                 return new TimeSpan(0);
