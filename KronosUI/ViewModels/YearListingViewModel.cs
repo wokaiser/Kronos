@@ -1,7 +1,39 @@
-﻿namespace KronosUI.ViewModels
+﻿using KronosData.Logic;
+using KronosUI.Events;
+using Prism.Events;
+using Prism.Ioc;
+using Prism.Regions;
+using System;
+
+namespace KronosUI.ViewModels
 {
-    public class YearListingViewModel : ControlViewModelBase
+    public class YearListingViewModel : ListingViewModelBase, INavigationAware
     {
+        private readonly DataManager dataManager;
+
+        public YearListingViewModel()
+        {
+            dataManager = ContainerLocator.Container.Resolve<DataManager>();
+            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
+        }
+
+        private void UpdateYearListing()
+        {
+
+        }
+
+        #region Eventhandler
+
+        private void TimeFrameUpdatedEventHandler(DateTime newTimeFrame)
+        {
+            currentTimeFrame = newTimeFrame;
+            PageTitle = currentTimeFrame.Year.ToString();
+        }
+
+        #endregion
+
+        #region Inherited method implementation and overrides
+
         protected override void Initialize()
         {
 
@@ -28,5 +60,28 @@
             currentTimeFrame = currentTimeFrame.AddYears(1);
             base.SwitchToNext();
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            PageTitle = currentTimeFrame.Year.ToString();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            // Unused
+        }
+
+        #endregion
+
+        #region Properties
+
+
+
+        #endregion
     }
 }

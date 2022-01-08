@@ -34,5 +34,16 @@ namespace KronosData.Logic
         {
             return date.ToString("MMM", CultureInfo.CurrentCulture);
         }
+
+        /// <summary>
+        /// Returns an abbreviated month name, in accordance to the current culture
+        /// </summary>
+        /// <param name="date">The date to get the month name from</param>
+        /// <param name="full">If true, will display the full name</param>
+        /// <returns>A string containing the abbreviated month name</returns>
+        public static string GetMonthNameFromDate(DateTime date, bool full)
+        {
+            return date.ToString(full ? "MMMM" : "MMM", CultureInfo.CurrentCulture);
+        }
     }
 }

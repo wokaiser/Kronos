@@ -7,7 +7,7 @@ using Prism.Regions;
 
 namespace KronosUI.ViewModels
 {
-    public class MonthListingViewModel : ControlViewModelBase, INavigationAware
+    public class MonthListingViewModel : ListingViewModelBase, INavigationAware
     {
         private readonly DataManager dataManager;
 
@@ -17,11 +17,17 @@ namespace KronosUI.ViewModels
             ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<TimeframeChangedEvent>().Subscribe(TimeFrameUpdatedEventHandler);
         }
 
+        private void UpdateMonthListing()
+        {
+
+        }
+
         #region Eventhandler
 
         private void TimeFrameUpdatedEventHandler(DateTime newTimeFrame)
         {
             currentTimeFrame = newTimeFrame;
+            PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
         }
 
         #endregion
@@ -57,7 +63,7 @@ namespace KronosUI.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            
+            PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -69,6 +75,12 @@ namespace KronosUI.ViewModels
         {
             // Unused
         }
+
+        #endregion
+
+        #region Properties
+
+
 
         #endregion
     }
