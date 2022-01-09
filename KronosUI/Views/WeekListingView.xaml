@@ -28,6 +28,15 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
             <DataGrid Grid.Row="1" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding CurrentWorkWeek}" IsReadOnly="True" SelectedItem="{Binding CurrentWorkDay}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsWeekend}" Value="True">
+                                <Setter Property="Background" Value="LightBlue" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Tag" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=DATE}" Width="*" />
                     <DataGridTextColumn Header="Beginn" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=BEGIN}" Width="80" />

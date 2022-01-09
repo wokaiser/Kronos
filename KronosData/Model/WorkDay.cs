@@ -116,6 +116,18 @@ namespace KronosData.Model
             }
         }
 
+        /// <summary>
+        /// Returns true, whether the day is on a weekend
+        /// </summary>
+        [JsonIgnore]
+        public bool IsWeekend
+        {
+            get
+            {
+                return WorkTime.DateOfWork.DayOfWeek == DayOfWeek.Saturday || WorkTime.DateOfWork.DayOfWeek == DayOfWeek.Sunday;
+            }
+        }
+
         #endregion
     }
 }
