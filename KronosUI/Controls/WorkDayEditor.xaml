@@ -76,6 +76,8 @@
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
@@ -89,15 +91,19 @@
                     <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
                     <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Arbeit" />
-                    <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" IsChecked="{Binding IsMobileOffice}" />
-                    <Rectangle Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Arbeitszeit:" />
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding TotalWorkHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Überstunden:" />
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TotalOvertime}" HorizontalAlignment="Right" Margin="5,5,80,5" />
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Unkontiert:" />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding UnaccountedHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Arbeit" Margin="5,0,0,0" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Urlaub" Margin="5,0,0,0" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Krank" Margin="5,0,0,0" />
+                    <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsMobileOffice}" />
+                    <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsFreeDay}" />
+                    <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsSickDay}" />
+                    <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Arbeitszeit:" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TotalWorkHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Überstunden:" />
+                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalOvertime}" HorizontalAlignment="Right" Margin="5,5,80,5" />
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Unkontiert:" />
+                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding UnaccountedHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
                 </Grid>
             </Border>
             <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">

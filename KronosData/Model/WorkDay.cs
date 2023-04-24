@@ -35,6 +35,8 @@ namespace KronosData.Model
             WorkTime.DateOfWork = update.WorkTime.DateOfWork;
             BreakTime = update.BreakTime;
             IsMobileDay = update.IsMobileDay;
+            IsSickDay = update.IsSickDay;
+            IsFreeDay = update.IsFreeDay;
             DailyWorkTime = update.DailyWorkTime;
 
             AssignedWorkItems.Clear();
@@ -60,6 +62,16 @@ namespace KronosData.Model
         /// Whether the day is spend mobile
         /// </summary>
         public bool IsMobileDay { get; set; }
+
+        /// <summary>
+        /// Whether the day is spend sick
+        /// </summary>
+        public bool IsSickDay { get; set; }
+
+        /// <summary>
+        /// Whether the day is free
+        /// </summary>
+        public bool IsFreeDay { get; set; }
 
         /// <summary>
         /// The total time of work to be done at a day

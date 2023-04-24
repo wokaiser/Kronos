@@ -275,6 +275,26 @@ namespace KronosUI.Controls
             }
         }
 
+        public bool IsSickDay
+        {
+            get { return CurrentDay.IsSickDay; }
+            set
+            {
+                CurrentDay.IsSickDay = value;
+                RaisePropertiesChanged();
+            }
+        }
+
+        public bool IsFreeDay
+        {
+            get { return CurrentDay.IsFreeDay;}
+            set
+            {
+                CurrentDay.IsFreeDay = value;
+                RaisePropertiesChanged();
+            }
+        }
+
         public string TotalWorkHours
         {
             get
