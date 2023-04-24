@@ -9,11 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\WorkDay.cs~RF8d1faf8.TMP" />
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <None Remove="Model\WorkDay.cs~RF8d1faf8.TMP" />
   </ItemGroup>
 
   <ItemGroup>
