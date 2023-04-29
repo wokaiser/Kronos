@@ -48,6 +48,9 @@ namespace KronosUI.ViewModels
             RaisePropertyChanged(nameof(SummaryTotalRequired));
             RaisePropertyChanged(nameof(SummaryTotalAccounted));
             RaisePropertyChanged(nameof(SummaryTotalOvertime));
+            RaisePropertyChanged(nameof(SummaryTotalMobileDays));
+            RaisePropertyChanged(nameof(SummaryTotalFreeDays));
+            RaisePropertyChanged(nameof(SummaryTotalSickDays));
         }
 
         protected override void Initialize()

@@ -60,6 +60,30 @@ namespace KronosUI.ViewModels
             }
         }
 
+        public string SummaryTotalMobileDays
+        {
+            get
+            {
+                return summaryInfo != null ? summaryInfo.TotalMobileDays.ToString() : string.Empty;
+            }
+        }
+
+        public string SummaryTotalSickDays
+        {
+            get
+            {
+                return summaryInfo != null ? summaryInfo.TotalSickDays.ToString() : string.Empty;
+            }
+        }
+
+        public string SummaryTotalFreeDays
+        {
+            get
+            {
+                return summaryInfo != null ? summaryInfo.TotalFreeDays.ToString() : string.Empty;
+            }
+        }
+
         #endregion
     }
 }

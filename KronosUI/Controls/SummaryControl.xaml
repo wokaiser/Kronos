@@ -7,27 +7,46 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Grid.Row="2" CornerRadius="8" BorderThickness="3" BorderBrush="DarkGreen">
-        <Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Zusammenfassung" FontWeight="Bold" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="h Soll" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="h gearbeitet" />
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="h kontiert" />
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="&#x0394; h" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" />
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" />
-            <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" />
-        </Grid>
+        <StackPanel>
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Zusammenfassung" FontWeight="Bold" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="h Soll" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="h gearbeitet" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="h kontiert" />
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="&#x0394; h" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" />
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" />
+            </Grid>
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Mobil Arbeitstage" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Krankheitstage" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Urlaubstage" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SummaryTotalMobileDays}" FontWeight="Bold" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SummaryTotalSickDays}" FontWeight="Bold" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SummaryTotalFreeDays}" FontWeight="Bold" />
+            </Grid>
+        </StackPanel>
     </Border>
 </UserControl>

@@ -63,7 +63,7 @@ namespace KronosData.Logic
             currentUser = user;
             targetDate = date;
 
-            return new SummaryInfo(GetTotalWorkHours(timeFrame), GetRequiredWorkHours(timeFrame), GetTotalOvertime(timeFrame), GetTotalAccountedHours(timeFrame));
+            return new SummaryInfo(GetTotalWorkHours(timeFrame), GetRequiredWorkHours(timeFrame), GetTotalOvertime(timeFrame), GetTotalAccountedHours(timeFrame), GetTotalMobileDays(timeFrame), GetTotalFreeDays(timeFrame), GetTotalSickDays(timeFrame));
         }
 
         private static TimeSpan GetTotalWorkHours(TimeFrame timeframe)
@@ -116,6 +116,21 @@ namespace KronosData.Logic
             }
 
             return retVal;
+        }
+
+        private static int GetTotalMobileDays(TimeFrame timeframe)
+        {
+            return GetRange(timeframe).Where(d => d.IsMobileDay).Count();
+        }
+
+        private static int GetTotalFreeDays(TimeFrame timeframe)
+        {
+            return GetRange(timeframe).Where(d => d.IsFreeDay).Count();
+        }
+
+        private static int GetTotalSickDays(TimeFrame timeframe)
+        {
+            return GetRange(timeframe).Where(d => d.IsSickDay).Count();
         }
 
         /// <summary>
