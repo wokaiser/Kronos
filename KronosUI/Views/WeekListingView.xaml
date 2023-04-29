@@ -34,6 +34,15 @@
                             <DataTrigger Binding="{Binding IsWeekend}" Value="True">
                                 <Setter Property="Background" Value="LightBlue" />
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMobileDay}" Value="True">
+                                <Setter Property="Background" Value="LightGreen" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsFreeDay}" Value="True">
+                                <Setter Property="Background" Value="LightBlue" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSickDay}" Value="True">
+                                <Setter Property="Background" Value="Red" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
@@ -45,7 +54,6 @@
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80" />
                     <DataGridTextColumn Header="Kontiert" Binding="{Binding TotalAccountedTime, Converter={StaticResource timeSpanConverter}}" Width="80" />
                     <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80" />
-                    <DataGridCheckBoxColumn Header="Mobil" Binding="{Binding IsMobileDay}" />
                 </DataGrid.Columns>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
