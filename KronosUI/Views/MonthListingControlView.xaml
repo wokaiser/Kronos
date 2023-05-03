@@ -11,8 +11,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <controls:TimeframeNavigator Grid.Row="0" />
+            <Button Grid.Row="2" HorizontalAlignment="Center" Command="{Binding UploadToMapping}">
+                <Border  BorderBrush="Black" BorderThickness="5" Width="150" Height="50">
+                    <TextBlock Text="Upload" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+            </Button>
         </Grid>
     </Border>
 </UserControl>

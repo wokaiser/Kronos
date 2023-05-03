@@ -6,6 +6,9 @@ using System;
 using Prism.Regions;
 using System.Linq;
 using KronosData.Model;
+using Prism.Commands;
+using KronosUI.Controls;
+using System.Windows;
 
 namespace KronosUI.ViewModels
 {
@@ -26,6 +29,11 @@ namespace KronosUI.ViewModels
             var firstDay = dataManager.CurrentUser.AssignedWorkDays.FirstOrDefault(d => d.WorkTime.DateOfWork.Date.Year == currentTimeFrame.Year && d.WorkTime.DateOfWork.Date.Month == currentTimeFrame.Month);
 
             UpdateSummary(dataManager.CurrentUser, firstDay);
+        }
+
+        private void UploadToMappingExecute()
+        {
+            MessageBox.Show("Upload will be added later.", "Not implemented yet", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         #region Eventhandler
@@ -56,6 +64,7 @@ namespace KronosUI.ViewModels
         protected override void Initialize()
         {
             PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
+            UploadToMapping = new DelegateCommand(UploadToMappingExecute);
         }
 
         public override bool CanSwitchToPrevious()
@@ -104,7 +113,7 @@ namespace KronosUI.ViewModels
 
         #region Properties
 
-
+        public DelegateCommand UploadToMapping { get; private set; }
 
         #endregion
     }
