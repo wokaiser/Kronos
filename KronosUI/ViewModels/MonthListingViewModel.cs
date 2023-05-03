@@ -52,6 +52,8 @@ namespace KronosUI.ViewModels
         protected override void UpdateSummary(User currentUser, WorkDay wDay)
         {
             summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromMonth(currentUser, wDay.WorkTime.DateOfWork);
+            var foo = wDay == null ? null : Summarizer.GetTaskOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork);
+
             RaisePropertyChanged(nameof(SummaryTotalHours));
             RaisePropertyChanged(nameof(SummaryTotalRequired));
             RaisePropertyChanged(nameof(SummaryTotalAccounted));

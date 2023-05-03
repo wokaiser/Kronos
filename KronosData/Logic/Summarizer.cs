@@ -56,6 +56,33 @@ namespace KronosData.Logic
             return GetSummary(user, date, TimeFrame.Year);
         }
 
+        public static Dictionary<string, TimeSpan> GetTaskOverviewFromMonth(User user, DateTime date) 
+        {
+            var retVal = new Dictionary<string, TimeSpan>();
+
+            currentUser = user;
+            targetDate = date;
+
+            var wDays = GetRange(TimeFrame.Month);
+
+            foreach (var wDay in wDays)
+            {
+                foreach (var task in wDay.AssignedWorkItems)
+                {
+                    if (retVal.ContainsKey(task.AssignedWorkTask.MappingID))
+                    {
+                        retVal[task.AssignedWorkTask.MappingID] += task.Duration;
+                    }
+                    else
+                    {
+                        retVal.Add(task.AssignedWorkTask.MappingID, task.Duration);
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
         #region Private methods
 
         private static SummaryInfo GetSummary(User user, DateTime date, TimeFrame timeFrame)

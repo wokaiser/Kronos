@@ -46,6 +46,11 @@ namespace KronosData.Model
             }
         }
 
+        public override string ToString()
+        {
+            return $"{WorkTime.DateOfWork.ToShortDateString()} - {TotalWorkTime}";
+        }
+
         #region Properties
 
         /// <summary>
