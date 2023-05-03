@@ -122,7 +122,7 @@ namespace KronosUI.Controls
 
         public string SelectedTaskTitle
         {
-            get { return string.Format("{0}\n{1}", SelectedTask.AssignedAccountNumber, SelectedTask.Title); }
+            get { return string.Format($"{SelectedTask.MappingID}\n{SelectedTask.Title}"); }
         }
 
         #endregion
