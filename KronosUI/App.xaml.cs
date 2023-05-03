@@ -17,11 +17,23 @@ namespace KronosUI
     {
         public App()
         {
-            Setup();
+            if (!Directory.Exists(DataManager.AppDataPath))
+            {
+                Directory.CreateDirectory(DataManager.AppDataPath);
+            }
+
+            try
+            {
+                var datMan = new DataManager();
+            }
+            catch (FileNotFoundException)
+            {
+                InitializeDB();
+            }
         }
 
-        //TODO: Remove
-        private void SetupSampleDB()
+#if DEBUG
+        private void InitializeDB()
         {
             var dataManager = new DataManager(true);
 
@@ -33,11 +45,11 @@ namespace KronosUI
             dataManager.CurrentUser.UserSettings.DefaultBreakTime = new TimeSpan(0, 45, 0);
 
             dataManager.Accounts.Add(new Account("AC-123-456-01") { Title = "Research more C#" });
-            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ", dataManager.Accounts[0]));
-            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research multi-threading", dataManager.Accounts[0]));
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research LINQ", dataManager.Accounts[0], "T0001"));
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Research multi-threading", dataManager.Accounts[0], "T0002"));
             dataManager.Accounts.Add(new Account("AC-789-012-34") { Title = "Do chores" });
-            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Do the dishes", dataManager.Accounts[1]));
-            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Take out the trash", dataManager.Accounts[1]));
+            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Do the dishes", dataManager.Accounts[1], "T0012"));
+            dataManager.Accounts[1].AssignedTasks.Add(new WorkTask("Take out the trash", dataManager.Accounts[1], "T0030"));
 
             var task1 = dataManager.Accounts[0].AssignedTasks[0];
             var task2 = dataManager.Accounts[0].AssignedTasks[1];
@@ -56,7 +68,6 @@ namespace KronosUI
             dataManager.SaveChanges();
         }
 
-        //TODO: Remove
         private WorkDay CreateWorkDaySample(DateTime day, WorkTask task1, WorkTask task2)
         {
             var retVal = new WorkDay(day);
@@ -69,24 +80,24 @@ namespace KronosUI
 
             return retVal;
         }
-
-        private void Setup()
+#else
+        private void InitializeDB()
         {
-            if (!Directory.Exists(DataManager.AppDataPath))
-            {
-                Directory.CreateDirectory(DataManager.AppDataPath);
-            }
+            var dataManager = new DataManager(true);
 
-            //TODO: Remove
-            try
-            {
-                var datMan = new DataManager();
-            }
-            catch (FileNotFoundException)
-            {
-                SetupSampleDB();
-            }
+            dataManager.SwitchUser(new User("default") { FirstName = "Default", LastName = "Default" });
+
+            dataManager.CurrentUser.UserSettings.DefaultDailyWorkTime = new TimeSpan(7, 0, 0);
+            dataManager.CurrentUser.UserSettings.DefaultBeginOfWork = new TimeSpan(8, 0, 0);
+            dataManager.CurrentUser.UserSettings.DefaultEndOfWork = new TimeSpan(16, 0, 0);
+            dataManager.CurrentUser.UserSettings.DefaultBreakTime = new TimeSpan(0, 45, 0);
+
+            dataManager.Accounts.Add(new Account("0815") { Title = "Do some work!" });
+            dataManager.Accounts[0].AssignedTasks.Add(new WorkTask("Did some work!", dataManager.Accounts[0], "T0001"));
+
+            dataManager.SaveChanges();
         }
+#endif
 
         protected override Window CreateShell()
         {

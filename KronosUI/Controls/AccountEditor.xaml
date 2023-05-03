@@ -16,6 +16,7 @@
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
                 <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="AUTO" />
@@ -29,10 +30,12 @@
             <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Kontierungsnummer" FontSize="16" Margin="5" Visibility="{Binding IsNumberVisible}" />
             <TextBox Grid.Row="3" Grid.Column="1" Width="300" Margin="5" Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsNumberVisible}" />
-            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}" Style="{StaticResource SaveButtonStyle}">
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Mapping ID" FontSize="16" Margin="5" Visibility="{Binding IsMappingIdVisible}" />
+            <TextBox Grid.Row="4" Grid.Column="1" Width="300" Margin="5" Text="{Binding MappingId, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsMappingIdVisible}" />
+            <Button Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}" Style="{StaticResource SaveButtonStyle}">
                 <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
             </Button>
-            <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding AbortCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}">
+            <Button Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding AbortCommand}" CommandParameter="{Binding ElementName=AccTaskEditor}">
                 <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
             </Button>
         </Grid>

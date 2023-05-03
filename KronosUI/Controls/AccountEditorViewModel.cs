@@ -12,9 +12,12 @@ namespace KronosUI.Controls
         public enum EditorStyle { Add = 0, Edit = 1 };
 
         private Visibility isNumberVisible;
+        private Visibility isMappingIdVisible;
+
         private string title;
         private string description;
         private string accountNumber;
+        private string mappingId;
 
         private readonly EditorStyle editorStyle;
         private readonly object selectedItem;
@@ -26,6 +29,7 @@ namespace KronosUI.Controls
 
             description = string.Empty;
             accountNumber = string.Empty;
+            mappingId = string.Empty;
 
             Initialize();
         }
@@ -39,11 +43,13 @@ namespace KronosUI.Controls
             {
                 Title = selectedItem == null ? "Kontierung hinzufügen" : "Arbeitspaket hinzufügen";
                 IsNumberVisible = selectedItem == null ? Visibility.Visible : Visibility.Collapsed;
+                IsMappingIdVisible = selectedItem == null ? Visibility.Collapsed : Visibility.Visible;
             }
             else if (editorStyle == EditorStyle.Edit)
             {
                 Title = selectedItem is Account || selectedItem is WorkItem ? "Kontierung bearbeiten" : "Arbeitspaket bearbeiten";
                 IsNumberVisible = selectedItem is Account ? Visibility.Visible : Visibility.Collapsed;
+                IsMappingIdVisible = selectedItem is Account ? Visibility.Collapsed : Visibility.Visible;
 
                 if (selectedItem is Account)
                 {
@@ -54,6 +60,7 @@ namespace KronosUI.Controls
                 if (selectedItem is WorkTask)
                 {
                     Description = (selectedItem as WorkTask).Title;
+                    MappingId = (selectedItem as WorkTask).MappingID;
                 }
             }
         }
@@ -67,14 +74,14 @@ namespace KronosUI.Controls
 
             if (selectedItem is Account)
             {
-                (selectedItem as Account).AssignedTasks.Add(new WorkTask(Description, selectedItem as Account));
+                (selectedItem as Account).AssignedTasks.Add(new WorkTask(Description, selectedItem as Account, MappingId));
             }
 
             if (selectedItem is WorkTask)
             {
                 var corrAcc = ContainerLocator.Container.Resolve<DataManager>().FindCorrespondingAccount(selectedItem as WorkTask);
 
-                corrAcc.AssignedTasks.Add(new WorkTask(Description, corrAcc));
+                corrAcc.AssignedTasks.Add(new WorkTask(Description, corrAcc, MappingId));
             }
         }
 
@@ -92,7 +99,8 @@ namespace KronosUI.Controls
 
             if (selectedItem is WorkTask)
             {
-                (selectedItem as WorkTask).Title = Description;
+                var acc = (selectedItem as WorkTask).AssignedAccountNumber;
+                (selectedItem as WorkTask).Update(Description, acc, MappingId);
             }
         }
 
@@ -121,7 +129,7 @@ namespace KronosUI.Controls
                 return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(AccountNumber);
             }
 
-            return !string.IsNullOrWhiteSpace(Description);
+            return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(MappingId);
         }
 
         private void Abort(Window window)
@@ -140,6 +148,15 @@ namespace KronosUI.Controls
             set
             {
                 SetProperty(ref isNumberVisible, value);
+            }
+        }
+
+        public Visibility IsMappingIdVisible
+        {
+            get { return isMappingIdVisible; }
+            set
+            {
+                SetProperty(ref isMappingIdVisible, value);
             }
         }
 
@@ -168,6 +185,16 @@ namespace KronosUI.Controls
             set
             {
                 SetProperty(ref accountNumber, value);
+                SaveChangesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public string MappingId
+        {
+            get { return mappingId; }
+            set
+            {
+                SetProperty(ref mappingId, value);
                 SaveChangesCommand.RaiseCanExecuteChanged();
             }
         }

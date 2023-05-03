@@ -61,7 +61,7 @@ namespace KronosData.Model
         {
             get
             {
-                return new WorkItem(TimeSpan.Zero, new WorkTask(string.Empty, new Account(string.Empty)));
+                return new WorkItem(TimeSpan.Zero, new WorkTask(string.Empty, new Account(string.Empty), string.Empty));
             }
         }
 

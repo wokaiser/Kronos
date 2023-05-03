@@ -29,7 +29,7 @@ namespace KronosData.Model
 
                 foreach (var item in AssignedTasks)
                 {
-                    item.Update(item.Title, this);
+                    item.Update(item.Title, this, item.MappingID);
                 }
             }
 

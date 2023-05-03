@@ -7,6 +7,7 @@ namespace KronosData.Model
     public class WorkTask : INotifyPropertyChanged
     {
         private string title;
+        private string mappingId;
         private string assignedAccountNumber;
 
         /// <summary>
@@ -14,15 +15,23 @@ namespace KronosData.Model
         /// </summary>
         /// <param name="title">The title of the work task</param>
         /// <param name="assignedAccoun">The account this task is assigned to</param>
-        public WorkTask(string title, Account assignedAccount)
+        public WorkTask(string title, Account assignedAccount, string mappingId)
         {
-            Update(title, assignedAccount);
+            Update(title, assignedAccount, mappingId);
         }
 
-        public void Update(string title, Account assignedAccount)
+        public void Update(string title, Account assignedAccount, string mappingId)
         {
             Title = title;
             AssignedAccountNumber = assignedAccount == null ? string.Empty : assignedAccount.Number;
+            MappingID = mappingId;
+        }
+
+        public void Update(string title, string accountNumber, string mappingId)
+        {
+            Title = title;
+            AssignedAccountNumber = accountNumber;
+            MappingID = mappingId;
         }
 
         #region IPropertyChanged implementation
@@ -43,17 +52,17 @@ namespace KronosData.Model
 
         public override string ToString()
         {
-            return Title;
+            return $"{MappingID} - {Title}";
         }
 
         public override bool Equals(object obj)
         {
-            return obj is WorkTask task && Title.Equals(task.Title) && AssignedAccountNumber.Equals(task.AssignedAccountNumber);
+            return obj is WorkTask task && Title.Equals(task.Title) && AssignedAccountNumber.Equals(task.AssignedAccountNumber) && MappingID.Equals(task.MappingID);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Title, AssignedAccountNumber);
+            return HashCode.Combine(Title, AssignedAccountNumber, MappingID);
         }
 
         #endregion
@@ -70,6 +79,19 @@ namespace KronosData.Model
             {
                 title = value;
                 OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        /// <summary>
+        /// The assigned mapping ID
+        /// </summary>
+        public string MappingID
+        {
+            get { return mappingId; }
+            set
+            {
+                mappingId = value;
+                OnPropertyChanged(nameof(MappingID));
             }
         }
 
