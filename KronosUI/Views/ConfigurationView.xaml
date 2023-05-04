@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:controls="clr-namespace:KronosUI.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="3" />
@@ -62,6 +62,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -93,6 +94,26 @@
                             <controls:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding DefaultDailyWorkTime}" />
                             <TextBlock Grid.Row="5" Grid.Column="0" Text="Pausenzeit" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
                             <controls:TimePicker Grid.Row="5" Grid.Column="1" Value="{Binding DefaultBreakTime}" />
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="AUTO" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="AUTO" />
+                                <ColumnDefinition Width="AUTO" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="Mapping" HorizontalAlignment="Center" />
+                            <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="SteelBlue" Height="3" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Token" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Margin="5" FontSize="16" Width="178" Text="{Binding MappingToken}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="URL" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Margin="5" FontSize="16" Width="178" Text="{Binding MappingUrl}" />
                         </Grid>
                     </Border>
                 </Grid>

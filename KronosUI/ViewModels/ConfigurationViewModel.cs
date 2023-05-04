@@ -18,7 +18,7 @@ namespace KronosUI.ViewModels
         private ObservableCollection<Account> currentAccounts;
         private object selectedItem;
         private bool pendingChanges;
-        private Settings defaultSettings;
+        private Settings userSettings;
 
         private readonly DataManager dataManger;
 
@@ -34,7 +34,7 @@ namespace KronosUI.ViewModels
         private void InitializeProperties()
         {
             CurrentAccounts = dataManger.Accounts;
-            defaultSettings = dataManger.CurrentUser.UserSettings;
+            userSettings = dataManger.CurrentUser.UserSettings;
 
             SelectedItem = null;
             PendingChanges = false;
@@ -42,6 +42,9 @@ namespace KronosUI.ViewModels
             RaisePropertyChanged(nameof(DefaultBeginOfWork));
             RaisePropertyChanged(nameof(DefaultEndOfWork));
             RaisePropertyChanged(nameof(DefaultDailyWorkTime));
+            RaisePropertyChanged(nameof(DefaultBreakTime));
+            RaisePropertyChanged(nameof(MappingToken));
+            RaisePropertyChanged(nameof(MappingUrl));
         }
 
         private void PublishStatusMessage(string message)
@@ -224,6 +227,28 @@ namespace KronosUI.ViewModels
 
         #region Properties
 
+        public string MappingToken
+        {
+            get {  return userSettings.MappingToken; }
+            set
+            {
+                userSettings.MappingToken = value;
+                RaisePropertyChanged(nameof(MappingToken));
+                PendingChanges = true;
+            }
+        }
+
+        public string MappingUrl
+        {
+            get { return userSettings.MappingUrl; }
+            set
+            {
+                userSettings.MappingUrl = value;
+                RaisePropertyChanged(nameof(MappingUrl));
+                PendingChanges = true;
+            }
+        }
+
         public ObservableCollection<Account> CurrentAccounts
         {
             get { return currentAccounts; }
@@ -258,10 +283,10 @@ namespace KronosUI.ViewModels
 
         public TimeSpan DefaultBeginOfWork
         {
-            get { return defaultSettings.DefaultBeginOfWork; }
+            get { return userSettings.DefaultBeginOfWork; }
             set
             {
-                defaultSettings.DefaultBeginOfWork = value;
+                userSettings.DefaultBeginOfWork = value;
                 RaisePropertyChanged(nameof(DefaultBeginOfWork));
                 PendingChanges = true;
             }
@@ -269,10 +294,10 @@ namespace KronosUI.ViewModels
 
         public TimeSpan DefaultEndOfWork
         {
-            get { return defaultSettings.DefaultEndOfWork; }
+            get { return userSettings.DefaultEndOfWork; }
             set
             {
-                defaultSettings.DefaultEndOfWork = value;
+                userSettings.DefaultEndOfWork = value;
                 RaisePropertyChanged(nameof(DefaultEndOfWork));
                 PendingChanges = true;
             }
@@ -280,10 +305,10 @@ namespace KronosUI.ViewModels
 
         public TimeSpan DefaultDailyWorkTime
         {
-            get { return defaultSettings.DefaultDailyWorkTime; }
+            get { return userSettings.DefaultDailyWorkTime; }
             set
             {
-                defaultSettings.DefaultDailyWorkTime = value;
+                userSettings.DefaultDailyWorkTime = value;
                 RaisePropertyChanged(nameof(DefaultDailyWorkTime));
                 PendingChanges = true;
             }
@@ -291,10 +316,10 @@ namespace KronosUI.ViewModels
 
         public TimeSpan DefaultBreakTime
         {
-            get { return defaultSettings.DefaultBreakTime; }
+            get { return userSettings.DefaultBreakTime; }
             set
             {
-                defaultSettings.DefaultBreakTime = value;
+                userSettings.DefaultBreakTime = value;
                 RaisePropertyChanged(nameof(DefaultBreakTime));
                 PendingChanges = true;
             }

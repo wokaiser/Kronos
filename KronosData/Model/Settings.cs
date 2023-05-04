@@ -9,6 +9,8 @@ namespace KronosData.Model
         private TimeSpan defaultBeginOfWork;
         private TimeSpan defaultEndOfWork;
         private TimeSpan defaultBreakTime;
+        private string mappingToken;
+        private string mappingUrl;
 
         public Settings()
         {
@@ -16,6 +18,8 @@ namespace KronosData.Model
             DefaultBeginOfWork = new TimeSpan(0);
             DefaultEndOfWork = new TimeSpan(0);
             DefaultBreakTime = new TimeSpan(0);
+            MappingToken = string.Empty;
+            MappingUrl = string.Empty;
         }
 
         #region INotifyPropertyChanged implementation
@@ -71,6 +75,26 @@ namespace KronosData.Model
             {
                 defaultBreakTime = value;
                 OnPropertyChanged(nameof(defaultBreakTime));
+            }
+        }
+
+        public string MappingToken
+        {
+            get { return mappingToken; }
+            set
+            {
+                mappingToken = value;
+                OnPropertyChanged(nameof(MappingToken));
+            }
+        }
+
+        public string MappingUrl
+        {
+            get { return mappingUrl; }
+            set
+            {
+                mappingUrl = value;
+                OnPropertyChanged(nameof(MappingUrl));
             }
         }
 
