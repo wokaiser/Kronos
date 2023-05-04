@@ -1,13 +1,14 @@
 ﻿using KronosData.Logic;
-using KronosUI.Events;
-using Prism.Ioc;
-using Prism.Events;
-using System;
-using Prism.Regions;
-using System.Linq;
 using KronosData.Model;
+using KronosUI.Events;
 using Prism.Commands;
-using KronosUI.Controls;
+using Prism.Events;
+using Prism.Ioc;
+using Prism.Regions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace KronosUI.ViewModels
@@ -15,6 +16,8 @@ namespace KronosUI.ViewModels
     public class MonthListingViewModel : ListingViewModelBase, INavigationAware
     {
         private readonly DataManager dataManager;
+
+        private Dictionary<string, TimeSpan> workByTasks;
 
         public MonthListingViewModel()
         {
@@ -33,7 +36,20 @@ namespace KronosUI.ViewModels
 
         private void UploadToMappingExecute()
         {
-            MessageBox.Show("Upload will be added later.", "Not implemented yet", MessageBoxButton.OK, MessageBoxImage.Information);
+            foreach (var task in workByTasks)
+            {
+                UploadTaskToMapping(task.Key, task.Value);
+            }
+        }
+
+        private void UploadTaskToMapping(string id, TimeSpan duration)
+        {
+            var uploader = new MappingUploader(dataManager.CurrentUser.UserSettings.MappingUrl, dataManager.CurrentUser.UserSettings.MappingToken);
+
+            if (!uploader.UploadTask(id, duration, currentTimeFrame))
+            {
+                MessageBox.Show("Upload will be added later.", "Not implemented yet", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         #region Eventhandler
@@ -52,7 +68,7 @@ namespace KronosUI.ViewModels
         protected override void UpdateSummary(User currentUser, WorkDay wDay)
         {
             summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromMonth(currentUser, wDay.WorkTime.DateOfWork);
-            var foo = wDay == null ? null : Summarizer.GetTaskOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork);
+            workByTasks = wDay == null ? new Dictionary<string, TimeSpan>() : Summarizer.GetTaskOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork);
 
             RaisePropertyChanged(nameof(SummaryTotalHours));
             RaisePropertyChanged(nameof(SummaryTotalRequired));
