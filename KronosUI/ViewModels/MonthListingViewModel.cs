@@ -10,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace KronosUI.ViewModels
 {
@@ -19,7 +17,7 @@ namespace KronosUI.ViewModels
     {
         private readonly DataManager dataManager;
 
-        private Dictionary<string, TimeSpan> workByTasks;
+        private Dictionary<WorkTask, TimeSpan> workByTasks;
 
         public MonthListingViewModel()
         {
@@ -55,13 +53,13 @@ namespace KronosUI.ViewModels
             }
         }
 
-        private string UploadTaskToMapping(string id, TimeSpan duration)
+        private string UploadTaskToMapping(WorkTask task, TimeSpan duration)
         {
             var uploader = new MappingUploader(dataManager.CurrentUser.UserSettings.MappingUrl, dataManager.CurrentUser.UserSettings.MappingToken);
 
-            if (!uploader.UploadTask(id, duration, currentTimeFrame))
+            if (!uploader.UploadTask(task.MappingID, duration, currentTimeFrame))
             {
-                return $"Task ID:{id} konnte nicht hochgeladen werden.\n";
+                return $"Task [{task.ToString()}] konnte nicht hochgeladen werden.\n";
             }
 
             return string.Empty;
@@ -83,7 +81,7 @@ namespace KronosUI.ViewModels
         protected override void UpdateSummary(User currentUser, WorkDay wDay)
         {
             summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromMonth(currentUser, wDay.WorkTime.DateOfWork);
-            workByTasks = wDay == null ? new Dictionary<string, TimeSpan>() : Summarizer.GetTaskOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork);
+            workByTasks = wDay == null ? new Dictionary<WorkTask, TimeSpan>() : Summarizer.GetTaskOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork);
 
             RaisePropertyChanged(nameof(SummaryTotalHours));
             RaisePropertyChanged(nameof(SummaryTotalRequired));

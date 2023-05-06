@@ -203,9 +203,31 @@ namespace KronosData.Logic
             return false;
         }
 
+        /// <summary>
+        /// Finds the account corresponding to the given task
+        /// </summary>
+        /// <param name="task">The task to look for the corresponding account</param>
+        /// <returns>The account if found or null</returns>
         public Account FindCorrespondingAccount(WorkTask task)
         {
             return Accounts.Where(d => d.AssignedTasks.Contains(task)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Finds a task by its ID
+        /// </summary>
+        /// <param name="id">The ID to look for</param>
+        /// <returns>The WorkTask assigned to the ID or null</returns>
+        public WorkTask FindTaskById(string id)
+        {
+            var acc = Accounts.Where(a => a.AssignedTasks.Select(t => t.MappingID).Contains(id)).FirstOrDefault();
+            
+            if (acc != null)
+            {
+                return acc.AssignedTasks.Where(t => t.MappingID.Equals(id)).FirstOrDefault();
+            }            
+
+            return null;
         }
 
         #region Properties
