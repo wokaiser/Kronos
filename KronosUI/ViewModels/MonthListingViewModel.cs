@@ -1,5 +1,6 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Controls;
 using KronosUI.Events;
 using Prism.Commands;
 using Prism.Events;
@@ -8,6 +9,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -36,20 +38,33 @@ namespace KronosUI.ViewModels
 
         private void UploadToMappingExecute()
         {
+            var sb = new StringBuilder();
+
             foreach (var task in workByTasks)
             {
-                UploadTaskToMapping(task.Key, task.Value);
+                sb.Append(UploadTaskToMapping(task.Key, task.Value));
+            }
+
+            if (sb.Length != 0)
+            {
+                PictoMsgBox.ShowMessage("Fehler beim hochladen", sb.ToString(), PictoMsgBoxButton.OK);
+            }
+            else
+            {
+                PictoMsgBox.ShowMessage("Hochladen", "Hochladen erfolgreich", PictoMsgBoxButton.OK);
             }
         }
 
-        private void UploadTaskToMapping(string id, TimeSpan duration)
+        private string UploadTaskToMapping(string id, TimeSpan duration)
         {
             var uploader = new MappingUploader(dataManager.CurrentUser.UserSettings.MappingUrl, dataManager.CurrentUser.UserSettings.MappingToken);
 
             if (!uploader.UploadTask(id, duration, currentTimeFrame))
             {
-                MessageBox.Show("Upload will be added later.", "Not implemented yet", MessageBoxButton.OK, MessageBoxImage.Information);
+                return $"Task {id} konnte nicht hochgeladen werden.\n";
             }
+
+            return string.Empty;
         }
 
         #region Eventhandler
