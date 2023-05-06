@@ -61,7 +61,7 @@ namespace KronosUI.ViewModels
 
             if (!uploader.UploadTask(id, duration, currentTimeFrame))
             {
-                return $"Task {id} konnte nicht hochgeladen werden.\n";
+                return $"Task ID:{id} konnte nicht hochgeladen werden.\n";
             }
 
             return string.Empty;

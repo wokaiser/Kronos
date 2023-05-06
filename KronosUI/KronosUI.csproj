@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
+	<CheckEolTargetFramework>False</CheckEolTargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\clock.ico</ApplicationIcon>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
