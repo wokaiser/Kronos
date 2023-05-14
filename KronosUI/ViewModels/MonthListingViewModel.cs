@@ -18,6 +18,7 @@ namespace KronosUI.ViewModels
         private readonly DataManager dataManager;
 
         private Dictionary<WorkTask, TimeSpan> workByTasks;
+        private string workByAccounts;
 
         public MonthListingViewModel()
         {
@@ -65,6 +66,35 @@ namespace KronosUI.ViewModels
             return string.Empty;
         }
 
+        private void UpdateAccountsSummary(IEnumerable<WorkDay> workMonth)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var workDay in workMonth.OrderBy(d => d.WorkTime.DateOfWork))
+            {
+                sb.AppendLine($"{workDay.WorkTime.DateOfWork.ToShortDateString()}");
+                var dict = new Dictionary<string, TimeSpan>();
+                foreach (var work in workDay.AssignedWorkItems)
+                {
+                    var key = work.AssignedWorkTask.AssignedAccountNumber;
+                    if (dict.ContainsKey(key))
+                    {
+                        dict[key] += work.Duration;
+                    }
+                    else
+                    {
+                        dict.Add(key, work.Duration);
+                    }
+                }
+                foreach (var account in dict.OrderBy(i => i.Key))
+                {
+                    sb.AppendFormat("    {0}: [{1:00},{2:00}h]\n", account.Key, account.Value.Hours, account.Value.Minutes);
+                }
+            }
+
+            WorkByAccounts = sb.ToString();
+        }
+
         #region Eventhandler
 
         private void TimeFrameUpdatedEventHandler(DateTime newTimeFrame)
@@ -82,6 +112,15 @@ namespace KronosUI.ViewModels
         {
             summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromMonth(currentUser, wDay.WorkTime.DateOfWork);
             workByTasks = wDay == null ? new Dictionary<WorkTask, TimeSpan>() : Summarizer.GetTaskOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork);
+
+            if (wDay != null)
+            {
+                UpdateAccountsSummary(Summarizer.GetAccountOverviewFromMonth(currentUser, wDay.WorkTime.DateOfWork));
+            }
+            else
+            {
+                WorkByAccounts = string.Empty;
+            }
 
             RaisePropertyChanged(nameof(SummaryTotalHours));
             RaisePropertyChanged(nameof(SummaryTotalRequired));
@@ -155,10 +194,16 @@ namespace KronosUI.ViewModels
 
                 foreach (var item in workByTasks)
                 {
-                    sb.AppendLine($"{item.Key.MappingID}: {item.Value.Hours},{item.Value.Minutes}");
+                    sb.AppendFormat("{0}: [{1:00},{2:00}h] - {3}\n", item.Key.MappingID, item.Value.Hours, item.Value.Minutes, item.Key.Title);
                 }
                 return sb.ToString();
             }
+        }
+
+        public string WorkByAccounts
+        {
+            get { return workByAccounts; }
+            set { SetProperty(ref workByAccounts, value); }
         }
 
         #endregion

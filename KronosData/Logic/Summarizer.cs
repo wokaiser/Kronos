@@ -9,8 +9,6 @@ namespace KronosData.Logic
     public static class Summarizer
     {
         private enum TimeFrame { Day, Week, Month, Year}
-        private static User currentUser;
-        private static DateTime targetDate;
 
         /// <summary>
         /// Extracts the SummaryInfo for the specified day
@@ -59,11 +57,7 @@ namespace KronosData.Logic
         public static Dictionary<WorkTask, TimeSpan> GetTaskOverviewFromMonth(User user, DateTime date) 
         {
             var retVal = new Dictionary<WorkTask, TimeSpan>();
-
-            currentUser = user;
-            targetDate = date;
-
-            var wDays = GetRange(TimeFrame.Month);
+            var wDays = GetRange(user, date, TimeFrame.Month);
 
             foreach (var wDay in wDays)
             {
@@ -83,20 +77,28 @@ namespace KronosData.Logic
             return retVal;
         }
 
+        public static IEnumerable<WorkDay> GetAccountOverviewFromMonth(User user, DateTime date)
+        {
+            return GetRange(user, date, TimeFrame.Month);
+        }
+
         #region Private methods
 
         private static SummaryInfo GetSummary(User user, DateTime date, TimeFrame timeFrame)
         {
-            currentUser = user;
-            targetDate = date;
-
-            return new SummaryInfo(GetTotalWorkHours(timeFrame), GetRequiredWorkHours(timeFrame), GetTotalOvertime(timeFrame), GetTotalAccountedHours(timeFrame), GetTotalMobileDays(timeFrame), GetTotalFreeDays(timeFrame), GetTotalSickDays(timeFrame));
+            return new SummaryInfo(GetTotalWorkHours(user, date, timeFrame),
+                GetRequiredWorkHours(user, date, timeFrame), 
+                GetTotalOvertime(user, date, timeFrame), 
+                GetTotalAccountedHours(user, date, timeFrame), 
+                GetTotalMobileDays(user, date, timeFrame), 
+                GetTotalFreeDays(user, date, timeFrame),
+                GetTotalSickDays(user, date, timeFrame));
         }
 
-        private static TimeSpan GetTotalWorkHours(TimeFrame timeframe)
+        private static TimeSpan GetTotalWorkHours(User user, DateTime date, TimeFrame timeframe)
         {
             var retVal = TimeSpan.Zero;
-            IEnumerable<WorkDay> wDays = GetRange(timeframe);
+            IEnumerable<WorkDay> wDays = GetRange(user, date, timeframe);
 
             foreach (var wDay in wDays)
             {
@@ -106,10 +108,10 @@ namespace KronosData.Logic
             return retVal;
         }
 
-        private static TimeSpan GetRequiredWorkHours(TimeFrame timeframe)
+        private static TimeSpan GetRequiredWorkHours(User user, DateTime date, TimeFrame timeframe)
         {
             var retVal = TimeSpan.Zero;
-            IEnumerable<WorkDay> wDays = GetRange(timeframe);
+            IEnumerable<WorkDay> wDays = GetRange(user, date, timeframe);
 
             foreach (var wDay in wDays)
             {
@@ -119,10 +121,10 @@ namespace KronosData.Logic
             return retVal;
         }
 
-        private static TimeSpan GetTotalOvertime(TimeFrame timeframe)
+        private static TimeSpan GetTotalOvertime(User user, DateTime date, TimeFrame timeframe)
         {
             var retVal = TimeSpan.Zero;
-            IEnumerable<WorkDay> wDays = GetRange(timeframe);
+            IEnumerable<WorkDay> wDays = GetRange(user, date, timeframe);
 
             foreach (var wDay in wDays)
             {
@@ -132,10 +134,10 @@ namespace KronosData.Logic
             return retVal;
         }
 
-        private static TimeSpan GetTotalAccountedHours(TimeFrame timeframe)
+        private static TimeSpan GetTotalAccountedHours(User user, DateTime date, TimeFrame timeframe)
         {
             var retVal = TimeSpan.Zero;
-            IEnumerable<WorkDay> wDays = GetRange(timeframe);
+            IEnumerable<WorkDay> wDays = GetRange(user, date, timeframe);
 
             foreach (var wDay in wDays)
             {
@@ -145,41 +147,43 @@ namespace KronosData.Logic
             return retVal;
         }
 
-        private static int GetTotalMobileDays(TimeFrame timeframe)
+        private static int GetTotalMobileDays(User user, DateTime date, TimeFrame timeframe)
         {
-            return GetRange(timeframe).Where(d => d.IsMobileDay).Count();
+            return GetRange(user, date, timeframe).Where(d => d.IsMobileDay).Count();
         }
 
-        private static int GetTotalFreeDays(TimeFrame timeframe)
+        private static int GetTotalFreeDays(User user, DateTime date, TimeFrame timeframe)
         {
-            return GetRange(timeframe).Where(d => d.IsFreeDay).Count();
+            return GetRange(user, date, timeframe).Where(d => d.IsFreeDay).Count();
         }
 
-        private static int GetTotalSickDays(TimeFrame timeframe)
+        private static int GetTotalSickDays(User user, DateTime date, TimeFrame timeframe)
         {
-            return GetRange(timeframe).Where(d => d.IsSickDay).Count();
+            return GetRange(user, date, timeframe).Where(d => d.IsSickDay).Count();
         }
 
         /// <summary>
         /// Returns the range for the given TimeFrame
         /// </summary>
+        /// <param name="user">The user to look in</param>
+        /// <param name="date">The day to look for</param>
         /// <param name="timeframe">The timeframe to look for</param>
         /// <returns>All days found wihtin the given TimeFrame</returns>
-        private static IEnumerable<WorkDay> GetRange(TimeFrame timeframe)
+        private static IEnumerable<WorkDay> GetRange(User user, DateTime date, TimeFrame timeframe)
         {
             switch (timeframe)
             {
                 case TimeFrame.Day:
-                    return currentUser.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork == targetDate);
+                    return user.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork == date);
 
                 case TimeFrame.Week:
-                    return GetWorkWeek();
+                    return GetWorkWeek(user, date);
 
                 case TimeFrame.Month:
-                    return currentUser.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Month == targetDate.Month && d.WorkTime.DateOfWork.Year == targetDate.Year);
+                    return user.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Month == date.Month && d.WorkTime.DateOfWork.Year == date.Year);
 
                 case TimeFrame.Year:
-                    return currentUser.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Year == targetDate.Year);
+                    return user.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Year == date.Year);
 
                 default:
                     return null;
@@ -189,8 +193,10 @@ namespace KronosData.Logic
         /// <summary>
         /// Extracts work week from specified TimeFrame
         /// </summary>
+        /// <param name="user">The user to look in</param>
+        /// <param name="date">The day to look for</param>
         /// <returns>All days found within given TimeFrame</returns>
-        private static IEnumerable<WorkDay> GetWorkWeek()
+        private static IEnumerable<WorkDay> GetWorkWeek(User user, DateTime date)
         {
             var ci = new CultureInfo("de-DE");
             var cwr = ci.DateTimeFormat.CalendarWeekRule;
@@ -199,9 +205,9 @@ namespace KronosData.Logic
 
             var retVal = new List<WorkDay>();
 
-            foreach (var wDay in currentUser.AssignedWorkDays)
+            foreach (var wDay in user.AssignedWorkDays)
             {
-                if (cal.GetWeekOfYear(targetDate, cwr, fdow) == cal.GetWeekOfYear(wDay.WorkTime.DateOfWork, cwr, fdow) && targetDate.Year == wDay.WorkTime.DateOfWork.Year)
+                if (cal.GetWeekOfYear(date, cwr, fdow) == cal.GetWeekOfYear(wDay.WorkTime.DateOfWork, cwr, fdow) && date.Year == wDay.WorkTime.DateOfWork.Year)
                 {
                     retVal.Add(wDay);
                 }

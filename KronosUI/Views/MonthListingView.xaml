@@ -27,8 +27,8 @@
                 <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="AUTO" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
             <Border Grid.Row="1" Grid.Column="0" BorderThickness="3" BorderBrush="DarkGreen" CornerRadius="8,0,0,8" Margin="0,5,5,5">
@@ -44,9 +44,16 @@
                 </Grid>
             </Border>
             <Border Grid.Row="1" Grid.Column="1" BorderThickness="3" BorderBrush="DarkGreen" CornerRadius="0,8,8,0" Margin="0,5,0,5">
-                <StackPanel>
-                    <TextBlock Text="SAP Kontierungen" FontWeight="Bold" />
-                </StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="SAP Kontierungen" FontWeight="Bold" />
+                    <ScrollViewer Grid.Row="1" Margin="0,0,0,5" VerticalScrollBarVisibility="Auto">
+                        <TextBlock Text="{Binding WorkByAccounts, Mode=OneWay}" HorizontalAlignment="Left" />
+                    </ScrollViewer>
+                </Grid>
             </Border>
             <controls:SummaryControl Grid.Row="2" Grid.ColumnSpan="2" />
         </Grid>
