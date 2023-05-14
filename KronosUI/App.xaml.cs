@@ -109,6 +109,7 @@ namespace KronosUI
             containerRegistry.RegisterInstance(new Shell());
             containerRegistry.RegisterInstance(new DataManager());
             containerRegistry.RegisterInstance(new WeekListingViewModel());
+            containerRegistry.RegisterInstance(new MonthListingViewModel());
             containerRegistry.RegisterInstance(new ConfigurationViewModel());
         }
     }

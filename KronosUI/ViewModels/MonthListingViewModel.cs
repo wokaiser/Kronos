@@ -90,6 +90,7 @@ namespace KronosUI.ViewModels
             RaisePropertyChanged(nameof(SummaryTotalMobileDays));
             RaisePropertyChanged(nameof(SummaryTotalFreeDays));
             RaisePropertyChanged(nameof(SummaryTotalSickDays));
+            RaisePropertyChanged(nameof(WorkByTasks));
         }
 
         protected override void Initialize()
@@ -145,6 +146,20 @@ namespace KronosUI.ViewModels
         #region Properties
 
         public DelegateCommand UploadToMapping { get; private set; }
+
+        public string WorkByTasks
+        {
+            get
+            {
+                var sb = new StringBuilder();
+
+                foreach (var item in workByTasks)
+                {
+                    sb.AppendLine($"{item.Key.MappingID}: {item.Value.Hours},{item.Value.Minutes}");
+                }
+                return sb.ToString();
+            }
+        }
 
         #endregion
     }
