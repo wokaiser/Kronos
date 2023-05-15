@@ -9,6 +9,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 
 namespace KronosUI.ViewModels
@@ -88,7 +89,8 @@ namespace KronosUI.ViewModels
                 }
                 foreach (var account in dict.OrderBy(i => i.Key))
                 {
-                    sb.AppendFormat("    {0}: [{1:00},{2:00}h]\n", account.Key, account.Value.Hours, account.Value.Minutes);
+                    double min = ((double)account.Value.Minutes / 60) * 100;
+                    sb.AppendFormat("    {0}: [{1:00},{2:00}h]\n", account.Key, account.Value.Hours, min);
                 }
             }
 
@@ -194,7 +196,8 @@ namespace KronosUI.ViewModels
 
                 foreach (var item in workByTasks)
                 {
-                    sb.AppendFormat("{0}: [{1:00},{2:00}h] - {3}\n", item.Key.MappingID, item.Value.Hours, item.Value.Minutes, item.Key.Title);
+                    double min = ((double)item.Value.Minutes / 60) * 100;
+                    sb.AppendFormat("{0}: [{1:00},{2:00}h] - {3}\n", item.Key.MappingID, item.Value.Hours, min, item.Key.Title);
                 }
                 return sb.ToString();
             }
