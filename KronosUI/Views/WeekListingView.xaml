@@ -69,6 +69,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </DataGrid>
+            <controls:WeekListingKey Grid.Row="2" Margin="5" />
             <controls:SummaryControl Grid.Row="3" />
         </Grid>
     </Border>
