@@ -15,6 +15,7 @@
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <Converters:TimeSpanToStringConverter x:Key="timeSpanConverter" />
+        <Converters:ValueToColorConverter x:Key="valueToColorConverter" />
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontWeight" Value="Bold" />
@@ -99,11 +100,11 @@
                     <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsSickDay}" />
                     <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Arbeitszeit:" />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TotalWorkHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TotalWorkHours}" FontFamily="Consolas" HorizontalAlignment="Right" Margin="5,5,80,5" />
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Überstunden:" />
-                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalOvertime}" HorizontalAlignment="Right" Margin="5,5,80,5" />
+                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalOvertime}" Foreground="{Binding TotalOvertime, Converter={StaticResource valueToColorConverter}}" FontFamily="Consolas" HorizontalAlignment="Right" Margin="5,5,80,5" />
                     <TextBlock Grid.Row="8" Grid.Column="0" Text="Unkontiert:" />
-                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding UnaccountedHours}" HorizontalAlignment="Right" Margin="5,5,80,5" />
+                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding UnaccountedHours}" FontFamily="Consolas" HorizontalAlignment="Right" Margin="5,5,80,5" />
                 </Grid>
             </Border>
             <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
@@ -128,7 +129,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, Converter={StaticResource timeSpanConverter}}" Width="100" />
+                            <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, Converter={StaticResource timeSpanConverter}}" FontFamily="Consolas" Width="100" />
                         </DataGrid.Columns>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
