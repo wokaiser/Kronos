@@ -16,8 +16,9 @@ namespace KronosUI.ViewModels
             var hours = Math.Abs(tSpan.Days * 24 + tSpan.Hours);
             var minutes = Math.Abs(tSpan.Minutes);
             var prefix = tSpan < TimeSpan.Zero ? "-" : string.Empty;
+            var suffix = tSpan < TimeSpan.Zero ? " " : string.Empty;
 
-            return string.Format("{0}{1:00}:{2:00}", prefix, hours, minutes);
+            return string.Format($"{prefix}{hours:00}:{minutes:00}{suffix}");
         }
 
         #region Properties

@@ -9,6 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:ValueToColorConverter x:Key="valueToColorConverter" />
+        <FontFamily x:Key="timeFont">Consolas</FontFamily>
     </UserControl.Resources>
     <Border Grid.Row="2" CornerRadius="8" BorderThickness="3" BorderBrush="DarkGreen">
         <StackPanel>
@@ -25,14 +26,15 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Zusammenfassung" FontWeight="Bold" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="h Soll" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="h gearbeitet" />
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="h kontiert" />
-                <TextBlock Grid.Row="1" Grid.Column="3" Text="&#x0394; h" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" FontSize="28" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" FontSize="28" />
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" FontSize="28" />
-                <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" FontSize="28" Foreground="{Binding SummaryTotalOvertime, Converter={StaticResource valueToColorConverter}}" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="h Soll" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="h gearbeitet" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="h kontiert" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="&#x0394; h" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}" />
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}"
+                           Foreground="{Binding SummaryTotalOvertime, Converter={StaticResource valueToColorConverter}}" />
             </Grid>
             <Grid Margin="5">
                 <Grid.RowDefinitions>
@@ -44,12 +46,12 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Mobil Arbeitstage" />
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="Krankheitstage" />
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Urlaubstage" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SummaryTotalMobileDays}" FontWeight="Bold" FontSize="28" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SummaryTotalSickDays}" FontWeight="Bold" FontSize="28" />
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SummaryTotalFreeDays}" FontWeight="Bold" FontSize="28" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Mobil Arbeitstage" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Krankheitstage" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Urlaubstage" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding SummaryTotalMobileDays}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SummaryTotalSickDays}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding SummaryTotalFreeDays}" FontWeight="Bold" FontSize="28" FontFamily="{StaticResource timeFont}" />
             </Grid>
         </StackPanel>
     </Border>
