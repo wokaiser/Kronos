@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KronosUI.Controls"
+             xmlns:converters="clr-namespace:KronosUI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:ValueToColorConverter x:Key="valueToColorConverter" />
+    </UserControl.Resources>
     <Border Grid.Row="2" CornerRadius="8" BorderThickness="3" BorderBrush="DarkGreen">
         <StackPanel>
             <Grid Margin="5">
@@ -25,10 +29,10 @@
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="h gearbeitet" />
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="h kontiert" />
                 <TextBlock Grid.Row="1" Grid.Column="3" Text="&#x0394; h" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" />
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" />
-                <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SummaryTotalRequired}" FontWeight="Bold" FontSize="28" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SummaryTotalHours}" FontWeight="Bold" FontSize="28" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SummaryTotalAccounted}" FontWeight="Bold" FontSize="28" />
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SummaryTotalOvertime}" FontWeight="Bold" FontSize="28" Foreground="{Binding SummaryTotalOvertime, Converter={StaticResource valueToColorConverter}}" />
             </Grid>
             <Grid Margin="5">
                 <Grid.RowDefinitions>
@@ -43,9 +47,9 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Mobil Arbeitstage" />
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="Krankheitstage" />
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Urlaubstage" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SummaryTotalMobileDays}" FontWeight="Bold" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SummaryTotalSickDays}" FontWeight="Bold" />
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SummaryTotalFreeDays}" FontWeight="Bold" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SummaryTotalMobileDays}" FontWeight="Bold" FontSize="28" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SummaryTotalSickDays}" FontWeight="Bold" FontSize="28" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SummaryTotalFreeDays}" FontWeight="Bold" FontSize="28" />
             </Grid>
         </StackPanel>
     </Border>
