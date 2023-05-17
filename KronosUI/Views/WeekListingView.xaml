@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <Converters:DateUnitToStringConverter x:Key="dateUnitConverter" />
         <Converters:TimeSpanToStringConverter x:Key="timeSpanConverter" />
+        <Converters:ValueToColorConverter x:Key="valueToColorConverter" />
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Margin" Value="5" />
@@ -44,6 +45,7 @@
                                 <Setter Property="Background" Value="Red" />
                             </DataTrigger>
                         </Style.Triggers>
+                        <Setter Property="FontFamily" Value="Consolas" />
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
@@ -53,7 +55,13 @@
                     <DataGridTextColumn Header="Pause" Binding="{Binding BreakTime, Converter={StaticResource timeSpanConverter}}" Width="80" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80" />
                     <DataGridTextColumn Header="Kontiert" Binding="{Binding TotalAccountedTime, Converter={StaticResource timeSpanConverter}}" Width="80" />
-                    <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80" />
+                    <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{Binding TotalOverTime, Converter={StaticResource valueToColorConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
