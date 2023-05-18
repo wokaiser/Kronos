@@ -21,15 +21,11 @@ namespace KronosUI.Controls
         private WorkDay currentDay;
         private WorkItem selectedWorkItem;
         private ObservableCollection<WorkItem> workItems;
-        private bool addWorkItem;
         private bool hasChanged;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
-            ContainerLocator.Container.Resolve<IEventAggregator>().GetEvent<WorkItemChangedEvent>().Subscribe(WorkItemChangedEventHandler);
-
-            addWorkItem = false;
 
             InitializeEditor(selectedItem);
         }
@@ -93,26 +89,6 @@ namespace KronosUI.Controls
             EditWorkItemCommand.RaiseCanExecuteChanged();
         }
 
-        #region Event handler
-
-        private void WorkItemChangedEventHandler(WorkItem changedItem)
-        {
-            if (addWorkItem)
-            {
-                WorkItems.Add(changedItem);
-                addWorkItem = false;
-            }
-            else
-            {
-                SelectedWorkItem.Update(changedItem);
-                RaisePropertyChanged(nameof(SelectedWorkItem));
-            }
-
-            RaisePropertiesChanged();
-        }
-
-        #endregion
-
         #region Command implementations
 
         public void InitializeCommands()
@@ -154,13 +130,25 @@ namespace KronosUI.Controls
 
         private void AddWorkItem()
         {
-            addWorkItem = true;
-            WorkItemEditor.AddWorkItem();
+            WorkItem newItem;
+
+            if (WorkItemEditor.AddWorkItem(out newItem))
+            {
+                WorkItems.Add(newItem);
+                RaisePropertiesChanged();
+            }
         }
 
         private void EditWorkItem()
         {
-            WorkItemEditor.EditWorkItem(SelectedWorkItem);
+            var changedItem = SelectedWorkItem;
+
+            if (WorkItemEditor.EditWorkItem(ref changedItem))
+            {
+                SelectedWorkItem.Update(changedItem);
+                RaisePropertyChanged(nameof(SelectedWorkItem));
+                RaisePropertiesChanged();
+            }
         }
 
         private bool CanEditWorkItem()

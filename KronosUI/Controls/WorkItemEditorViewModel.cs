@@ -14,21 +14,21 @@ namespace KronosUI.Controls
 {
     public class WorkItemEditorViewModel : BindableBase
     {
-        private readonly IEventAggregator eventAggregator;
         private readonly DataManager dataManager;
 
         private bool hasChanged;
         private TimeSpan duration;
+        private WorkItem selectedItem;
         private WorkTask selectedTask;
         private ObservableCollection<Account> currentAccounts;
 
-        public WorkItemEditorViewModel(WorkItem selectedItem)
+        public WorkItemEditorViewModel(ref WorkItem selectedItem)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
-            eventAggregator = ContainerLocator.Container.Resolve<IEventAggregator>();
 
             Initialize();
 
+            this.selectedItem = selectedItem;
             SelectedTask = selectedItem.AssignedWorkTask;
             Duration = selectedItem.Duration;
 
@@ -61,7 +61,7 @@ namespace KronosUI.Controls
 
         private void SaveChanges(Window window)
         {
-            eventAggregator.GetEvent<WorkItemChangedEvent>().Publish(new WorkItem(Duration, SelectedTask));
+            selectedItem.Update(new WorkItem(Duration, SelectedTask));
 
             window.DialogResult = true;
             window.Close();
