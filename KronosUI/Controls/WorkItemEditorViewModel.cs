@@ -75,7 +75,7 @@ namespace KronosUI.Controls
 
         private bool CanSaveChanges(Window window)
         {
-            return hasChanged && SelectedTaskTitle != string.Empty && Duration > TimeSpan.Zero;
+            return hasChanged && !string.IsNullOrWhiteSpace(SelectedTaskTitle) && Duration > TimeSpan.Zero;
         }
 
         #endregion
