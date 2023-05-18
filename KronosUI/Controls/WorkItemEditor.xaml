@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         x:Name="wItemEditor"
         Height="400" Width="600" Title="WorkItemEditor"
-        AllowsTransparency="True" Background="Transparent"
+        AllowsTransparency="True" Background="Transparent" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}">

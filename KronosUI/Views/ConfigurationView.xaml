@@ -111,9 +111,9 @@
                             <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="Mapping" HorizontalAlignment="Center" />
                             <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="SteelBlue" Height="3" />
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Token" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
-                            <TextBox Grid.Row="2" Grid.Column="1" Margin="5" FontSize="14" Width="178" Text="{Binding MappingToken}"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Margin="5" FontSize="14" Width="178" Text="{Binding MappingToken, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="URL" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,0,0" />
-                            <TextBox Grid.Row="3" Grid.Column="1" Margin="5" FontSize="14" Width="178" Text="{Binding MappingUrl}" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Margin="5" FontSize="14" Width="178" Text="{Binding MappingUrl, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
                 </Grid>

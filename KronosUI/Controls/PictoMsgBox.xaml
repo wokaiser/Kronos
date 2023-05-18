@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KronosUI.Controls"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-        x:Name="PictographicMessageBox"
-        mc:Ignorable="d" MinWidth="400" MaxWidth="600"
+        x:Name="PictographicMessageBox" Title="MessageBox"
+        mc:Ignorable="d" MinWidth="400" MaxWidth="600" ShowInTaskbar="False"
         SizeToContent="WidthAndHeight" AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>

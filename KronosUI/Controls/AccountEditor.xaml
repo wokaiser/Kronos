@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KronosUI.Controls"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-        x:Name="AccTaskEditor"
+        x:Name="AccTaskEditor" Title="AccountEditor"
         mc:Ignorable="d" SizeToContent="WidthAndHeight" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False">
     <Border BorderBrush="SteelBlue" Background="White" BorderThickness="3" CornerRadius="8">
         <Grid>
             <Grid.RowDefinitions>

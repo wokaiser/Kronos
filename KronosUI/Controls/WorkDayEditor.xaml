@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         x:Name="WDayEditor"
         Height="450" Width="800" Title="WorkDayEditor"
-        AllowsTransparency="True" Background="Transparent"
+        AllowsTransparency="True" Background="Transparent" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <Converters:TimeSpanToStringConverter x:Key="timeSpanConverter" />
