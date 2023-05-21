@@ -45,7 +45,7 @@
                                 <Setter Property="Background" Value="Red" />
                             </DataTrigger>
                         </Style.Triggers>
-                        <Setter Property="FontFamily" Value="Consolas" />
+                        <Setter Property="FontFamily" Value="{StaticResource HighlightValueFont}" />
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
