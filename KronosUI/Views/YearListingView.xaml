@@ -27,6 +27,7 @@
                 <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold" />
+            <TextBlock Grid.Row="1" Text="! UNDER CONSTRUCTION !" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" />
             <controls:SummaryControl Grid.Row="2" />
         </Grid>
     </Border>

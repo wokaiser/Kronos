@@ -1,8 +1,6 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
-using KronosUI.Events;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using System;

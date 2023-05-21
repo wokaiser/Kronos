@@ -35,8 +35,18 @@ namespace KronosUI.ViewModels
             UpdateSummary(dataManager.CurrentUser, firstDay);
         }
 
+        private bool CanUploadToMapping()
+        {
+            return !string.IsNullOrWhiteSpace(WorkByTasks);
+        }
+
         private void UploadToMappingExecute()
         {
+            if (!(bool)PictoMsgBox.ShowMessage("Die Stunden dieses Monats in Mapping eintragen?", "WARNUNG: Bereits in Mapping eingetragene Werte für diesen Monat werden überschrieben!", PictoMsgBoxButton.YesNo))
+            {
+                return;
+            }
+
             var sb = new StringBuilder();
 
             foreach (var task in workByTasks)
@@ -89,7 +99,7 @@ namespace KronosUI.ViewModels
                 foreach (var account in dict.OrderBy(i => i.Key))
                 {
                     double min = ((double)account.Value.Minutes / 60) * 100;
-                    sb.AppendFormat("    {0}: [{1:00},{2:00}h]\n", account.Key, account.Value.Hours, min);
+                    sb.AppendFormat("    {0}: [{1:00},{2:00}h]\n", account.Key, account.Value.TotalHours, min);
                 }
             }
 
@@ -131,12 +141,15 @@ namespace KronosUI.ViewModels
             RaisePropertyChanged(nameof(SummaryTotalFreeDays));
             RaisePropertyChanged(nameof(SummaryTotalSickDays));
             RaisePropertyChanged(nameof(WorkByTasks));
+
+            UploadToMappingCommand.RaiseCanExecuteChanged();
+            
         }
 
         protected override void Initialize()
         {
             PageTitle = DateHelper.GetMonthNameFromDate(currentTimeFrame, true);
-            UploadToMapping = new DelegateCommand(UploadToMappingExecute);
+            UploadToMappingCommand = new DelegateCommand(UploadToMappingExecute, CanUploadToMapping);
         }
 
         public override bool CanSwitchToPrevious()
@@ -185,7 +198,7 @@ namespace KronosUI.ViewModels
 
         #region Properties
 
-        public DelegateCommand UploadToMapping { get; private set; }
+        public DelegateCommand UploadToMappingCommand { get; private set; }
 
         public string WorkByTasks
         {
@@ -196,7 +209,7 @@ namespace KronosUI.ViewModels
                 foreach (var item in workByTasks)
                 {
                     double min = ((double)item.Value.Minutes / 60) * 100;
-                    sb.AppendFormat("{0}: [{1:00},{2:00}h] - {3}\n", item.Key.MappingID, item.Value.Hours, min, item.Key.Title);
+                    sb.AppendFormat("{0}: [{1:00},{2:00}h] - {3}\n", item.Key.MappingID, item.Value.TotalHours, min, item.Key.Title);
                 }
                 return sb.ToString();
             }
