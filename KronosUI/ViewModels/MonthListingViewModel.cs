@@ -82,7 +82,7 @@ namespace KronosUI.ViewModels
 
             foreach (var workDay in workMonth.OrderBy(d => d.WorkTime.DateOfWork))
             {
-                sb.AppendLine($"        {workDay.WorkTime.DateOfWork.ToShortDateString()}");
+                sb.AppendLine($"======= {workDay.WorkTime.DateOfWork.ToShortDateString()} =======");
                 var dict = new Dictionary<string, TimeSpan>();
                 foreach (var work in workDay.AssignedWorkItems)
                 {
