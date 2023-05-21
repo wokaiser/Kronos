@@ -1,11 +1,10 @@
 ﻿<UserControl x:Class="KronosUI.Views.ConfigurationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:model="clr-namespace:KronosData.Model;assembly=KronosData"
-             xmlns:local="clr-namespace:KronosUI.Views"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:KronosData.Model;assembly=KronosData"
              xmlns:controls="clr-namespace:KronosUI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
@@ -39,9 +38,9 @@
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Number}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
-                                    <TextBlock Text="{Binding MappingID}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
-                                    <TextBlock Text="{Binding Title}" FontSize="14" />
+                                    <TextBlock Text="{Binding Number, StringFormat={}{0,-18}}" FontSize="14" FontWeight="Bold" FontFamily="{StaticResource HighlightValueFont}" Margin="0,0,5,0" />
+                                    <TextBlock Text="{Binding MappingID, StringFormat={}{0,4}}" FontSize="14" FontWeight="Bold" FontFamily="{StaticResource HighlightValueFont}" Margin="0,0,5,0" />
+                                    <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="{StaticResource HighlightValueFont}" />
                                 </StackPanel>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
