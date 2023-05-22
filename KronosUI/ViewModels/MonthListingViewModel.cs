@@ -99,7 +99,9 @@ namespace KronosUI.ViewModels
                 foreach (var account in dict.OrderBy(i => i.Key))
                 {
                     double min = ((double)account.Value.Minutes / 60) * 100;
-                    sb.AppendFormat("{0,18}[{1:00},{2:00}h]\n", account.Key, account.Value.TotalHours, min);
+                    double hrs = Math.Floor(account.Value.TotalHours);
+
+                    sb.AppendFormat("{0,18}[{1:00},{2:00}h]\n", account.Key, hrs, min);
                 }
             }
 
@@ -209,7 +211,9 @@ namespace KronosUI.ViewModels
                 foreach (var item in workByTasks.OrderByDescending(i => i.Value))
                 {
                     double min = ((double)item.Value.Minutes / 60) * 100;
-                    sb.AppendFormat("{0,4}[{1:00},{2:00}h] - {3}\n", item.Key.MappingID, item.Value.TotalHours, min, item.Key.Title);
+                    double hrs = Math.Floor(item.Value.TotalHours);
+
+                    sb.AppendFormat("{0,4}[{1:00},{2:00}h] - {3}\n", item.Key.MappingID, hrs, min, item.Key.Title);
                 }
                 return sb.ToString();
             }

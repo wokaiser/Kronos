@@ -7,7 +7,7 @@ namespace KronosData.Logic
 {
     public class MappingUploader
     {
-        private static readonly string RequestMask = "set.php?userHash={0}&month={1}&year={2}&subtask={3}&hours={4:0.0#}";
+        private static readonly string RequestMask = "set.php?userHash={0}&month={1:00}&year={2}&subtask={3}&hours={4:0.0#}";
         private static readonly string TransactionSuccess = "";
 
         private string token;
@@ -30,7 +30,7 @@ namespace KronosData.Logic
         {
             var duration = hoursWorked.TotalHours.ToString("0.0#", new NumberFormatInfo() { NumberDecimalSeparator = "." });
 
-            return string.Format(RequestMask, url, token, month, year, taskId, duration);
+            return string.Format(RequestMask, token, month, year, taskId, duration);
         }
 
         private string HttpGet(string url, string request)
