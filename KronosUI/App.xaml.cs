@@ -1,11 +1,13 @@
 ﻿using KronosData.Logic;
 using KronosData.Model;
+using KronosUI.Controls;
 using KronosUI.ViewModels;
 using KronosUI.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 
 namespace KronosUI
@@ -15,6 +17,8 @@ namespace KronosUI
     /// </summary>
     public partial class App : PrismApplication
     {
+        private static Mutex appMutex = null;
+
         public App()
         {
             if (!Directory.Exists(DataManager.AppDataPath))
@@ -30,6 +34,23 @@ namespace KronosUI
             {
                 InitializeDB();
             }
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            const string appName = "Kronos.KronosUI";
+            bool createdNew;
+
+            appMutex = new Mutex(true, appName, out createdNew);
+
+            if (!createdNew)
+            {
+                //app is already running! Exiting the application
+                PictoMsgBox.ShowMessage("Anwendungsstart abgebrochen!", "Die Anwendung läuft bereits!");
+                Current.Shutdown();
+            }
+
+            base.OnStartup(e);
         }
 
 #if DEBUG
