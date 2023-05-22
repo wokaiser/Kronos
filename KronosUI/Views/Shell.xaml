@@ -18,16 +18,18 @@
                 <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="360" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
+            <Image Grid.Row="0" Grid.Column="0" Source="/Images/clock.ico" Height="18" Margin="5" />
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown" VerticalAlignment="Center">
                 <TextBlock Text="Kronos Zeiterfassung" FontSize="16" FontWeight="Bold" Margin="10,0,0,0" />
             </StackPanel>
-            <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
-            <ContentControl Grid.Row="2" Grid.Column="1" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
-            <ContentControl Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
-            <ContentControl Grid.Row="3" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
+            <ContentControl Grid.Row="1" Grid.Column="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
+            <ContentControl Grid.Row="2" Grid.Column="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
+            <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
+            <ContentControl Grid.Column="3" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
         </Grid>
     </Border>
 </Window>
