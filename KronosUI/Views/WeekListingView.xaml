@@ -46,6 +46,11 @@
                             </DataTrigger>
                         </Style.Triggers>
                         <Setter Property="FontFamily" Value="{StaticResource HighlightValueFont}" />
+                        <Setter Property="ToolTip">
+                            <Setter.Value>
+                                <TextBlock Text="{Binding ToolTipText}" FontFamily="{StaticResource HighlightValueFont}" FontSize="16" />
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>

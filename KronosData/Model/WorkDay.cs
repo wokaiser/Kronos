@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace KronosData.Model
@@ -142,6 +143,34 @@ namespace KronosData.Model
             get
             {
                 return WorkTime.DateOfWork.DayOfWeek == DayOfWeek.Saturday || WorkTime.DateOfWork.DayOfWeek == DayOfWeek.Sunday;
+            }
+        }
+
+        /// <summary>
+        /// Returns a tooltip value to show in listings
+        /// </summary>
+        [JsonIgnore]
+        public string ToolTipText
+        {
+            get
+            {
+                var sb = new StringBuilder();
+
+                foreach (var item in AssignedWorkItems)
+                {
+                    sb.AppendFormat("{0,4}[{1:00.00}h] - {2}\n", item.AssignedWorkTask.MappingID, item.Duration.TotalHours, item.AssignedWorkTask.Title);
+                }
+
+                if (sb.Length > 0)
+                {
+                    sb.Remove(sb.Length - 1, 1); // Remove trailing line break
+                }
+                else
+                {
+                    return "Keine Eintragungen vorhanden";
+                }
+
+                return sb.ToString();
             }
         }
 
