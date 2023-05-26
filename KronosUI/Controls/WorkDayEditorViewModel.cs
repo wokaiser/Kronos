@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace KronosUI.Controls
 {
@@ -20,6 +21,7 @@ namespace KronosUI.Controls
         private WorkItem selectedWorkItem;
         private ObservableCollection<WorkItem> workItems;
         private bool hasChanged;
+        private bool allowTimeSelection;
 
         public WorkDayEditorViewModel(WorkDay selectedItem)
         {
@@ -35,6 +37,7 @@ namespace KronosUI.Controls
                 selectedItem.WorkTime.DateOfWork.Date.ToShortDateString());
 
             hasChanged = false;
+            allowTimeSelection = true;
 
             SetupCurrentWorkDay(selectedItem);
 
@@ -77,6 +80,9 @@ namespace KronosUI.Controls
         private void RaisePropertiesChanged()
         {
             hasChanged = true;
+            RaisePropertyChanged(nameof(BeginOfDay));
+            RaisePropertyChanged(nameof(EndOfDay));
+            RaisePropertyChanged(nameof(BreakTime));
             RaisePropertyChanged(nameof(DailyWorkTime));
             RaisePropertyChanged(nameof(TotalWorkHours));
             RaisePropertyChanged(nameof(TotalOvertime));
@@ -96,6 +102,7 @@ namespace KronosUI.Controls
             AddWorkItemCommand = new DelegateCommand(AddWorkItem);
             EditWorkItemCommand = new DelegateCommand(EditWorkItem, CanEditWorkItem);
             RemoveWorkItemCommand = new DelegateCommand(RemoveWorkItem, CanRemoveWorkItem);
+            RadioButtonSelectedCommand = new DelegateCommand<object>(RadioButtonSelectedCommandExecute);
         }
 
         private void SaveChanges(Window window)
@@ -168,6 +175,35 @@ namespace KronosUI.Controls
             return SelectedWorkItem != null;
         }
 
+        private void RadioButtonSelectedCommandExecute(object sender)
+        {
+            var workType = (sender as RadioButton).Name;
+
+            switch(workType)
+            {
+                case "Office":
+                case "Mobile":
+                    AllowTimeSelection = true;
+                    BeginOfDay = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
+                    EndOfDay = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
+                    BreakTime = dataManager.CurrentUser.UserSettings.DefaultBreakTime;
+                    DailyWorkTime = dataManager.CurrentUser.UserSettings.DefaultDailyWorkTime;
+                    break;
+
+                case "Vacation":
+                case "Sick":
+                    AllowTimeSelection = false;
+                    BeginOfDay = TimeSpan.Zero;
+                    EndOfDay = TimeSpan.Zero;
+                    BreakTime = TimeSpan.Zero;
+                    DailyWorkTime = TimeSpan.Zero;
+                    break;
+
+                default:
+                    return;
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -181,6 +217,8 @@ namespace KronosUI.Controls
         public DelegateCommand EditWorkItemCommand { get; private set; }
 
         public DelegateCommand RemoveWorkItemCommand { get; private set; }
+
+        public DelegateCommand<object> RadioButtonSelectedCommand { get; private set; }
 
         public WorkDay CurrentDay
         {
@@ -279,6 +317,12 @@ namespace KronosUI.Controls
                 CurrentDay.IsFreeDay = value;
                 RaisePropertiesChanged();
             }
+        }
+
+        public bool AllowTimeSelection
+        {
+            get { return allowTimeSelection; }
+            set { SetProperty(ref allowTimeSelection, value); }
         }
 
         public string TotalWorkHours

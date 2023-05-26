@@ -34,6 +34,9 @@
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="5,0,0,0" />
         </Style>
+        <Style TargetType="controls:TimePicker">
+            <Setter Property="IsEnabled" Value="{Binding AllowTimeSelection}" />
+        </Style>
     </Window.Resources>
     <Border BorderBrush="Transparent" BorderThickness="10" CornerRadius="8" Background="Transparent">
         <Border BorderBrush="DarkOliveGreen" Background="LightSeaGreen">
@@ -102,10 +105,34 @@
                         <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
                         <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
-                        <RadioButton Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="True" Content="Im Werk" />
-                        <RadioButton Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsMobileOffice}" Content="Mobile Arbeit" />
-                        <RadioButton Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsFreeDay}" Content="Urlaub" />
-                        <RadioButton Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsSickDay}" Content="Krank" />
+                        <RadioButton Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Office" IsChecked="True" Content="Im Werk">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding RadioButtonSelectedCommand}" CommandParameter="{Binding ElementName=Office}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RadioButton>
+                        <RadioButton Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Mobile" IsChecked="{Binding IsMobileOffice}" Content="Mobile Arbeit">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding RadioButtonSelectedCommand}" CommandParameter="{Binding ElementName=Mobile}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RadioButton>
+                        <RadioButton Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Vacation" IsChecked="{Binding IsFreeDay}" Content="Urlaub">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding RadioButtonSelectedCommand}" CommandParameter="{Binding ElementName=Vacation}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RadioButton>
+                        <RadioButton Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Sick" IsChecked="{Binding IsSickDay}" Content="Krank">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding RadioButtonSelectedCommand}" CommandParameter="{Binding ElementName=Sick}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RadioButton>
                         <Rectangle Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
                         <TextBlock Grid.Row="7" Grid.Column="0" Text="Arbeitszeit:" />
                         <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalWorkHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
