@@ -24,14 +24,14 @@
     <Border Background="LightSteelBlue" BorderThickness="0" Margin="5">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0,0,0,5" CornerRadius="8,8,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="200" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Kontierungen" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" Margin="5" />
                     <TreeView Grid.Row="1" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0" Margin="0,0,0,5">
