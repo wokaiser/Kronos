@@ -9,7 +9,7 @@
         xmlns:Converters="clr-namespace:KronosUI.Converters"
         mc:Ignorable="d"
         x:Name="WDayEditor"
-        Height="450" Width="800" Title="WorkDayEditor"
+        Height="470" Width="800" Title="WorkDayEditor"
         AllowsTransparency="True" Background="Transparent" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
@@ -28,8 +28,11 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Margin" Value="5" />
         </Style>
-        <Style TargetType="{x:Type CheckBox}">
-            <Setter Property="HorizontalAlignment" Value="Left" />
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5,0,0,0" />
         </Style>
     </Window.Resources>
     <Border BorderBrush="Transparent" BorderThickness="10" CornerRadius="8" Background="Transparent">
@@ -85,6 +88,7 @@
                             <RowDefinition Height="AUTO" />
                             <RowDefinition Height="AUTO" />
                             <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="AUTO" />
                             <RowDefinition Height="AUTO" />
@@ -98,19 +102,17 @@
                         <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
                         <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Arbeit" Margin="5,0,0,0" />
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Urlaub" Margin="5,0,0,0" />
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Krank" Margin="5,0,0,0" />
-                        <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsMobileOffice}" />
-                        <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsFreeDay}" />
-                        <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsSickDay}" />
-                        <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
-                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Arbeitszeit:" />
-                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TotalWorkHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Überstunden:" />
-                        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalOvertime}" Foreground="{Binding TotalOvertime, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Unkontiert:" />
-                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding UnaccountedHours}" Foreground="{Binding UnaccountedHoursradio, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                        <RadioButton Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="True" Content="Im Werk" />
+                        <RadioButton Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsMobileOffice}" Content="Mobile Arbeit" />
+                        <RadioButton Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsFreeDay}" Content="Urlaub" />
+                        <RadioButton Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsSickDay}" Content="Krank" />
+                        <Rectangle Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Arbeitszeit:" />
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalWorkHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Überstunden:" />
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding TotalOvertime}" Foreground="{Binding TotalOvertime, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="9" Grid.Column="0" Text="Unkontiert:" />
+                        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding UnaccountedHours}" Foreground="{Binding UnaccountedHoursradio, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
                     </Grid>
                 </Border>
                 <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
