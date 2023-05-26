@@ -32,124 +32,129 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
     </Window.Resources>
-    <Border BorderBrush="DarkOliveGreen" Background="LightSeaGreen">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="AUTO" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="AUTO" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
-                <TextBlock Text="{Binding Title}" Margin="5,0,0,0" />
-            </StackPanel>
-            <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkOliveGreen" />
-            <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}" Style="{StaticResource SaveButtonStyle}">
-                <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
-            </Button>
-            <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
-                <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
-            </Button>
-            <Border Grid.Row="2" BorderBrush="DarkGreen" Margin="5,5,0,0" HorizontalAlignment="Stretch">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="AUTO" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="AUTO" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Beginn" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="1" Grid.Column="0" Value="{Binding BeginOfDay}" HorizontalAlignment="Center" Margin="5" />
-                    <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" Fill="DarkGreen" Width="3" />
-                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Ende" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <controls:TimePicker Grid.Row="1" Grid.Column="2" Value="{Binding EndOfDay}" HorizontalAlignment="Center" Margin="5" />
-                </Grid>
-            </Border>
-            <Border Grid.Row="3" BorderBrush="DarkGreen" Margin="5,5,0,5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="AUTO" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="AUTO" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Soll-Arbeitszeit" />
-                    <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
-                    <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Arbeit" Margin="5,0,0,0" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Urlaub" Margin="5,0,0,0" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Krank" Margin="5,0,0,0" />
-                    <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsMobileOffice}" />
-                    <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsFreeDay}" />
-                    <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsSickDay}" />
-                    <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Arbeitszeit:" />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TotalWorkHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Right" Margin="5,5,80,5" />
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Überstunden:" />
-                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalOvertime}" Foreground="{Binding TotalOvertime, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Right" Margin="5,5,80,5" />
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Unkontiert:" />
-                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding UnaccountedHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Right" Margin="5,5,80,5" />
-                </Grid>
-            </Border>
-            <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="AUTO" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="AUTO" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="AUTO" />
-                        <ColumnDefinition Width="AUTO" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
-                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding WorkItems}" SelectedItem="{Binding SelectedWorkItem}" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Arbeitspaket" Binding="{Binding AssignedWorkTask}" Width="*">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Left" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, Converter={StaticResource timeSpanConverter}}" FontFamily="{StaticResource HighlightValueFont}" Width="100" />
-                        </DataGrid.Columns>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding EditWorkItemCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </DataGrid>
-                    <Button Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" ToolTip="Arbeitspaket entfernen" Command="{Binding RemoveWorkItemCommand}" Margin="5">
-                        <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="1" ToolTip="Arbeitspaket bearbeiten" Command="{Binding EditWorkItemCommand}" Margin="5">
-                        <svgc:SvgViewbox Source="/Images/edit.svg" Margin="5" />
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="2" ToolTip="Arbeitspaket hinzufügen" Command="{Binding AddWorkItemCommand}" Margin="5">
-                        <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
-                    </Button>
-                </Grid>
-            </Border>
-        </Grid>
+    <Border BorderBrush="Transparent" BorderThickness="10" CornerRadius="8" Background="Transparent">
+        <Border BorderBrush="DarkOliveGreen" Background="LightSeaGreen">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="8" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Opacity="1" />
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="AUTO" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="StackPanel_MouseDown">
+                    <TextBlock Text="{Binding Title}" Margin="5,0,0,0" />
+                </StackPanel>
+                <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkOliveGreen" />
+                <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}" Style="{StaticResource SaveButtonStyle}">
+                    <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
+                </Button>
+                <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=WDayEditor}">
+                    <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
+                </Button>
+                <Border Grid.Row="2" BorderBrush="DarkGreen" Margin="5,5,0,0" HorizontalAlignment="Stretch">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Beginn" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <controls:TimePicker Grid.Row="1" Grid.Column="0" Value="{Binding BeginOfDay}" HorizontalAlignment="Center" Margin="5" />
+                        <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Center" Fill="DarkGreen" Width="3" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Ende" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <controls:TimePicker Grid.Row="1" Grid.Column="2" Value="{Binding EndOfDay}" HorizontalAlignment="Center" Margin="5" />
+                    </Grid>
+                </Border>
+                <Border Grid.Row="3" BorderBrush="DarkGreen" Margin="5,5,0,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Soll-Arbeitszeit" />
+                        <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
+                        <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Arbeit" Margin="5,0,0,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Urlaub" Margin="5,0,0,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Krank" Margin="5,0,0,0" />
+                        <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsMobileOffice}" />
+                        <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsFreeDay}" />
+                        <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding IsSickDay}" />
+                        <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="3" Fill="DarkGreen" />
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Arbeitszeit:" />
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TotalWorkHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Überstunden:" />
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TotalOvertime}" Foreground="{Binding TotalOvertime, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Unkontiert:" />
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding UnaccountedHours}" Foreground="{Binding UnaccountedHoursradio, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Durchgeführte Arbeiten" HorizontalAlignment="Left" />
+                        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent" AutoGenerateColumns="False" BorderThickness="0" ItemsSource="{Binding WorkItems}" SelectedItem="{Binding SelectedWorkItem}" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Arbeitspaket" Binding="{Binding AssignedWorkTask}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, Converter={StaticResource timeSpanConverter}}" FontFamily="{StaticResource HighlightValueFont}" Width="100" />
+                            </DataGrid.Columns>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding EditWorkItemCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DataGrid>
+                        <Button Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" ToolTip="Arbeitspaket entfernen" Command="{Binding RemoveWorkItemCommand}" Margin="5">
+                            <svgc:SvgViewbox Source="/Images/trash.svg" Margin="5" />
+                        </Button>
+                        <Button Grid.Row="2" Grid.Column="1" ToolTip="Arbeitspaket bearbeiten" Command="{Binding EditWorkItemCommand}" Margin="5">
+                            <svgc:SvgViewbox Source="/Images/edit.svg" Margin="5" />
+                        </Button>
+                        <Button Grid.Row="2" Grid.Column="2" ToolTip="Arbeitspaket hinzufügen" Command="{Binding AddWorkItemCommand}" Margin="5">
+                            <svgc:SvgViewbox Source="/Images/add.svg" Margin="5" />
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
     </Border>
 </Window>

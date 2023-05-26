@@ -286,7 +286,7 @@ namespace KronosUI.Controls
             get
             {
                 var wHours = EndOfDay - BeginOfDay - BreakTime;
-                return string.Format("{0} h", wHours.ToString(@"hh\:mm"));
+                return string.Format(" {0} h", wHours.ToString(@"hh\:mm"));
             }
         }
 
@@ -294,7 +294,7 @@ namespace KronosUI.Controls
         {
             get
             {
-                var prefix = CurrentDay.TotalOverTime < TimeSpan.Zero ? "-" : string.Empty;
+                var prefix = CurrentDay.TotalOverTime < TimeSpan.Zero ? "-" : " ";
                 return string.Format("{0}{1} h", prefix, CurrentDay.TotalOverTime.ToString(@"hh\:mm"));
             }
         }
@@ -305,7 +305,7 @@ namespace KronosUI.Controls
             {
                 var uaHours = EndOfDay - BeginOfDay - BreakTime - GetAccountedTime();
                 var retVal = string.Format("{0} h", uaHours.ToString(@"hh\:mm"));
-                return uaHours < TimeSpan.Zero ? "-" + retVal : retVal;
+                return uaHours < TimeSpan.Zero ? "-" + retVal : " " + retVal;
             }
         }
 
