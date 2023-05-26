@@ -163,7 +163,7 @@ namespace KronosUI.Controls
 
         private void RemoveWorkItem()
         {
-            if ((bool)PictoMsgBox.ShowMessage("Remove WorkItem", "Are you sure to remove the selected work item?", PictoMsgBoxButton.YesNo))
+            if ((bool)PictoMsgBox.ShowMessage("Arbeitspaket löschen", "Sind Sie sich sicher das gewählte Arbeitspaket zu entfernen?", PictoMsgBoxButton.YesNo))
             {
                 CurrentDay.AssignedWorkItems.Remove(SelectedWorkItem);
                 RaisePropertiesChanged();

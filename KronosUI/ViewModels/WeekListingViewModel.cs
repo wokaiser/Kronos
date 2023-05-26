@@ -100,7 +100,7 @@ namespace KronosUI.ViewModels
 
         public void DeleteItem()
         {
-            if (!(bool)PictoMsgBox.ShowMessage("Delete workday", "Are you sure to delete the selected workday?", PictoMsgBoxButton.YesNo))
+            if (!(bool)PictoMsgBox.ShowMessage("Arbeitstag löschen", "Sind Sie sich sicher den gewählten Arbeitsag zu entfernen?", PictoMsgBoxButton.YesNo))
             {
                 return;
             }
@@ -114,7 +114,7 @@ namespace KronosUI.ViewModels
         {
             if (CurrentWorkDay != null)
             {
-                return CurrentWorkDay.WorkTime.Duration > TimeSpan.Zero;
+                return CurrentWorkDay.WorkTime.Duration > TimeSpan.Zero || CurrentWorkDay.IsFreeDay ||CurrentWorkDay.IsSickDay;
             }
 
             return false;

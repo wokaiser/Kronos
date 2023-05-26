@@ -167,6 +167,11 @@ namespace KronosData.Model
                 }
                 else
                 {
+                    if (IsSickDay || IsFreeDay)
+                    {
+                        return IsSickDay ? "Krank" : "Urlaub";
+                    }
+
                     return "Keine Eintragungen vorhanden";
                 }
 
