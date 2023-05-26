@@ -23,57 +23,62 @@
             <Setter Property="CornerRadius" Value="8" />
         </Style>
     </Window.Resources>
-    <Border BorderBrush="DarkOliveGreen" Background="LightSeaGreen">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="DragMove_MouseDown">
-                <TextBlock Text="Arbeitspaketeditor" Margin="5,0,0,0" />
-            </StackPanel>
-            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Number}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
-                            <TextBlock Text="{Binding MappingID}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
-                            <TextBlock Text="{Binding Title}" FontSize="14" />
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" Value="True" />
-                    </Style>
-                </TreeView.ItemContainerStyle>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedItemChanged">
-                        <i:InvokeCommandAction Command="{Binding ItemSelectionChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=AccountTreeView}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TreeView>
-            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Dauer:" HorizontalAlignment="Right" />
-            <local:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding Duration}" Margin="5" />            
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Ausgewähltes Arbeitspaket:" />
-            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedTaskTitle}" Foreground="LightGray" />
-            <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}" Style="{StaticResource SaveButtonStyle}">
-                <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
-            </Button>
-            <Button Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}">
-                <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
-            </Button>
-        </Grid>
+    <Border BorderBrush="Transparent" BorderThickness="10" CornerRadius="8" Background="Transparent">
+        <Border BorderBrush="DarkOliveGreen" Background="LightSeaGreen">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="8" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Opacity="1" />
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="DragMove_MouseDown">
+                    <TextBlock Text="Arbeitspaketeditor" Margin="5,0,0,0" />
+                </StackPanel>
+                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+                <TreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Number}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
+                                <TextBlock Text="{Binding MappingID}" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" />
+                                <TextBlock Text="{Binding Title}" FontSize="14" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedItemChanged">
+                            <i:InvokeCommandAction Command="{Binding ItemSelectionChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=AccountTreeView}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TreeView>
+                <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Dauer:" HorizontalAlignment="Right" />
+                <local:TimePicker Grid.Row="4" Grid.Column="1" Value="{Binding Duration}" Margin="5" />
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Ausgewähltes Arbeitspaket:" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedTaskTitle}" Foreground="LightGray" />
+                <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}" Style="{StaticResource SaveButtonStyle}">
+                    <svgc:SvgViewbox Source="/Images/save.svg" Margin="5" />
+                </Button>
+                <Button Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding RevokeChangesCommand}" CommandParameter="{Binding ElementName=wItemEditor}">
+                    <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
+                </Button>
+            </Grid>
+        </Border>
     </Border>
 </Window>

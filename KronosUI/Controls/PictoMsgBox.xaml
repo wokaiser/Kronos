@@ -15,27 +15,32 @@
             <Setter Property="Margin" Value="5" />
         </Style>
     </Window.Resources>
-    <Border BorderBrush="DodgerBlue" Background="LightBlue" BorderThickness="3" CornerRadius="8">
-        <Grid Margin="0,0,0,5" MouseDown="MouseDown_DragMove">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Header}" FontWeight="Bold" />
-            <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="DodgerBlue" Height="3" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Message}" TextWrapping="Wrap" />
-            <Button Grid.Row="3" Grid.Column="0" Name="B_Accept" HorizontalAlignment="Center" Click="Accept_Click">
-                <svgc:SvgViewbox Source="/Images/tick.svg" Margin="5" />
-            </Button>
-            <Button Grid.Row="3" Grid.Column="1" Name="B_Deny" HorizontalAlignment="Center" Click="Deny_Click">
-                <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
-            </Button>
-        </Grid>
+    <Border BorderBrush="Transparent" BorderThickness="10" CornerRadius="8" Background="Transparent">
+        <Border BorderBrush="DodgerBlue" Background="LightBlue" BorderThickness="3" CornerRadius="8">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="8" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Opacity="1" />
+            </Border.Effect>
+            <Grid Margin="0,0,0,5" MouseDown="MouseDown_DragMove">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Header}" FontWeight="Bold" />
+                <Rectangle Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Fill="DodgerBlue" Height="3" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Message}" TextWrapping="Wrap" />
+                <Button Grid.Row="3" Grid.Column="0" Name="B_Accept" HorizontalAlignment="Center" Click="Accept_Click">
+                    <svgc:SvgViewbox Source="/Images/tick.svg" Margin="5" />
+                </Button>
+                <Button Grid.Row="3" Grid.Column="1" Name="B_Deny" HorizontalAlignment="Center" Click="Deny_Click">
+                    <svgc:SvgViewbox Source="/Images/abort.svg" Margin="5" />
+                </Button>
+            </Grid>
+        </Border>
     </Border>
 </Window>
