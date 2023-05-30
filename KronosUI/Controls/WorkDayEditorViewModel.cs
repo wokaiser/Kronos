@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Unity.Injection;
 
 namespace KronosUI.Controls
 {
@@ -139,11 +140,22 @@ namespace KronosUI.Controls
         {
             WorkItem newItem;
 
-            if (WorkItemEditor.AddWorkItem(out newItem))
+            if (!WorkItemEditor.AddWorkItem(out newItem))
+            {
+                return;
+            }
+
+            var existing = workItems.Where(w => w.AssignedWorkTask.Equals(newItem.AssignedWorkTask)).FirstOrDefault();
+            if (existing == null)
             {
                 WorkItems.Add(newItem);
-                RaisePropertiesChanged();
             }
+            else
+            {
+                existing.Duration += newItem.Duration;
+            }
+
+            RaisePropertiesChanged();
         }
 
         private void EditWorkItem()
