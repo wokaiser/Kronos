@@ -16,10 +16,11 @@ namespace KronosUI.Controls
     {
         private readonly DataManager dataManager;
 
-        private string title;
         private WorkDay currentDay;
         private WorkItem selectedWorkItem;
         private ObservableCollection<WorkItem> workItems;
+        private string title;
+        private string previousSelected;
         private bool hasChanged;
         private bool allowTimeSelection;
 
@@ -35,6 +36,7 @@ namespace KronosUI.Controls
             Title = string.Format("{0}, den {1} bearbeiten",
                 CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.DateOfWork.DayOfWeek),
                 selectedItem.WorkTime.DateOfWork.Date.ToShortDateString());
+            previousSelected = "Office";
 
             hasChanged = false;
             allowTimeSelection = true;
@@ -184,10 +186,14 @@ namespace KronosUI.Controls
                 case "Office":
                 case "Mobile":
                     AllowTimeSelection = true;
-                    BeginOfDay = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
-                    EndOfDay = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
-                    BreakTime = dataManager.CurrentUser.UserSettings.DefaultBreakTime;
-                    DailyWorkTime = dataManager.CurrentUser.UserSettings.DefaultDailyWorkTime;
+                    if (previousSelected == "Vacation" || previousSelected == "Sick")
+                    {
+                        BeginOfDay = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
+                        EndOfDay = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
+                        BreakTime = dataManager.CurrentUser.UserSettings.DefaultBreakTime;
+                        DailyWorkTime = dataManager.CurrentUser.UserSettings.DefaultDailyWorkTime;
+                    }
+                    previousSelected = workType;
                     break;
 
                 case "Vacation":
@@ -197,6 +203,7 @@ namespace KronosUI.Controls
                     EndOfDay = TimeSpan.Zero;
                     BreakTime = TimeSpan.Zero;
                     DailyWorkTime = TimeSpan.Zero;
+                    previousSelected = workType;
                     break;
 
                 default:
