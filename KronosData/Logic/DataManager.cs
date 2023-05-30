@@ -59,42 +59,6 @@ namespace KronosData.Logic
         }
 
         /// <summary>
-        /// Serialize object to json file
-        /// </summary>
-        /// <param name="path">The path where to store the desired json file</param>
-        /// <param name="instance">The object to serialize</param>
-        public static void SerializeToFile(string path, object instance)
-        {
-            var serializer = new JsonSerializer
-            {
-                Formatting = Formatting.Indented
-            };
-
-            using var sw = new StreamWriter(path);
-            using var writer = new JsonTextWriter(sw);
-
-            serializer.Serialize(writer, instance);
-        }
-
-        /// <summary>
-        /// Deserialize an json file to an user object
-        /// </summary>
-        /// <typeparam name="T">The type of object to deserialize into</typeparam>
-        /// <param name="path">The path to the json file to deserialize</param>
-        /// <returns>A User object or null in case of an error</returns>
-        public static T DeserializeFromFile<T>(string path)
-        {
-            var json = File.ReadAllText(path);
-
-            if (string.IsNullOrEmpty(json))
-            {
-                return default;
-            }
-
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-
-        /// <summary>
         /// Gets all items of the desired day
         /// </summary>
         /// <param name="desiredDay">The day to lookup</param>
@@ -229,6 +193,46 @@ namespace KronosData.Logic
 
             return null;
         }
+
+        #region Serialization
+
+        /// <summary>
+        /// Serialize object to json file
+        /// </summary>
+        /// <param name="path">The path where to store the desired json file</param>
+        /// <param name="instance">The object to serialize</param>
+        private static void SerializeToFile(string path, object instance)
+        {
+            var serializer = new JsonSerializer
+            {
+                Formatting = Formatting.Indented
+            };
+
+            using var sw = new StreamWriter(path);
+            using var writer = new JsonTextWriter(sw);
+
+            serializer.Serialize(writer, instance);
+        }
+
+        /// <summary>
+        /// Deserialize an json file to an user object
+        /// </summary>
+        /// <typeparam name="T">The type of object to deserialize into</typeparam>
+        /// <param name="path">The path to the json file to deserialize</param>
+        /// <returns>A User object or null in case of an error</returns>
+        private static T DeserializeFromFile<T>(string path)
+        {
+            var json = File.ReadAllText(path);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                return default;
+            }
+
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        #endregion
 
         #region Properties
 

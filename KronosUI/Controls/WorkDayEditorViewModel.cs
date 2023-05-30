@@ -9,19 +9,20 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Unity.Injection;
 
 namespace KronosUI.Controls
 {
     public class WorkDayEditorViewModel : BindableBase
     {
+        private enum WorkdayTypes { Office = 0, Mobile, Vacation, Sick };
+
         private readonly DataManager dataManager;
 
         private WorkDay currentDay;
         private WorkItem selectedWorkItem;
         private ObservableCollection<WorkItem> workItems;
         private string title;
-        private string previousSelected;
+        private WorkdayTypes previousSelected;
         private bool hasChanged;
         private bool allowTimeSelection;
 
@@ -37,7 +38,7 @@ namespace KronosUI.Controls
             Title = string.Format("{0}, den {1} bearbeiten",
                 CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(selectedItem.WorkTime.DateOfWork.DayOfWeek),
                 selectedItem.WorkTime.DateOfWork.Date.ToShortDateString());
-            previousSelected = "Office";
+            previousSelected = WorkdayTypes.Office;
 
             hasChanged = false;
             allowTimeSelection = true;
@@ -191,14 +192,14 @@ namespace KronosUI.Controls
 
         private void RadioButtonSelectedCommandExecute(object sender)
         {
-            var workType = (sender as RadioButton).Name;
+            var workType = (WorkdayTypes)Enum.Parse(typeof(WorkdayTypes), (sender as RadioButton).Name);
 
             switch(workType)
             {
-                case "Office":
-                case "Mobile":
+                case WorkdayTypes.Office:
+                case WorkdayTypes.Mobile:
                     AllowTimeSelection = true;
-                    if (previousSelected == "Vacation" || previousSelected == "Sick")
+                    if (previousSelected == WorkdayTypes.Vacation || previousSelected == WorkdayTypes.Sick)
                     {
                         BeginOfDay = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
                         EndOfDay = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
@@ -208,8 +209,8 @@ namespace KronosUI.Controls
                     previousSelected = workType;
                     break;
 
-                case "Vacation":
-                case "Sick":
+                case WorkdayTypes.Vacation:
+                case WorkdayTypes.Sick:
                     AllowTimeSelection = false;
                     BeginOfDay = TimeSpan.Zero;
                     EndOfDay = TimeSpan.Zero;

@@ -105,7 +105,7 @@
                         <controls:TimePicker Grid.Row="0" Grid.Column="1" Value="{Binding DailyWorkTime}" HorizontalAlignment="Center" Margin="5" />
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Pausenzeit" />
                         <controls:TimePicker Grid.Row="1" Grid.Column="1" Value="{Binding BreakTime}" HorizontalAlignment="Center" Margin="5" />
-                        <RadioButton Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Office" IsChecked="True" Content="Im Werk">
+                        <RadioButton Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Office" IsChecked="True" Content="Im Büro">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
                                     <i:InvokeCommandAction Command="{Binding RadioButtonSelectedCommand}" CommandParameter="{Binding ElementName=Office}" />
