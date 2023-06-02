@@ -87,7 +87,9 @@ namespace KronosUI.ViewModels
                     continue;
                 }
 
-                sb.AppendLine($"======= {workDay.WorkTime.DateOfWork.ToShortDateString()} =======");
+                double totMin = ((double)workDay.TotalAccountedTime.Minutes / 60) * 100;
+                double totHrs = Math.Floor(workDay.TotalAccountedTime.TotalHours);
+                sb.AppendLine($"=== {workDay.WorkTime.DateOfWork.ToShortDateString()} [{totHrs:00},{totMin:00}h] ===");
                 var dict = new Dictionary<string, TimeSpan>();
                 foreach (var work in workDay.AssignedWorkItems)
                 {
@@ -106,8 +108,9 @@ namespace KronosUI.ViewModels
                     double min = ((double)account.Value.Minutes / 60) * 100;
                     double hrs = Math.Floor(account.Value.TotalHours);
 
-                    sb.AppendFormat("{0,18}[{1:00},{2:00}h]\n", account.Key, hrs, min);
+                    sb.AppendFormat("{0,18} [{1:00},{2:00}h]\n", account.Key, hrs, min);
                 }
+                sb.AppendFormat("\n");
             }
 
             WorkByAccounts = sb.ToString();
@@ -218,7 +221,7 @@ namespace KronosUI.ViewModels
                     double min = ((double)item.Value.Minutes / 60) * 100;
                     double hrs = Math.Floor(item.Value.TotalHours);
 
-                    sb.AppendFormat("{0,4}[{1:00},{2:00}h] - {3}\n", item.Key.MappingID, hrs, min, item.Key.Title);
+                    sb.AppendFormat("{0,4} [{1:00},{2:00}h] {3}\n", item.Key.MappingID, hrs, min, item.Key.Title);
                 }
                 return sb.ToString();
             }
