@@ -58,7 +58,20 @@
                     <DataGridTextColumn Header="Ende" Binding="{Binding WorkTime, Converter={StaticResource dateUnitConverter}, ConverterParameter=END}" Width="80" />
                     <DataGridTextColumn Header="Pause" Binding="{Binding BreakTime, Converter={StaticResource timeSpanConverter}}" Width="80" />
                     <DataGridTextColumn Header="Arbeitszeit" Binding="{Binding TotalWorkTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80" />
-                    <DataGridTextColumn Header="Kontiert" Binding="{Binding TotalAccountedTime, Converter={StaticResource timeSpanConverter}}" Width="80" />
+                    <DataGridTextColumn Header="Kontiert" Binding="{Binding TotalAccountedTime, Converter={StaticResource timeSpanConverter}}" Width="80">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{Converters:AccountedToColorConverter HighlightColor=Red}">
+                                            <Binding Path="TotalWorkTime" />
+                                            <Binding Path="TotalAccountedTime" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Überstunden" Binding="{Binding TotalOverTime, Converter={StaticResource timeSpanConverter}}" MinWidth="80">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">

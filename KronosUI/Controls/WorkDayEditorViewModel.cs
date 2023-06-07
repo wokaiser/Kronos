@@ -373,6 +373,14 @@ namespace KronosUI.Controls
             }
         }
 
+        public string ZeroHours
+        {
+            get
+            {
+                return " 00:00 h";
+            }
+        }
+
         #endregion
     }
 }

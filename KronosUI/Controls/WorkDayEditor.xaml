@@ -15,6 +15,7 @@
     <Window.Resources>
         <Converters:TimeSpanToStringConverter x:Key="timeSpanConverter" />
         <Converters:ValueToColorConverter x:Key="valueToColorConverter" />
+        <Converters:AccountedToColorConverter x:Key="accountedToColorConverter" />
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontWeight" Value="Bold" />
@@ -139,7 +140,14 @@
                         <TextBlock Grid.Row="8" Grid.Column="0" Text="Überstunden:" />
                         <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding TotalOvertime}" Foreground="{Binding TotalOvertime, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
                         <TextBlock Grid.Row="9" Grid.Column="0" Text="Unkontiert:" />
-                        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding UnaccountedHours}" Foreground="{Binding UnaccountedHoursradio, Converter={StaticResource valueToColorConverter}}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding UnaccountedHours}" FontFamily="{StaticResource HighlightValueFont}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <MultiBinding Converter="{StaticResource accountedToColorConverter}">
+                                    <Binding Path="UnaccountedHours" />
+                                    <Binding Path="ZeroHours" />
+                                </MultiBinding>
+                            </TextBlock.Foreground>
+                        </TextBlock>
                     </Grid>
                 </Border>
                 <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="DarkGreen" Margin="5">
