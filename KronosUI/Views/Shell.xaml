@@ -33,7 +33,7 @@
                 <ContentControl Grid.Row="1" Grid.Column="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.NavigationRegion}" />
                 <ContentControl Grid.Row="2" Grid.Column="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.ControlRegion}" />
                 <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.DataRegion}" />
-                <ContentControl Grid.Column="3" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
+                <ContentControl Grid.Row="3" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static model:RegionNames.StatusBarRegion}" />
             </Grid>
         </Border>
     </Border>

@@ -80,6 +80,11 @@ namespace KronosUI.ViewModels
         {
             var sb = new StringBuilder();
 
+            double totMin = (double)(workMonth.Sum(wd => wd.TotalAccountedTime.Minutes) % 60) / 60 * 100;
+            double totHrs = Math.Floor(workMonth.Sum(wd => wd.TotalAccountedTime.TotalHours));
+
+            sb.AppendLine($"===== Total[{totHrs:000},{totMin:00}h] ======");
+
             foreach (var workDay in workMonth.OrderBy(d => d.WorkTime.DateOfWork))
             {
                 if (workDay.TotalWorkTime == TimeSpan.Zero)
@@ -87,8 +92,8 @@ namespace KronosUI.ViewModels
                     continue;
                 }
 
-                double totMin = ((double)workDay.TotalAccountedTime.Minutes / 60) * 100;
-                double totHrs = Math.Floor(workDay.TotalAccountedTime.TotalHours);
+                totMin = ((double)workDay.TotalAccountedTime.Minutes / 60) * 100;
+                totHrs = Math.Floor(workDay.TotalAccountedTime.TotalHours);
                 sb.AppendLine($"=== {workDay.WorkTime.DateOfWork.ToShortDateString()} [{totHrs:00},{totMin:00}h] ===");
                 var dict = new Dictionary<string, TimeSpan>();
                 foreach (var work in workDay.AssignedWorkItems)
@@ -105,7 +110,7 @@ namespace KronosUI.ViewModels
                 }
                 foreach (var account in dict.OrderBy(i => i.Key))
                 {
-                    double min = ((double)account.Value.Minutes / 60) * 100;
+                    double min = (double)account.Value.Minutes / 60 * 100;
                     double hrs = Math.Floor(account.Value.TotalHours);
 
                     sb.AppendFormat("{0,18} [{1:00},{2:00}h]\n", account.Key, hrs, min);
