@@ -45,7 +45,7 @@
   <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
-    <PackageReference Include="SharpVectors" Version="1.7.1" />
+    <PackageReference Include="SharpVectors" Version="1.8.1" />
   </ItemGroup>
 
   <ItemGroup>

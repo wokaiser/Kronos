@@ -129,7 +129,7 @@ namespace KronosUI.Controls
                 return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(AccountNumber);
             }
 
-            return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(MappingId);
+            return !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(IsMappingIdVisible == Visibility.Visible ? MappingId : AccountNumber);
         }
 
         private void Abort(Window window)
