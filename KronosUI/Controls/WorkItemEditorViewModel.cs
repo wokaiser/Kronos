@@ -13,6 +13,7 @@ namespace KronosUI.Controls
     public class WorkItemEditorViewModel : BindableBase
     {
         private readonly DataManager dataManager;
+        private readonly TimeSpan remaining;
 
         private bool hasChanged;
         private TimeSpan duration;
@@ -20,9 +21,10 @@ namespace KronosUI.Controls
         private WorkTask selectedTask;
         private ObservableCollection<Account> currentAccounts;
 
-        public WorkItemEditorViewModel(ref WorkItem selectedItem)
+        public WorkItemEditorViewModel(ref WorkItem selectedItem, TimeSpan remaining)
         {
             dataManager = ContainerLocator.Container.Resolve<DataManager>();
+            this.remaining = remaining;
 
             Initialize();
 
@@ -47,6 +49,7 @@ namespace KronosUI.Controls
             ItemSelectionChangedCommand = new DelegateCommand<object>(ItemSelectionChanged);
             SaveChangesCommand = new DelegateCommand<Window>(SaveChanges, CanSaveChanges);
             RevokeChangesCommand = new DelegateCommand<Window>(RevokeChanges);
+            UseRemainingTimeCommand = new DelegateCommand(UseRemainingTime);
         }
 
         private void ItemSelectionChanged(object param)
@@ -76,6 +79,11 @@ namespace KronosUI.Controls
             return hasChanged && !string.IsNullOrWhiteSpace(SelectedTaskTitle) && Duration > TimeSpan.Zero;
         }
 
+        private void UseRemainingTime()
+        {
+            Duration = remaining;
+        }
+
         #endregion
 
         #region Properties
@@ -85,6 +93,8 @@ namespace KronosUI.Controls
         public DelegateCommand<Window> RevokeChangesCommand { get; private set; }
 
         public ICommand ItemSelectionChangedCommand { get; private set; }
+
+        public ICommand UseRemainingTimeCommand { get; private set; }
 
         public ObservableCollection<Account> CurrentAccounts
         {

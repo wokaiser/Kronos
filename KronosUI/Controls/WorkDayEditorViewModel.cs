@@ -140,8 +140,9 @@ namespace KronosUI.Controls
         private void AddWorkItem()
         {
             WorkItem newItem;
+            var unaccounted = EndOfDay - BeginOfDay - BreakTime - GetAccountedTime();
 
-            if (!WorkItemEditor.AddWorkItem(out newItem))
+            if (!WorkItemEditor.AddWorkItem(out newItem, unaccounted))
             {
                 return;
             }
@@ -162,8 +163,9 @@ namespace KronosUI.Controls
         private void EditWorkItem()
         {
             var changedItem = SelectedWorkItem;
+            var unaccounted = EndOfDay - BeginOfDay - BreakTime - GetAccountedTime();
 
-            if (WorkItemEditor.EditWorkItem(ref changedItem))
+            if (WorkItemEditor.EditWorkItem(ref changedItem, unaccounted))
             {
                 SelectedWorkItem.Update(changedItem);
                 RaisePropertyChanged(nameof(SelectedWorkItem));
