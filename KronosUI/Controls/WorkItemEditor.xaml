@@ -46,8 +46,8 @@
                 <StackPanel Grid.Row="0" Grid.ColumnSpan="2" MouseDown="DragMove_MouseDown">
                     <TextBlock Text="Arbeitspaketeditor" Margin="5,0,0,0" />
                 </StackPanel>
-                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-                <TreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
+                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                <TreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding CurrentAccounts}" Background="Transparent" x:Name="AccountTreeView" BorderThickness="0">
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type model:Account}" ItemsSource="{Binding AssignedTasks}">
                             <StackPanel Orientation="Horizontal">
