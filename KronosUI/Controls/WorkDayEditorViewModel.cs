@@ -200,8 +200,9 @@ namespace KronosUI.Controls
             {
                 case WorkdayTypes.Office:
                 case WorkdayTypes.Mobile:
+                case WorkdayTypes.Sick:
                     AllowTimeSelection = true;
-                    if (previousSelected == WorkdayTypes.Vacation || previousSelected == WorkdayTypes.Sick)
+                    if (previousSelected == WorkdayTypes.Vacation)
                     {
                         BeginOfDay = dataManager.CurrentUser.UserSettings.DefaultBeginOfWork;
                         EndOfDay = dataManager.CurrentUser.UserSettings.DefaultEndOfWork;
@@ -211,8 +212,7 @@ namespace KronosUI.Controls
                     previousSelected = workType;
                     break;
 
-                case WorkdayTypes.Vacation:
-                case WorkdayTypes.Sick:
+                case WorkdayTypes.Vacation:                
                     AllowTimeSelection = false;
                     BeginOfDay = TimeSpan.Zero;
                     EndOfDay = TimeSpan.Zero;

@@ -54,6 +54,12 @@ namespace KronosData.Logic
             return GetSummary(user, date, TimeFrame.Year);
         }
 
+        /// <summary>
+        /// Gets a overview of each task for the given user in the given month
+        /// </summary>
+        /// <param name="user">The user to look for</param>
+        /// <param name="date">The month to look for</param>
+        /// <returns>The amount of work for each task</returns>
         public static Dictionary<WorkTask, TimeSpan> GetTaskOverviewFromMonth(User user, DateTime date) 
         {
             var retVal = new Dictionary<WorkTask, TimeSpan>();
@@ -77,6 +83,12 @@ namespace KronosData.Logic
             return retVal;
         }
 
+        /// <summary>
+        /// Gets a overview of each account for the given user in the given year
+        /// </summary>
+        /// <param name="user">The user to look for</param>
+        /// <param name="date">The month to look for</param>
+        /// <returns>The amount of work for each account</returns>
         public static IEnumerable<WorkDay> GetAccountOverviewFromMonth(User user, DateTime date)
         {
             return GetRange(user, date, TimeFrame.Month);

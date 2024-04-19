@@ -44,6 +44,7 @@ namespace KronosUI.ViewModels
         protected override void UpdateSummary(User currentUser, WorkDay wDay)
         {
             summaryInfo = wDay == null ? SummaryInfo.Zero : Summarizer.GetSummaryFromYear(currentUser, wDay.WorkTime.DateOfWork);
+
             RaisePropertyChanged(nameof(SummaryTotalHours));
             RaisePropertyChanged(nameof(SummaryTotalRequired));
             RaisePropertyChanged(nameof(SummaryTotalAccounted));
@@ -99,7 +100,13 @@ namespace KronosUI.ViewModels
 
         #region Properties
 
-
+        public override string SummaryTotalOvertime
+        {
+            get
+            {
+                return summaryInfo != null ? ToHoursMinutesString(summaryInfo.TotalOvertime + dataManager.CurrentUser.UserSettings.CarryOverTime) : string.Empty;
+            }
+        }
 
         #endregion
     }

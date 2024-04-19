@@ -53,7 +53,7 @@ namespace KronosUI.ViewModels
             }
         }
 
-        public string SummaryTotalOvertime
+        public virtual string SummaryTotalOvertime
         {
             get
             {

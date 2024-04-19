@@ -9,6 +9,7 @@ namespace KronosData.Model
         private TimeSpan defaultBeginOfWork;
         private TimeSpan defaultEndOfWork;
         private TimeSpan defaultBreakTime;
+        private TimeSpan carryOverTime;
         private string mappingToken;
         private string mappingUrl;
 
@@ -18,6 +19,7 @@ namespace KronosData.Model
             DefaultBeginOfWork = new TimeSpan(0);
             DefaultEndOfWork = new TimeSpan(0);
             DefaultBreakTime = new TimeSpan(0);
+            CarryOverTime = new TimeSpan(0);
             MappingToken = string.Empty;
             MappingUrl = string.Empty;
         }
@@ -74,7 +76,17 @@ namespace KronosData.Model
             set
             {
                 defaultBreakTime = value;
-                OnPropertyChanged(nameof(defaultBreakTime));
+                OnPropertyChanged(nameof(DefaultBreakTime));
+            }
+        }
+
+        public TimeSpan CarryOverTime
+        {
+            get { return carryOverTime; }
+            set
+            {
+                carryOverTime = value;
+                OnPropertyChanged(nameof(CarryOverTime));
             }
         }
 
