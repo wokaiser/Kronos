@@ -94,6 +94,29 @@ namespace KronosData.Logic
             return GetRange(user, date, TimeFrame.Month);
         }
 
+        public static QuarterInfo GetQuarterInfo(User user, DateTime date) 
+        {
+            int twd;
+            int md;
+            int sd;
+            int fd;
+
+            int startMonth = GetQuarterStart(date);
+            if (startMonth == 0)
+            {
+                return QuarterInfo.Empty;
+            }
+
+            var days = user.AssignedWorkDays.Where(d => d.WorkTime.DateOfWork.Month >= startMonth && d.WorkTime.DateOfWork.Month <= startMonth + 3);
+
+            md = days.Count(d => d.IsMobileDay);
+            sd = days.Count(d => d.IsSickDay);
+            fd = days.Count(d => d.IsFreeDay);
+            twd = days.Count(d => !d.IsFreeDay && !d.IsSickDay);
+
+            return new QuarterInfo(twd, sd, fd, md);
+        }
+
         #region Private methods
 
         private static SummaryInfo GetSummary(User user, DateTime date, TimeFrame timeFrame)
@@ -226,6 +249,35 @@ namespace KronosData.Logic
             }
 
             return retVal;
+        }
+
+        private static int GetQuarterStart(DateTime date)
+        {
+            switch (date.Month)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    return 1;
+
+                case 4:
+                case 5:
+                case 6:
+                    return 4;
+
+                case 7:
+                case 8:
+                case 9:
+                    return 7;
+
+                case 10:
+                case 11:
+                case 12:
+                    return 10;
+
+                default:
+                    return 0;
+            }
         }
 
         #endregion

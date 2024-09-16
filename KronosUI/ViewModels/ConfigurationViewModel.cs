@@ -287,7 +287,7 @@ namespace KronosUI.ViewModels
             set
             {
                 userSettings.DefaultBeginOfWork = value;
-                RaisePropertyChanged(nameof(DefaultBeginOfWork));
+                RaisePropertyChanged();
                 PendingChanges = true;
             }
         }
@@ -298,7 +298,7 @@ namespace KronosUI.ViewModels
             set
             {
                 userSettings.DefaultEndOfWork = value;
-                RaisePropertyChanged(nameof(DefaultEndOfWork));
+                RaisePropertyChanged();
                 PendingChanges = true;
             }
         }
@@ -309,7 +309,7 @@ namespace KronosUI.ViewModels
             set
             {
                 userSettings.DefaultDailyWorkTime = value;
-                RaisePropertyChanged(nameof(DefaultDailyWorkTime));
+                RaisePropertyChanged();
                 PendingChanges = true;
             }
         }
@@ -320,7 +320,7 @@ namespace KronosUI.ViewModels
             set
             {
                 userSettings.DefaultBreakTime = value;
-                RaisePropertyChanged(nameof(DefaultBreakTime));
+                RaisePropertyChanged();
                 PendingChanges = true;
             }
         }
